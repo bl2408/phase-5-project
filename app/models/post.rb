@@ -2,6 +2,7 @@ class Post < ApplicationRecord
   before_validation :pre_format
 
   belongs_to :author, class_name:'User', foreign_key: :author_id
+  belongs_to :category
 
   enum :status, [ :draft, :published, :waiting, :archived, :trashed ]
 
@@ -20,8 +21,7 @@ class Post < ApplicationRecord
 
   def pre_format
     self.title = self.title.downcase
-    self.slug = self.slug.downcase
-    self.slug = self.slug.parameterize(separator: '-')
+    self.slug = self.slug.downcase.parameterize(separator: '-')
   end
 
 end

@@ -22,6 +22,10 @@ user1 = User.create!(
     role: role_admin
 )
 
+# Categories
+cat1 = Category.create(label: "TEST", slug: "test", description: "description for test category")
+cat2 = Category.create(label: "TEST with spaces", slug: "TEST With SpAcEs", description: "description for test with spaces category")
+
 
 # Posts
 Post.create(
@@ -30,7 +34,10 @@ Post.create(
     content: "sample text here",
     publish_datetime: DateTime.now,
     author: user1,
-    status: 1
+    status: 1,
+    category: cat1
 )
+
+
 
 puts "SEEDING COMPLETE!"
