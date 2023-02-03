@@ -1,6 +1,10 @@
 class User < ApplicationRecord
 
+    before_validation :pre_format
+
     belongs_to :role
+    has_many :posts, class_name:'Post', foreign_key: :author_id
+
 
     has_secure_password
 
@@ -20,4 +24,14 @@ class User < ApplicationRecord
 
     validates :email,
         format: { with: URI::MailTo::EMAIL_REGEXP } 
+
+
+    private
+
+    def pre_format
+        # lowercase fields
+        self.first_name = self.first_name.downcase
+        self.last_name = self.last_name.downcase
+        self.username = self.username.downcase    
+    end
 end
