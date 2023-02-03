@@ -6,17 +6,31 @@
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
 
+puts "SEEDING"
 
 # Roles
 role_admin = Role.create!(label: "admin", description: "Administrator role, access to everything.")
 Role.create(label: "user", description: "General role, read access only.")
 
-# User
-User.create!(
+# Users
+user1 = User.create!(
     first_name: "Brian", 
     last_name: "Lambert", 
-    username: "brian", 
+    username: "Brian", 
     email: "brian@email.com",
     password: "password123",
     role: role_admin
 )
+
+
+# Posts
+Post.create(
+    title: "Sample post",
+    slug: "SaMple posT",
+    content: "sample text here",
+    publish_datetime: DateTime.now,
+    author: user1,
+    status: 1
+)
+
+puts "SEEDING COMPLETE!"
