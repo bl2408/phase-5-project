@@ -21,7 +21,7 @@ class Post < ApplicationRecord
 
   def pre_format
     self.title = self.title.downcase
-    self.slug = self.slug.downcase.parameterize(separator: '-')
+    self.slug = self.slug.downcase.parameterize(separator: '-') unless self.slug.nil?
   end
 
 end
