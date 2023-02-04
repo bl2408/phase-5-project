@@ -43,6 +43,22 @@ Post.create(
     tags: [tag1, tag2]
 )
 
+# Collection
+collection1 = Collection.create(
+    label: "General", 
+    slug: "general", 
+    description:"Generic collection for files.",
+    tags: [tag2, tag1],
+)
+
+# Stored File
+file1 = StoredFile.create(
+    alt_text: "Test image", 
+    tags: [tag2, tag1],
+    collection: collection1
+)
+
+file1.file.attach(io: File.open('storage/seed_files/1.jpg'), filename: '1.jpg')
 
 
 puts "SEEDING COMPLETE!"

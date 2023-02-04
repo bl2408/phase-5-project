@@ -4,6 +4,8 @@ class Tag < ApplicationRecord
 
     has_many :taggables
     has_many :posts, through: :taggables, source: :target, source_type: "Post"
+    has_many :stored_files, through: :taggables, source: :target, source_type: "StoredFile"
+    has_many :collections, through: :taggables, source: :target, source_type: "Collection"
 
     validates :label, 
         presence: true, 
