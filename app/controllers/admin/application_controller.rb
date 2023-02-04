@@ -1,10 +1,14 @@
 class Admin::ApplicationController < ApplicationController
 
+    before_action :authorize
 
     def res_err_ue msg
         res_err msg: msg, status: :unprocessable_entity
     end 
 
+    def res_err_ua msg
+        res_err msg: msg, status: :unauthorized
+    end 
 
     def res_err msg:, status:
         render json: {
@@ -25,6 +29,13 @@ class Admin::ApplicationController < ApplicationController
         render json: obj,
         status: status
 
+    end
+
+    private
+
+    def authorize
+        @user = User.find_by(id: session[:user_id])
+        return res_err_ua ["Unauthorized"] unless @user
     end
 
 
