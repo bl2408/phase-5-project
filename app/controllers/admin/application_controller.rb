@@ -6,8 +6,8 @@ class Admin::ApplicationController < ApplicationController
         res_err msg: msg, status: :unprocessable_entity
     end 
 
-    def res_err_ua msg
-        res_err msg: msg, status: :unauthorized
+    def res_err_ua
+        res_err msg: ["Unauthorized"], status: :unauthorized
     end 
 
     def res_err msg:, status:
@@ -35,7 +35,7 @@ class Admin::ApplicationController < ApplicationController
 
     def authorize
         @user = User.find_by(id: session[:user_id])
-        return res_err_ua ["Unauthorized"] unless @user
+        return res_err_ua unless @user
     end
 
 
