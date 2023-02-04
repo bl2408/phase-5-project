@@ -11,7 +11,7 @@ class Category < ApplicationRecord
     validates :slug, 
         uniqueness: true, 
         format: { 
-            with: /[a-z0-9\-]+\S/, message: "categories can only contain letters, numbers and hyphens."
+            with: /[a-z0-9\-]+\S/, message: "Category slug can only contain letters, numbers and hyphens."
         }
 
     private
