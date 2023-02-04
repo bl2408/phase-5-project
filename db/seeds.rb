@@ -27,6 +27,10 @@ cat1 = Category.create(label: "TEST", slug: "test", description: "description fo
 cat2 = Category.create(label: "TEST with spaces", slug: "TEST With SpAcEs", description: "description for test with spaces category")
 
 
+# Tags
+tag1 = Tag.create(label: "test tag", slug:"test-tag", description: "Description for test tag 1")
+tag2 = Tag.create(label: "test tag 2", slug:"test-tag-2", description: "Description for test tag 2")
+
 # Posts
 Post.create(
     title: "Sample post",
@@ -35,7 +39,8 @@ Post.create(
     publish_datetime: DateTime.now,
     author: user1,
     status: 1,
-    category: cat1
+    category: cat1,
+    tags: [tag1, tag2]
 )
 
 

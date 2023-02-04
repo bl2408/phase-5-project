@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_02_03_053325) do
+ActiveRecord::Schema[7.0].define(version: 2023_02_04_004540) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,23 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_053325) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "taggables", force: :cascade do |t|
+    t.bigint "tag_id", null: false
+    t.boolean "visible"
+    t.string "target_type"
+    t.bigint "target_id"
+    t.index ["tag_id"], name: "index_taggables_on_tag_id"
+    t.index ["target_type", "target_id"], name: "index_taggables_on_target"
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "label"
+    t.string "description"
+    t.string "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "first_name"
     t.string "username"
@@ -57,5 +74,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_02_03_053325) do
 
   add_foreign_key "posts", "categories"
   add_foreign_key "posts", "users", column: "author_id"
+  add_foreign_key "taggables", "tags"
   add_foreign_key "users", "roles"
 end

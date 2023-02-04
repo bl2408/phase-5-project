@@ -4,6 +4,10 @@ class Post < ApplicationRecord
   belongs_to :author, class_name:'User', foreign_key: :author_id
   belongs_to :category
 
+  has_many :taggables, as: :target, dependent: :destroy
+  has_many :tags, :through => :taggables
+
+
   enum :status, [ :draft, :published, :waiting, :archived, :trashed ]
 
   validates :title, 
@@ -13,7 +17,7 @@ class Post < ApplicationRecord
 	uniqueness: true, 
 	format: { 
 		# REGEX only contains lowercase letters, numbers and hyphens
-		with: /[a-z0-9\-]+\S/, message: "Slug can only contain letters, numbers and hyphens."
+		with: /[a-z0-9\-]+\S/, message: "Post slug can only contain letters, numbers and hyphens."
 	}
 
 
