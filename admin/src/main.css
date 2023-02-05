@@ -145,7 +145,7 @@ body.open{
     box-sizing: border-box;
     width: 100%;
     height: 100%;
-    font-size: 1.6rem;
+    margin-top: 16px;
 }
 
 .nav-side-button{
@@ -153,15 +153,19 @@ body.open{
     display: grid;
     grid-template-columns: var(--width-nav-side-closed) 1fr auto;
     overflow: hidden;
-    padding: 8px;
+    padding: 8px 12px;
     padding-left: 0;
     box-sizing: border-box;
     cursor: pointer;
     margin-bottom: 8px;
     color: var(--font-col-nav-side-primary);
+    transition: all 0.2s ease-in-out;
 }
 .nav-side-button:hover{
     color: var(--font-col-nav-side-hover); 
+}
+.nav-side-button:hover > :last-child{
+    transform: translate(3px);
 }
 .nav-side-button:active{
     color: var(--font-col-nav-side-active); 
@@ -170,13 +174,9 @@ body.open{
     text-align: center;
 }
 .nav-side-button >:last-child{
+    transition: all 0.2s ease-in-out;
     text-align: center;
 }
-
-#nav-side button{
-    width: 100%;
-}
-
 #nav-side .toggle-menu{
     position: absolute;
     bottom: 0;

@@ -1,13 +1,24 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faEdit, faAngleRight, faTag, faListSquares } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useState } from 'react';
+import ButtonList from './NavSide/ButtonList';
+import NavSideButton from './NavSide/NavSideButton';
+
+import { faCircleArrowLeft, faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
 
 export default function NavSide() {
 
-    const handleClick = () => {
+    const [ navOpen, setNavOpen ] = useState(true)
 
-        document.body.classList.toggle("open");
-
+    const toggleMenu=(force=null)=>{
+        setNavOpen(state=>force !== null ? forceClose : !navOpen)
     };
+
+    useEffect(()=>{
+        if(navOpen){
+            document.body.classList.add("open")
+        }else{
+            document.body.classList.remove("open")
+        }
+    },[navOpen]);
 
     return (
         <nav id="nav-side">
@@ -16,23 +27,17 @@ export default function NavSide() {
             </header>
 
             <section>
-                <NavSideButton text="Post" icon={faEdit} />
-                <NavSideButton text="Categories" icon={faListSquares} />
-                <NavSideButton text="Tags" icon={faTag} />
-                <button className="toggle-menu" onClick={handleClick}>TEST</button>
+                <ButtonList />
+                <NavSideButton 
+                    className="toggle-menu" 
+                    onClick={()=>toggleMenu()} 
+                    text="Hide" 
+                    icon={navOpen? faCircleArrowLeft : faCircleArrowRight} 
+                    hasSI={false} 
+                />
             </section>
 
         </nav>
     )
 
 }
-
-const NavSideButton = ({ icon, text }) => {
-    return (
-        <div className="nav-side-button">
-            <div>{<FontAwesomeIcon icon={icon} />}</div>
-            <div>{text}</div>
-            <div>{<FontAwesomeIcon icon={faAngleRight} />}</div>
-        </div>
-    )
-};
