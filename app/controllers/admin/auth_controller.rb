@@ -4,7 +4,13 @@ class Admin::AuthController < Admin::ApplicationController
 
     def create
 
+        MSG_WRONG_U_P = "Wrong username or password!"
+
         user = User.find_by(username: params[:username])
+
+        admin = Role.find_by(label: "admin")
+
+        return res_err_ue [MSG_WRONG_U_P] unless user.role == admin
 
         if user&.authenticate(params[:password])
 
@@ -17,7 +23,7 @@ class Admin::AuthController < Admin::ApplicationController
             )
 
         else
-            res_err_ue ["Wrong username or password!"]
+            res_err_ue [MSG_WRONG_U_P]
         end
 
     end

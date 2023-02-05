@@ -10,7 +10,7 @@ puts "SEEDING"
 
 # Roles
 role_admin = Role.create!(label: "admin", description: "Administrator role, access to everything.")
-Role.create(label: "user", description: "General role, read access only.")
+role_user = Role.create(label: "user", description: "General role, read access only.")
 
 # Users
 user1 = User.create!(
@@ -20,6 +20,15 @@ user1 = User.create!(
     email: "brian@email.com",
     password: "password123",
     role: role_admin
+)
+
+User.create!(
+    first_name: "Rob", 
+    last_name: "Lambert", 
+    username: "Robert", 
+    email: "rob@email.com",
+    password: "password123",
+    role: role_user
 )
 
 # Categories

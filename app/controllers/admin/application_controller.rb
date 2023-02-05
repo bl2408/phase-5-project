@@ -7,12 +7,13 @@ class Admin::ApplicationController < ApplicationController
     end 
 
     def res_err_ua
-        res_err msg: ["Unauthorized"], status: :unauthorized
+        res_err msg: ["Access denied"], status: :unauthorized
     end 
 
     def res_err msg:, status:
         render json: {
-            errors: msg
+            errors: msg,
+            status: status
         }, 
         status: status
     end
