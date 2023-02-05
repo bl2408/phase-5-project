@@ -1,8 +1,14 @@
+import NavSide from "./NavSide";
+import NavTop from "./NavTop";
+
 function App() {
 
 	return (
 		<>
-			Hello
+			<NavSide />
+			<NavTop />
+			<main>
+			</main>
 		</>
 	)
 }
