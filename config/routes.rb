@@ -8,6 +8,7 @@ Rails.application.routes.draw do
     
     post "/login", to: "auth#create"
     post "/logout", to: "auth#destroy"
+    get "/valid", to: "auth#render_user"
     
   end
 
