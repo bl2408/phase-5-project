@@ -9,6 +9,12 @@ Rails.application.routes.draw do
     post "/login", to: "auth#create"
     post "/logout", to: "auth#destroy"
     get "/valid", to: "auth#render_user"
+
+    resources :posts
+
+    resources :category, param: :slug do
+      resources :posts, only: [:index, :show]
+    end
     
   end
 
