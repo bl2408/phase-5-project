@@ -17,7 +17,10 @@ class User < ApplicationRecord
     validates :username, 
         presence: true, 
         length: { in: 4..20}, 
-        uniqueness: true
+        uniqueness: true,
+        format: { 
+            with: /[a-z0-9\-\_]+\S/, message: "Username can only contain letters, numbers, hyphens and underscores."
+        }
 
     validates :password, 
         length: { minimum: 6 }
