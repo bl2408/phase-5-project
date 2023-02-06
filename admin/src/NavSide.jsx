@@ -4,21 +4,21 @@ import NavSideButton from './NavSide/NavSideButton';
 
 import { faCircleArrowLeft, faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
 
+import { useSelector, useDispatch } from 'react-redux'
+import { toggleMenu } from './Slices/navSideSlice';
+
 export default function NavSide() {
 
-    const [ navOpen, setNavOpen ] = useState(true)
-
-    const toggleMenu=(force=null)=>{
-        setNavOpen(state=>force !== null ? forceClose : !navOpen)
-    };
+    const navIsOpen = useSelector(state => state.navSideOpen.value);
+    const dispatch = useDispatch();
 
     useEffect(()=>{
-        if(navOpen){
+        if(navIsOpen){
             document.body.classList.add("open")
         }else{
             document.body.classList.remove("open")
         }
-    },[navOpen]);
+    },[navIsOpen]);
 
     return (
         <nav id="nav-side">
@@ -30,10 +30,11 @@ export default function NavSide() {
                 <ButtonList />
                 <NavSideButton 
                     className="toggle-menu" 
-                    onClick={()=>toggleMenu()} 
-                    text="Hide" 
-                    icon={navOpen? faCircleArrowLeft : faCircleArrowRight} 
-                    hasSI={false} 
+                    onClick={()=>dispatch(toggleMenu())} 
+                    text={navIsOpen ? "Hide" : "Show"} 
+                    icon={navIsOpen? faCircleArrowLeft : faCircleArrowRight} 
+                    hasSI={false}
+                    showHoverText={!navIsOpen}
                 />
             </section>
 
