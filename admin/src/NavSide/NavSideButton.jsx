@@ -1,8 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
-import { useEffect, useRef } from 'react'
-
-
+import { useRef } from 'react'
 
 export default function NavSideButton({
     className = "",
@@ -43,19 +41,14 @@ export default function NavSideButton({
         toolTip.style.top = `0px`;
     };
 
-    useEffect(() => {
-
-        el.current.addEventListener("mouseover", handleMouseOver);
-        el.current.addEventListener("mouseout", handleMouseOut);
-        return () => {
-            el.current.removeEventListener("mouseover", handleMouseOver);
-            el.current.removeEventListener("mouseout", handleMouseOut);
-        }
-
-    }, []);
-
     return (
-        <div ref={el} onClick={onClick} className={`nav-side-button ${className}`}>
+        <div 
+            ref={el} 
+            onMouseOver={handleMouseOver} 
+            onMouseOut={handleMouseOut} 
+            onClick={onClick} 
+            className={`nav-side-button ${className}`}
+        >
             <div>{<FontAwesomeIcon icon={icon} />}</div>
             <div>{text}</div>
             <div>{hasSI ? <FontAwesomeIcon icon={secondaryIcon} /> : null}</div>
