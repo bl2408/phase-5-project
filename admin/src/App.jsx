@@ -1,5 +1,6 @@
 import NavSide from "./NavSide/NavSide";
 import NavTop from "./NavTop";
+import WindowBasic from "./Windows/WindowBasic";
 
 function App() {
 
@@ -8,6 +9,7 @@ function App() {
 			<NavSide />
 			<NavTop />
 			<main>
+				<WindowBasic />
 			</main>
 		</>
 	)

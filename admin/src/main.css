@@ -55,7 +55,6 @@
 
 }
 
-
 .thin-scroll {
     scrollbar-width: thin;
     scrollbar-color: var(--scroll-col-nav-side) transparent;
@@ -76,12 +75,17 @@
 }
 
 
-body {
+body, h1, h2 {
     margin: 0;
     padding: 0;
-    font-size: 1.6rem;
-
 }
+body{
+    font-size: 1.6rem;
+}
+
+
+h1{ color: var(--font-col-heading-primary); }
+h2{ color: var(--font-col-heading-secondary); }
 
 body.open {
     --width-nav-side-current: 200px;
@@ -212,7 +216,6 @@ body.open {
     position: absolute;
     top: 0;
     left: var(--width-nav-side-closed);
-    /* min-height: 36px; */
     width: max-content;
     max-width: 200px;
     background-color: var(--bg-nav-side);
@@ -224,7 +227,6 @@ body.open {
     color: var(--font-col-nav-side-hover);
     box-sizing: border-box;
 
-
     display: none;
 }
 
@@ -232,96 +234,21 @@ body.open {
     visibility: hidden;
 }
 
+.window{
+    
+    min-width: 100px;
+    min-height: 100px;
 
+    border: solid 1px var(--border-col-window);
+    background-color: var(--bg-window);
+    color: var(--font-col-primary);
 
-
-/* 
-
-#nav-side > header{
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border: solid 5px green;
-
-    /* width: 100%; */
-/* height: var(--height-nav-top); 
-
-    border-bottom: solid 1px var(--border-col-nav-side-header);
-    background-color: var(--bg-nav-side-header);
-    /* margin-top: 16px; 
-
-}
-
-#nav-side > section{
-    position: relative;
+    padding: 20px;
     box-sizing: border-box;
-    width: 100%;
-    height: calc(100% - var(--height-nav-top));
-}
-#nav-side .button-list{
-    height: calc(100% - var(--height-nav-top));
-    overflow-x: scroll;
-    /* border: solid 1px green; 
 }
 
-.nav-side-button{
-    width: 100%;
-    height: 40px;
-    display: grid;
-    grid-template-columns: var(--width-nav-side-closed) 1fr auto;
-    padding-right: 12px;
-    box-sizing: border-box;
-    cursor: pointer;
-    margin-bottom: 8px;
-    color: var(--font-col-nav-side-primary);
-    transition: all 0.2s ease-in-out;
-    overflow: hidden;
-}
-.nav-side-button > *{
+main{
     display: flex;
-    flex-direction: column;
-    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
 }
-
-.nav-side-button.hover-mode{
-    overflow: visible;
-    grid-template-columns: var(--width-nav-side-closed) max-content;
-}
-.nav-side-button.hover-mode > :nth-child(2){
-    background-color: var(--bg-nav-side);
-    display: none;
-    padding-left: 15px;
-    padding-right: 20px;
-}
-.nav-side-button.hover-mode:hover > :nth-child(2){
-    display: flex;
-}
-
-.nav-side-button.hover-mode > :last-child{
-    display: none;
-}
-
-
-.nav-side-button:hover{
-    color: var(--font-col-nav-side-hover); 
-}
-.nav-side-button:hover > :last-child{
-    transform: translate(3px);
-}
-.nav-side-button:active{
-    color: var(--font-col-nav-side-active); 
-}
-.nav-side-button >:first-child{
-    text-align: center;
-}
-.nav-side-button >:last-child{
-    transition: all 0.2s ease-in-out;
-    text-align: center;
-} */
-/* #nav-side .toggle-menu{
-    position: absolute;
-    bottom: 0;
-    left: 0;
-} */
