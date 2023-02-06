@@ -41,7 +41,7 @@ export default function Login(){
     };
     
     return(
-        <div id={styles["main-login"]}>
+        <div id="main-centered">
             <WindowBasic id={styles["window-login"]}>
                 {
                     status==="loading" 

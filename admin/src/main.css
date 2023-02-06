@@ -87,6 +87,10 @@ body{
 h1{ color: var(--font-col-heading-primary); }
 h2{ color: var(--font-col-heading-secondary); }
 
+a{
+    text-decoration: none;
+}
+
 body.open {
     --width-nav-side-current: 200px;
 }
@@ -251,6 +255,15 @@ main{
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+}
+
+#main-centered{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+    width: 100vw;
+    height: 100vh;
 }
 
 .input-floating-label{
