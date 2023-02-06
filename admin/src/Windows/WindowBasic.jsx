@@ -1,9 +1,9 @@
-export default function WindowBasic({children}){
+export default function WindowBasic(props){
 
     return (
 
-        <div className="window">
-            {children}
+        <div {...props} className={`window ${props.className||""}`} >
+            {props.children}
         </div>
 
     );

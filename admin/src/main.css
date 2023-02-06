@@ -10,7 +10,7 @@
     --bg-nav-top: #fcfdfe;
     --bg-nav-side-header: #5e718b;
 
-    --bg-button-primary: #d1d5d9;
+    --bg-button-primary: #488dd0;
     --bg-button-primary-hover: #60a1e3;
     --bg-button-primary-active: #477298;
 
@@ -243,7 +243,7 @@ body.open {
     background-color: var(--bg-window);
     color: var(--font-col-primary);
 
-    padding: 20px;
+    padding: 26px;
     box-sizing: border-box;
 }
 
@@ -252,3 +252,114 @@ main{
     flex-wrap: wrap;
     gap: 20px;
 }
+
+.input-floating-label{
+    position: relative;
+    font-size: 1.6rem;
+    
+}
+
+.input-floating-label > input{
+    margin-top: 15px;
+}
+
+.input-floating-label > input:focus ~ span,
+.input-floating-label > input:not(:focus):valid ~ span{
+    bottom: 0;
+    left: 5px;
+    top: 0;
+    right: 0;
+    font-size: 80%;
+}
+
+.input-floating-label > span{
+    position: absolute;
+    pointer-events: none;
+    transition: 0.2s ease all;
+    
+    bottom: 0;
+    left: 5px;
+    top: 15px;
+    right: 0;
+    font-size: 100%;
+}
+
+input{
+    font-size: 1.6rem;
+    width: 100%;
+    box-sizing: border-box;
+    outline: 0;
+    border: 0;
+    border-bottom: solid 1px var(--border-col-window);
+    padding: 8px;
+}
+
+input:focus{
+    border-bottom: solid 1px var(--border-col-nav-side-header);
+}
+
+button{
+    color: var(--font-col-button);
+    font-size: 1.6rem;
+    padding: 10px 20px;
+    font-family: inherit;
+    outline: 0;
+    border: 0;
+}
+
+.btn.primary{
+    background-color: var(--bg-button-primary);
+}
+.btn.primary:hover, .btn.primary:focus{
+    background-color: var(--bg-button-primary-hover);
+}
+.btn.primary:active{
+    background-color: var(--bg-button-primary-active);
+}
+
+.btn.secondary{
+    background-color: var(--bg-button-secondary);
+}
+.btn.secondary:hover, .btn.secondary:focus{
+    background-color: var(--bg-button-secondary-hover);
+}
+.btn.secondary:active{
+    background-color: var(--bg-button-secondary-active);
+}
+
+.form-section-buttons{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+
+.loader::before{
+    content: '';
+    display: block;
+    width: 20px;
+    height: 20px;
+
+    border: 5px solid rgb(191, 191, 191);
+    border-top-color: rgb(191, 191, 191);;
+    border-top-style: solid;
+    border-top-width: 5px;
+    border-radius: 50%;
+    border-top: 5px solid rgb(74, 74, 74);
+    -webkit-animation: spin .3s linear infinite;
+    animation: spin .3s linear infinite;
+}
+
+
+
+@-webkit-keyframes spin {
+    0% { -webkit-transform: rotate(0deg); }
+    100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
