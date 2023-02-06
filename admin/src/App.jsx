@@ -1,4 +1,4 @@
-import NavSide from "./NavSide";
+import NavSide from "./NavSide/NavSide";
 import NavTop from "./NavTop";
 
 function App() {
