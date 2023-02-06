@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { useRef } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function NavSideButton({
     className = "",
@@ -43,19 +43,29 @@ export default function NavSideButton({
         toolTip.style.top = `0px`;
     };
 
+    const navigate = useNavigate()
+
+    const handleOnClick =()=>{
+        if(to!==""){
+            navigate(to)
+        }else{
+            onClick();
+        }
+    };
+
     return (
-        <Link to={to}>
-            <div 
-                ref={el} 
-                onMouseOver={handleMouseOver} 
-                onMouseOut={handleMouseOut} 
-                onClick={onClick} 
-                className={`nav-side-button ${className}`}
-            >
-                <div>{<FontAwesomeIcon icon={icon} />}</div>
-                <div>{text}</div>
-                <div>{hasSI ? <FontAwesomeIcon icon={secondaryIcon} /> : null}</div>
-            </div>
-        </Link>
+        
+        <div 
+            ref={el} 
+            onMouseOver={handleMouseOver} 
+            onMouseOut={handleMouseOut} 
+            onClick={handleOnClick} 
+            className={`nav-side-button ${className}`}
+        >
+            <div>{<FontAwesomeIcon icon={icon} />}</div>
+            <div>{text}</div>
+            <div>{hasSI ? <FontAwesomeIcon icon={secondaryIcon} /> : null}</div>
+        </div>
+        
     )
 };

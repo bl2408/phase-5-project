@@ -340,6 +340,16 @@ button{
     background-color: var(--bg-button-secondary-active);
 }
 
+.btn.red{
+    background-color: var(--bg-button-red);
+}
+.btn.red:hover, .btn.red:focus{
+    background-color: var(--bg-button-red-hover);
+}
+.btn.red:active{
+    background-color: var(--bg-button-red-active);
+}
+
 .form-section-buttons{
     display: flex;
     justify-content: flex-end;

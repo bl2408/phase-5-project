@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './main.css'
+import './css/main.css'
 
 import { Provider as ReduxProvider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit'
@@ -10,12 +10,14 @@ import { RouterProvider } from "react-router-dom";
 import navSideSlice from './Slices/navSideSlice';
 import userSlice from './Slices/userSlice';
 import { routesList } from './pages/routesList';
+import postsSlice from './Slices/postsSlice';
 
 
 const store = configureStore({
 	reducer: {
 		navSideOpen: navSideSlice,
-		user: userSlice
+		user: userSlice,
+		posts: postsSlice
 	},
 	devTools: true,
 });

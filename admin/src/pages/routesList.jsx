@@ -1,9 +1,9 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
-import App from '../App';
-import ErrorPage from '../ErrorPages/ErrorPage';
 
-const Posts = lazy(() => import("../pages/Posts"));
+const App = lazy(() => import('../App'));
+const PostsAll = lazy(() => import("./PostsAll"));
+const ErrorPage = lazy(() => import('./ErrorPage'));
 
 const SuspenseLoader =({element})=>{
 	return (
@@ -17,17 +17,17 @@ const SuspenseLoader =({element})=>{
 export const routesList = createBrowserRouter([
 	{
 		path: "/",
-		element: <App />,
+		element: <SuspenseLoader element={<App />} />,
 		children: [
 			{
 				path: "posts/",
-				element: <SuspenseLoader element={<Posts />} />
+				element: <SuspenseLoader element={<PostsAll />} />
 			},
 			{
 				path: "posts/:id",
-				element: <SuspenseLoader element={<Posts />} />
+				element: <SuspenseLoader element={<PostsAll />} />
 			},
 		],
-		errorElement: <ErrorPage />
+		errorElement: <SuspenseLoader element={<ErrorPage />} />
 	},
 ]);
