@@ -12,6 +12,8 @@ Rails.application.routes.draw do
 
     resources :posts
 
+    get "/posts/list/status", to: "posts#status_list"
+
     resources :category, param: :slug do
       resources :posts, only: [:index, :show]
     end

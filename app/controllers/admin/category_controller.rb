@@ -2,7 +2,7 @@ class Admin::CategoryController < Admin::ApplicationController
 
     def index
         res(
-            data:Category.all,
+            data:Category.all.as_json(only: [:id, :label, :slug]),
             status: :ok
         )
     end

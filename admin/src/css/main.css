@@ -259,6 +259,8 @@ main{
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
+    min-width: 700px;
+    justify-content: center;
 }
 
 #main-centered{
@@ -272,8 +274,7 @@ main{
 
 .input-floating-label{
     position: relative;
-    font-size: 1.6rem;
-    
+    font-size: inherit;
 }
 
 .input-floating-label > input{

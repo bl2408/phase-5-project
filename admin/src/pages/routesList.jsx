@@ -1,9 +1,12 @@
 import { lazy, Suspense } from "react";
 import { createBrowserRouter } from "react-router-dom";
 
+
 const App = lazy(() => import('../App'));
 const PostsAll = lazy(() => import("./PostsAll"));
+const Post =  lazy(() => import("./Post"));
 const ErrorPage = lazy(() => import('./ErrorPage'));
+
 
 const SuspenseLoader =({element})=>{
 	return (
@@ -24,8 +27,12 @@ export const routesList = createBrowserRouter([
 				element: <SuspenseLoader element={<PostsAll />} />
 			},
 			{
-				path: "posts/:id",
-				element: <SuspenseLoader element={<h1>Hi</h1>} />
+				path: "posts/new/",
+				element: <SuspenseLoader element={<Post />} />
+			},
+			{
+				path: "posts/:id/",
+				element: <SuspenseLoader element={<Post />} />
 			},
 		],
 		errorElement: <SuspenseLoader element={<ErrorPage />} />

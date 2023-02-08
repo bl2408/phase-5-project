@@ -24,7 +24,14 @@ class Admin::PostsController < Admin::ApplicationController
     def show
         post = Post.find_by(id: params[:id])
         res(
-            data: Admin::PostAllSerializer.new(post),
+            data: Admin::PostSingleSerializer.new(post),
+            status: :ok
+        )
+    end
+
+    def status_list
+        res(
+            data: Post.statuses,
             status: :ok
         )
     end

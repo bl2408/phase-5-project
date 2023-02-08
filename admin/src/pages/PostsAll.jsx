@@ -8,7 +8,7 @@ import { displayDate } from "../fns";
 import { v4 as uuid } from "uuid"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEdit, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit, faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 export default function PostsAll(){
@@ -50,6 +50,7 @@ export default function PostsAll(){
 
     const displayPosts = posts.items?.map(post =>{
         const { id, title, status, publish_datetime, slug, category, tags } = post;
+        const linkTitle = <Link to={`/posts/${id}`}>{title}</Link>
         const cat = <Link to="/">{category.label}</Link>
         const tagsDisplay = (
             <div style={{display:"flex", gap: "6px", flexWrap:"wrap"}}>
@@ -57,7 +58,7 @@ export default function PostsAll(){
             </div>
         );
 
-        return templateRow(id, [title, displayDate(publish_datetime), cat, tagsDisplay/*controls*/]); 
+        return templateRow(id, [linkTitle, displayDate(publish_datetime), cat, tagsDisplay/*controls*/]); 
     });
 
     const handleTitlesSort =(title)=>{
@@ -71,8 +72,9 @@ export default function PostsAll(){
     };
 
     return (
-        <WindowBasic style={{width:"100%"}}>
+        <WindowBasic style={{width:"100%", maxWidth: "1200px"}}>
             <h1>Posts</h1>
+            <button onClick={()=>navigate("/posts/new")} className="btn primary"><FontAwesomeIcon icon={faPlus}/></button>
             {/* <div>Controls</div> */}
             <section className="table-posts">
                 <div className="row header">

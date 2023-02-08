@@ -1,9 +1,9 @@
 export default function InputFloatingLabel(props){
 
     return (
-        <div className="input-floating-label">
+        <div className="input-floating-label" style={props.baseStyle}>
             <input {...props} required/>
-            <span>{props.label}</span>
+            <span style={props.labelStyle}>{props.label}</span>
         </div>
     );
 
