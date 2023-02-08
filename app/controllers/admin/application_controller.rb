@@ -21,6 +21,8 @@ class Admin::ApplicationController < ApplicationController
     
     def res data:, status:, meta: nil
 
+        # puts data.size if data.kind_of?(Array)
+
         obj = {
             data: data
         }
@@ -39,5 +41,26 @@ class Admin::ApplicationController < ApplicationController
         return res_err_ua unless @user
     end
 
+    def check_queries_params forClass
 
+        params[:offset] ||= 0
+        params[:limit] ||= 10
+        params[:order] ||= ""
+        params[:order_by] ||= ""
+
+        order = 'DESC' # default
+        params[:order] = params[:order].upcase if params[:order].to_s #if string then upcase
+        order = params[:order] if params[:order] == "ASC" || params[:order] == "DESC" # set option only if asc or desc
+
+        offset = params[:offset].to_i
+
+        limit = params[:limit].to_i
+        limit = 1 if limit <= 0
+        limit = 100 if limit > 100
+
+        order_by = "id" # default
+        order_by = params[:order_by] if forClass.column_names.include? params[:order_by]
+        
+        return {order: order, order_by: order_by, limit: limit, offset: offset}
+    end
 end

@@ -55,8 +55,8 @@ export default function PostsAll(){
             {/* <div>Controls</div> */}
             <section className="table-posts">
                 <div className="row header">
-                    <div>Date/Time</div>
                     <div>Title</div>
+                    <div>Date/Time</div>
                     <div>Status</div>
                     <div>Slug</div>
                 </div>                
