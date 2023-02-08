@@ -25,7 +25,7 @@ export const routesList = createBrowserRouter([
 			},
 			{
 				path: "posts/:id",
-				element: <SuspenseLoader element={<PostsAll />} />
+				element: <SuspenseLoader element={<h1>Hi</h1>} />
 			},
 		],
 		errorElement: <SuspenseLoader element={<ErrorPage />} />

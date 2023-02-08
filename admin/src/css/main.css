@@ -87,8 +87,12 @@ body{
 h1{ color: var(--font-col-heading-primary); }
 h2{ color: var(--font-col-heading-secondary); }
 
-a{
+a, a:active, a:visited{
+    color: blue;
     text-decoration: none;
+}
+a:hover{
+    color: hsl(240, 100%, 30%);
 }
 
 body.open {
@@ -316,6 +320,7 @@ button{
     font-family: inherit;
     outline: 0;
     border: 0;
+    cursor: pointer;
 }
 
 .btn{
@@ -361,6 +366,12 @@ button{
 }
 .btn.red:active, .btn-sml.red:active{
     background-color: var(--bg-button-red-active);
+}
+.tag-link::before{
+    content: "#";
+}
+.tag-link{
+    font-size: 1.4rem;
 }
 
 .form-section-buttons{

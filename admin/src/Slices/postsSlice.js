@@ -2,18 +2,18 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
 	status: 'idle',
-	items: []
+	items: [],
+	meta: {}
 };
 
 //logout
-export const getPostsAll = createAsyncThunk('posts/all', async (_, { rejectWithValue }) => {
-	const response = await fetch("/api/admin/posts", {
+export const getPostsAll = createAsyncThunk('posts/all', async (paramsObj, { rejectWithValue }) => {
+	const response = await fetch(`/api/admin/posts${!!paramsObj ? `?${paramsObj}` : ""}`, {
 		method: "GET",
 		headers: {
 			"Content-Type": "application/json"
 		},
 	});
-
 	const data = await response.json();
 	
 	if (!response.ok) {
@@ -35,6 +35,7 @@ export const postsSlice = createSlice({
 		}),
 		builder.addCase(getPostsAll.fulfilled, (state, action) => {
 			state.items = action.payload.data,
+			state.meta = action.payload.meta,
 			state.status = 'idle'
 		})
 	},
