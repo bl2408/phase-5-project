@@ -13,6 +13,7 @@
     border-bottom: solid 1px var(--border-col-window);
     align-items: center;
 }
+
 .table-posts > .row.header:hover{
     background-color: unset;
 }

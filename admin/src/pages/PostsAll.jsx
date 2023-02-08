@@ -5,6 +5,9 @@ import { getPostsAll } from "../Slices/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { displayDate } from "../fns";
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faEdit, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+
 export default function PostsAll(){
 
     const posts = useSelector(state=>state.posts)
@@ -35,13 +38,14 @@ export default function PostsAll(){
 
     const displayPosts = posts.items?.map(post =>{
         const { id, title, status, publish_datetime, slug } = post;
-        const controls = (
-            <>
-                <button className="btn secondary">Edit</button>
-                <button className="btn red">Delete</button>
-            </>
-        )
-        return templateRow(id, [displayDate(publish_datetime), title, status, controls]); 
+        // const controls = (
+        //     <div className="controls">
+        //         <button className="btn-sml secondary"><FontAwesomeIcon icon={faInfoCircle}/></button>
+        //         <button className="btn-sml secondary"><FontAwesomeIcon icon={faEdit}/></button>
+        //         <button className="btn-sml red"><FontAwesomeIcon icon={faTrash} /></button>
+        //     </div>
+        // )
+        return templateRow(id, [title, displayDate(publish_datetime), status, slug/*controls*/]); 
     });
 
 
@@ -54,7 +58,7 @@ export default function PostsAll(){
                     <div>Date/Time</div>
                     <div>Title</div>
                     <div>Status</div>
-                    <div>Controls</div>
+                    <div>Slug</div>
                 </div>                
                 {displayPosts}
                 <div className="bottom">

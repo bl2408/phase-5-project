@@ -313,40 +313,53 @@ input:focus{
 
 button{
     color: var(--font-col-button);
-    font-size: 1.6rem;
-    padding: 10px 20px;
     font-family: inherit;
     outline: 0;
     border: 0;
 }
 
-.btn.primary{
+.btn{
+    font-size: 1.6rem;
+    padding: 10px 20px;
+}
+
+.btn-sml{
+    font-size: 1.4rem;
+    padding: 8px 10px;
+}
+
+
+
+.btn.primary, .btn-sml.primary{
     background-color: var(--bg-button-primary);
 }
-.btn.primary:hover, .btn.primary:focus{
+.btn.primary:hover, .btn.primary:focus,
+.btn-sml.primary:hover, .btn-sml.primary:focus{
     background-color: var(--bg-button-primary-hover);
 }
-.btn.primary:active{
+.btn.primary:active, .btn-sml.primary:active{
     background-color: var(--bg-button-primary-active);
 }
 
-.btn.secondary{
+.btn.secondary, .btn-sml.secondary{
     background-color: var(--bg-button-secondary);
 }
-.btn.secondary:hover, .btn.secondary:focus{
+.btn.secondary:hover, .btn.secondary:focus,
+.btn-sml.secondary:hover, .btn-sml.secondary:focus{
     background-color: var(--bg-button-secondary-hover);
 }
-.btn.secondary:active{
+.btn.secondary:active, .btn-sml.secondary:active{
     background-color: var(--bg-button-secondary-active);
 }
 
-.btn.red{
+.btn.red, .btn-sml.red{
     background-color: var(--bg-button-red);
 }
-.btn.red:hover, .btn.red:focus{
+.btn.red:hover, .btn.red:focus,
+.btn-sml.red:hover, .btn-sml.red:focus{
     background-color: var(--bg-button-red-hover);
 }
-.btn.red:active{
+.btn.red:active, .btn-sml.red:active{
     background-color: var(--bg-button-red-active);
 }
 
