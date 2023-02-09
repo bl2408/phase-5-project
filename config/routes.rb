@@ -14,7 +14,7 @@ Rails.application.routes.draw do
     # resources :collections, param: :slug 
 
     resources :collections, param: :slug do
-      resources :files, controller: :stored_files, only: [ :index ]
+      resources :files, controller: :stored_files, only: [ :index, :show]
     end
 
     get "/posts/list/status", to: "posts#status_list"

@@ -59,6 +59,13 @@ collection1 = Collection.create(
     description:"Generic collection for files.",
     tags: [tag2, tag1],
 )
+tag3 = Tag.create(label: "180sx", slug:"180sx", description: "180sx car")
+collection2 = Collection.create(
+    label: "Cars", 
+    slug: "cars", 
+    description:"Car photos",
+    tags: [tag3],
+)
 
 # Stored File
 file1 = StoredFile.create(
@@ -68,6 +75,23 @@ file1 = StoredFile.create(
 )
 
 file1.file.attach(io: File.open('storage/seed_files/1.jpg'), filename: '1.jpg')
+
+file2 = StoredFile.create(
+    alt_text: "180sx", 
+    tags: [tag3],
+    collection: collection2
+)
+
+file2.file.attach(io: File.open('storage/seed_files/car1.JPG'), filename: 'car1.JPG')
+
+
+file3 = StoredFile.create(
+    alt_text: "180sx", 
+    tags: [tag3],
+    collection: collection2
+)
+
+file3.file.attach(io: File.open('storage/seed_files/car2.jpg'), filename: 'car2.jpg')
 
 
 puts "SEEDING COMPLETE!"
