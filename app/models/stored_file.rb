@@ -12,6 +12,14 @@ class StoredFile < ApplicationRecord
     file.url
   end
 
+  def label
+    file.filename
+  end
+  
+  def type
+    file.content_type
+  end
+
   private
 
   def purge_file

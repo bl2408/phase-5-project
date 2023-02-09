@@ -11,8 +11,14 @@ Rails.application.routes.draw do
     get "/valid", to: "auth#render_user"
 
     resources :posts
+    # resources :collections, param: :slug 
+
+    resources :collections, param: :slug do
+      resources :files, controller: :stored_files, only: [ :index ]
+    end
 
     get "/posts/list/status", to: "posts#status_list"
+
 
     resources :category, param: :slug do
       resources :posts, only: [:index, :show]

@@ -383,6 +383,40 @@ button{
 }
 
 
+.collections-grid{
+    width: 100%;
+    max-width: 1200px;
+}
+.collection-button{
+    background-color: transparent;
+    width: 130px;
+    height: 130px;
+    color: var(--font-col-secondary);
+    box-sizing: border-box;
+    border: solid 1px transparent;
+}
+.collection-button > .text-area{
+    height: 30px;
+    box-sizing: border-box;
+}
+.collection-button > .icon-area{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 8rem;
+    width: 100%;
+    height: 90px;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+}
+.collection-button img{
+    max-width: 100%;
+}
+
+.collection-button:hover{
+    border-color:  var(--font-col-secondary);
+}
+
 .loader::before{
     content: '';
     display: block;
