@@ -29,11 +29,35 @@ class Admin::PostsController < Admin::ApplicationController
         )
     end
 
+    def create
+        post = @user.posts.create!(post_params)
+        res(
+            data: Admin::PostSingleSerializer.new(post),
+            status: :ok
+        )
+    end
+
+    def update
+        post = Post.find_by(id: params[:id])
+        post.update!(post_params)
+        res(
+            data: Admin::PostSingleSerializer.new(post),
+            status: :ok
+        )
+    end
+    
+
     def status_list
         res(
             data: Post.statuses,
             status: :ok
         )
+    end
+
+    private 
+
+    def post_params
+        params.require(:post).permit(:title, :content, :slug, :publish_datetime, :status, :category_id)
     end
 
 end
