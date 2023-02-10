@@ -1,7 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { useRef } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { toggleMenu } from '../Slices/navSideSlice';
 
 export default function NavSideButton({
     className = "",
@@ -15,6 +17,9 @@ export default function NavSideButton({
 }) {
 
     const el = useRef()
+
+    const navIsOpen = useSelector(state=>state.navSideOpen.value)
+    const dispatch = useDispatch();
 
     const handleMouseOver = (e) => {
         e.stopPropagation()
@@ -48,9 +53,18 @@ export default function NavSideButton({
     const handleOnClick =()=>{
         if(to!==""){
             navigate(to)
+
+            const navSide = document.querySelector("#nav-side")
+            const is100 = window.getComputedStyle(navSide).getPropertyValue('--width-nav-side-current');
+            if(parseInt(is100)===100){
+                dispatch(toggleMenu())
+            }
+            
         }else{
             onClick();
         }
+
+        
     };
 
     return (

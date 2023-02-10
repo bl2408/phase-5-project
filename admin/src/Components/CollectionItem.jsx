@@ -1,43 +1,45 @@
-import { faFile, faFolderBlank, faImage } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-
-export default function CollectionItem({label, handleItemClick, slug, display_type, url, icon, type}){
+import { useEffect, useRef } from "react";
 
 
-    const handleClick=()=>{
-        
-        if(display_type==="collection"){
-            handleItemClick(slug)
-        }
+export default function CollectionItem({
 
+    isChecked=false,
+    icon=null,
+    label=null,
+    onClick=()=>{},
+    onCheckClick=null,
+
+}){
+
+    const handleClick = e =>{
+        e.stopPropagation();
+        onClick();
+    };
+
+    const handleCheckClick= e =>{
+        e.stopPropagation();
+        onCheckClick()
     };
     
-    const displayIcon = ()=>{
-
-        if(display_type==="collection" ){
-            return <FontAwesomeIcon icon={icon ?? faFolderBlank} />
-        }else{
-            if(type.includes("image")){
-                return <img src={url} loading="lazy"/>
-            }
-        }
-
-    };
-
+    const checkboxRef = useRef()
+    useEffect(()=>{
+        checkboxRef.current.checked = isChecked;
+        return ()=>{};
+    },[]);
 
     return (
         <button onClick={handleClick} type="button" className="collection-button">
+            {onCheckClick ? <input ref={checkboxRef} onClick={handleCheckClick} type="checkbox"/> : null}
+            <div className="highlight-area">
+
+            </div>
             <div className="icon-area">
-                {
-                    displayIcon()
-                }
+                {icon}
             </div>
             <div className="text-area">
                 {label} 
             </div>
-
         </button>
-
     );
 
 }

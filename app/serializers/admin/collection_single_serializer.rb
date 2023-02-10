@@ -1,6 +1,6 @@
 class Admin::CollectionSingleSerializer < ActiveModel::Serializer
   has_many :tags, serializer: Admin::TagsSerializer
-  attributes :label, :description, :slug, :file_count, :files, :display_type
+  attributes :id, :label, :description, :slug, :file_count, :files, :display_type
 
   def display_type
     "collection"

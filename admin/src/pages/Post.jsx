@@ -198,7 +198,7 @@ export default function Post() {
 
 
     return (
-        <form ref={form} onSubmit={handleSubmit} className="grid-post">
+        <form ref={form} onSubmit={handleSubmit} className="grid-2">
             <WindowBasic>
                 <input type="text" placeholder="Title" name="title" style={{ fontSize: "3rem" }} />
                 <button type="button" onClick={addFormElement} className="btn primary"><FontAwesomeIcon icon={faPlus} /></button>

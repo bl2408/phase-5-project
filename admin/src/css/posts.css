@@ -36,13 +36,3 @@
 .table-posts > .bottom > :last-child{
     align-self: center;
 }
-
-
-.grid-post{
-    width: 100%;
-    max-width: 1200px;
-    display: grid;
-    /* grid-template-columns: minmax(500px, auto) 250px; */
-    grid-template-columns: auto 300px;
-    gap: 10px;
-}
