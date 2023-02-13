@@ -4,7 +4,12 @@ import { useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import CollectionItem from "./CollectionItem";
 
-export default function CollectionView({parentListState, parentViewState}){
+export default function CollectionView({
+    selectableFolders=true,
+    createNewCollection =true, 
+    parentListState, 
+    parentViewState
+}){
     
     const BASE_PATH = "/api/admin/collections"
     const [ currentPath, setCurrentPath ]                   = useState(BASE_PATH)
@@ -59,7 +64,8 @@ export default function CollectionView({parentListState, parentViewState}){
             if(col.display_type==="collection"){   
                 col.onDblClick =()=>setCurrentPath(path=>`${BASE_PATH}/${col.slug}/files`);
                 col.onClick = {slug: col.slug};
-                col.icon = <FontAwesomeIcon icon={faFolder} />;   
+                col.icon = <FontAwesomeIcon icon={faFolder} />;
+                col.selectable = selectableFolders  
             }else if(col.display_type==="file"){
                 col.onDblClick =()=>console.log(uniqId);
                 col.icon = <img src={col.url} loading="lazy"/>;
@@ -68,6 +74,7 @@ export default function CollectionView({parentListState, parentViewState}){
             return(
                 <CollectionItem
                     key={uuid()}
+                    selectable={col.selectable}
                     isChecked={isChecked(uniqId)}
                     icon={col.icon}
                     label={col.label}
@@ -86,7 +93,11 @@ export default function CollectionView({parentListState, parentViewState}){
                 <input type="search" name="collection-search" style={{display:"inline"}}/>
                 <button type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faSearch} /></button>
                 <button onClick={()=>setCurrentPath(path=>BASE_PATH)} type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faHome} /></button>
-                <button type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faFolderPlus} /></button>
+                {   
+                    createNewCollection
+                    ? <button type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faFolderPlus} /></button>
+                    : null
+                }
                 <button type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faCheckSquare} /></button>
             </div>
             <div className="contents">

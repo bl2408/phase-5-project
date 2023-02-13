@@ -1,37 +1,38 @@
 import { faArrowDownLong, faArrowUpLong, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useRef } from "react";
-// import { v1 as uuid } from "uuid";
+import { useEffect, useRef, useState } from "react";
 
-export default function PostTextArea({id, t="text", bn="", v="", up, down, remove}){
+import CollectionView from "../Components/CollectionView"
+import CollectionSelectedList from "../Components/CollectionSelectedList"
 
-    const hiddenRef = useRef()
+export default function PostCollectionArea({id, t="collection", bn="", v=[], up, down, remove}){
+
+    const [collectionSelected, setCollectionSelected]   = useState([])
+    const [viewSelected, setViewSelected]               = useState([])
     const inputRef = useRef();
-    const textareaRef = useRef();
+    const hiddenRef = useRef();
 
     const obj = {t,bn,v}
     useEffect(()=>{
-
         inputRef.current.value = bn
-        textareaRef.current.value = v
+        setCollectionSelected(state=>v)
         hiddenRef.current.value = JSON.stringify(obj)
-
         return ()=>{};
     },[]);
-  
 
-    const textAreaUpdateHidden = (e)=>{
-        const txtArea = e.target
-        obj.v = txtArea.value
-        hiddenRef.current.value = JSON.stringify(obj)
-    };
     const inputUpdateHidden = (e)=>{
         const input = e.target
         obj.bn = input.value
         hiddenRef.current.value = JSON.stringify(obj)
     };
 
-    return(
+    useEffect(()=>{
+        console.log(collectionSelected)
+        obj.v = collectionSelected
+        hiddenRef.current.value = JSON.stringify(obj)
+    },[collectionSelected]);
+
+    return (
         <div className="block-area">
             <div className="controls">
                 <input ref={inputRef} type="text" placeholder="Block name" onChange={inputUpdateHidden} required/>
@@ -39,9 +40,21 @@ export default function PostTextArea({id, t="text", bn="", v="", up, down, remov
                 <button onClick={()=>down(id)} type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faArrowDownLong}/></button>
                 <button onClick={()=>remove(id)} type="button" className="btn-sml red"><FontAwesomeIcon icon={faX}/></button>  
             </div>
-            
-            <textarea ref={textareaRef} onChange={textAreaUpdateHidden}></textarea>
-            
+            {
+                collectionSelected.length > 0
+                    ? <CollectionSelectedList
+                        showHeading={false}
+                        parentListState={[collectionSelected, setCollectionSelected]} 
+                    />
+                    : null
+            }            
+            <CollectionView 
+                selectableFolders={false}
+                createNewCollection={false}
+                parentListState={[collectionSelected, setCollectionSelected]}
+                parentViewState={[viewSelected, setViewSelected]}
+            />
+
             <input 
                 ref={hiddenRef} 
                 data-is-block="true"

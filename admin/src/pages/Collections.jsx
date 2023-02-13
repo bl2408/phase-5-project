@@ -22,7 +22,7 @@ export default function Collections() {
                 />
             </WindowBasic>
 
-            <WindowBasic>
+            <WindowBasic className="collection-side-panel">
 
                 {
                     viewSelected?.id 

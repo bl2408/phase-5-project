@@ -31,16 +31,13 @@
     opacity: 0.5;
 }
 
-.collection-sl{
+.collection-side-panel .collection-sl{
     margin-left: 5px;
     margin-bottom: 10px;
 }
 
-.collection-sl-item:hover{
-    background-color: rgba(0, 0, 0, 0.05);
-}
 
-.collection-sl-item{
+.collection-side-panel .collection-sl-item{
     display: grid;
     grid-template-columns: 25px auto 25px;
     padding: 2px;
@@ -49,12 +46,4 @@
     color: var(--font-col-primary)
 }
 
-.collection-sl-item > :last-child{
-    font-size: 1rem;
-    
-}
 
-.collection-sl-item button{
-    background-color: transparent;
-    color: var(--font-col-primary)
-}

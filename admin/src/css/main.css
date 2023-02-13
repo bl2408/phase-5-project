@@ -392,13 +392,14 @@ button{
 .collection-viewer{
     width: 100%;
 }
-.collection-viewer > .controls {
+
+.collection-viewer > .controls, .block-area > .controls {
     display: flex;
     gap: 5px;
-    /* border: solid 1px var(--bg-nav-side-header); */
     padding: 10px;
     box-sizing: border-box;
 }
+
 .collection-viewer > .contents{
     display: flex;
     flex-wrap: wrap;
@@ -455,8 +456,45 @@ button{
     object-fit: cover;
 }
 
+.collection-sl-item button{
+    background-color: transparent;
+    color: var(--font-col-primary)
+}
+.collection-sl-item > :last-child{
+    font-size: 1rem;   
+}
+
+.collection-sl-item:hover{
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
 .collection-button:hover{
     border-color:  var(--font-col-secondary);
+}
+.block-area{
+    border: solid 1px var(--font-col-nav-side-active);
+}
+
+.block-area textarea{
+    width: 100%;
+    min-height: 50px;
+    padding: 20px;
+    box-sizing: border-box;
+    outline: 0;
+    border: 0;
+    resize: vertical;
+    font-size: inherit;
+}
+
+.block-area > .controls{
+    justify-content: flex-end;
+    background-color: var(--font-col-nav-side-active);
+}
+
+.display-content-blocks{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
 }
 
 .loader::before{

@@ -5,28 +5,39 @@ import WindowBasic from "../Windows/WindowBasic";
 import { useSelector } from "react-redux";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
-import { Suspense, useEffect, useRef, useState } from "react";
+import { faPlus, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { useEffect, useRef, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 import { lazy } from "react";
 import Tag from "../Components/Tag";
+import SuspenseLoader from "../Components/SuspenseLoader";
 
 const PostTextArea = lazy(() => import("../Components/PostTextArea"))
+const PostCollectionArea = lazy(() => import("../Components/PostCollectionArea"))
 
 export default function Post() {
 
-    const SuspensePostTextArea = (props = {}) => {
+    const SuspenseBlockObj = (props = {}) => {
         const compId = uuid();
         props.id = compId;
         props.up = (id)=>moveFormElement(id, true);
         props.down = (id)=>moveFormElement(id);
         props.remove = removeFormElement;
+        let component = null;
+        switch(props.t){
+            case "text":
+                component = <PostTextArea {...props} />
+                break;
+            case "collection":
+                component = <PostCollectionArea {...props} />
+                break
+        }
         return {
             id: compId,
-            comp: <Suspense key={uuid()} fallback={<div className="loader"></div>}>
-                <PostTextArea {...props} />
-            </Suspense>
+            comp: <SuspenseLoader key={uuid()}>
+                    {component}
+                </SuspenseLoader>
         }
     };
 
@@ -93,13 +104,24 @@ export default function Post() {
             try {
                 const a = postState?.content ? JSON.parse(postState?.content) : [];
                 if (a.length > 0) {
-                    setContent(state => a.map(a => SuspensePostTextArea({ ...a })))
+                    setContent(state => a.map(a => {
+
+                        switch(a.t){
+                            case "text":
+                                return SuspenseBlockObj({ ...a })
+                            case "collection":
+                                return SuspenseBlockObj({ ...a })
+                            default:
+                                return
+                        }
+
+                    }))
                 }
             } catch (err) {
                 console.log(err);
 
                 if (postState?.content?.length > 0) {
-                    setContent(state => [SuspensePostTextArea({
+                    setContent(state => [SuspenseBlockObj({
                         t: "text",
                         bn: "Unknown",
                         v: `Record contains invalid json\n\n "${postState.content}"`
@@ -166,9 +188,9 @@ export default function Post() {
 
     };
 
-    const addFormElement = () => {
+    const addFormElement = (type) => {
         setContent(state => [...state,
-            SuspensePostTextArea()
+            SuspenseBlockObj({t: type})
         ]);
     };
 
@@ -202,8 +224,11 @@ export default function Post() {
         <form ref={form} onSubmit={handleSubmit} className="grid-2">
             <WindowBasic>
                 <input type="text" placeholder="Title" name="title" style={{ fontSize: "3rem" }} />
-                <button type="button" onClick={addFormElement} className="btn primary"><FontAwesomeIcon icon={faPlus} /></button>
-                {content?.map(cont => cont.comp)}
+                <button type="button" onClick={()=>addFormElement("text")} className="btn primary"><FontAwesomeIcon icon={faPlus} /></button>
+                <button type="button" onClick={()=>addFormElement("collection")} className="btn primary"><FontAwesomeIcon icon={faPlusSquare} /></button>
+                <div className="display-content-blocks">
+                    {content?.map(cont => cont.comp)}
+                </div>
             </WindowBasic>
             <WindowBasic>
                 <section>

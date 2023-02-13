@@ -4,7 +4,10 @@ import { faFile, faFolder, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 
-export default function collectionSelectedList({parentListState}){
+export default function collectionSelectedList({
+    showHeading = true,
+    parentListState
+}){
 
     const [ collectionSelected, setCollectionSelected ]     = parentListState;
 
@@ -27,7 +30,7 @@ export default function collectionSelectedList({parentListState}){
     return (
 
         <>
-            <h3>Selections</h3>
+            {showHeading ? <h3>Selections</h3> : null}
             <div className="collection-sl">
                 {
                     sortedList.filter(item=>item.display_type === "collection").map(item=><CollectionSlItem key={uuid()} {...item} onRemove={handleRemoveSelectedItem} />)

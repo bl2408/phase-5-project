@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 
 export default function CollectionItem({
 
+    selectable = true,
     isChecked = false,
     icon = null,
     label = null,
@@ -14,7 +15,10 @@ export default function CollectionItem({
     const clicks = useRef(0);
     const checkboxRef = useRef();
     useEffect(() => {
-        checkboxRef.current.checked = isChecked;
+        if(selectable){
+            checkboxRef.current.checked = isChecked;
+        }
+        
         return () => { };
     }, []);
 
@@ -32,19 +36,15 @@ export default function CollectionItem({
         }, 200);
     }
 
-
-    // onClick();
-
-
-const handleCheckClick = e => {
-    e.stopPropagation();
-    onCheckClick()
-};
+    const handleCheckClick = e => {
+        e.stopPropagation();
+        onCheckClick()
+    };
 
 
 return (
     <button onClick={handleClick} type="button" className="collection-button">
-        {onCheckClick ? <input ref={checkboxRef} onClick={handleCheckClick} type="checkbox" /> : null}
+        {selectable && onCheckClick ? <input ref={checkboxRef} onClick={handleCheckClick} type="checkbox" /> : null}
         <div className="highlight-area">
 
         </div>

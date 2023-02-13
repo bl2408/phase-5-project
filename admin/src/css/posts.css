@@ -36,3 +36,21 @@
 .table-posts > .bottom > :last-child{
     align-self: center;
 }
+
+
+.block-area .collection-sl{
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.block-area .collection-sl-item{
+    display: flex;
+    gap: 3px;
+    width: max-content;
+    text-align: center;
+    padding: 5px;
+    box-sizing: border-box;
+}
+
