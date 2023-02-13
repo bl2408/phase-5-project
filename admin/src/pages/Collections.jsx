@@ -1,23 +1,49 @@
-import { useState } from "react";
+import { lazy, useState } from "react";
 import CollectionView from "../Components/CollectionView";
 import WindowBasic from "../Windows/WindowBasic";
+import SuspenseLoader from "../Components/SuspenseLoader";
 
-export default function Collections(){
+import "../css/collection.css"
+const CollectionSelectedList = lazy(()=>import("../Components/CollectionSelectedList"))
+const CollectionViewSelected = lazy(()=>import("../Components/CollectionViewSelected"))
 
-    
+export default function Collections() {
+
+    const [ collectionSelected, setCollectionSelected ] = useState([])
+    const [ viewSelected, setViewSelected ] = useState({})
 
     return (
         <div className="grid-2">
             <WindowBasic >
-                <h1>Collections</h1>  
+                <h1>Collections</h1>
                 <CollectionView 
-                    // collectionSelected={collectionSelected} 
-                    // setCollectionSelected={setCollectionSelected}
-                />              
+                    parentListState={[collectionSelected, setCollectionSelected]}
+                    parentViewState={[viewSelected, setViewSelected]}
+                />
             </WindowBasic>
 
             <WindowBasic>
-                {/* {collectionSelected?.map(cs => <div key={cs.uniqId}>{cs.label}</div>)} */}
+
+                {
+                    viewSelected?.id 
+                        ? <SuspenseLoader>
+                            <CollectionViewSelected 
+                                parentViewState={viewSelected}
+                            />
+                        </SuspenseLoader>
+                        : null
+                }
+
+                {
+                    collectionSelected.length > 0 
+                        ? <SuspenseLoader>
+                            <CollectionSelectedList 
+                                parentListState={[collectionSelected, setCollectionSelected]} 
+                            />
+                        </SuspenseLoader>
+                        : null
+                }
+
             </WindowBasic>
         </div>
 
@@ -25,36 +51,3 @@ export default function Collections(){
 
 }
 
-
-
-
-
-
-
-
-// import { useState } from "react";
-// import CollectionView from "../Components/CollectionView";
-// import WindowBasic from "../Windows/WindowBasic";
-
-// export default function Collections(){
-
-//     const [selectedItems, setSelectedItems ] = useState([]);
-
-//     return (
-//         <div className="grid-2">
-//             <WindowBasic >
-//                 <h1>Collections</h1>
-//                 <CollectionView 
-//                     setSelectedItems={setSelectedItems}
-//                     selectedItems={selectedItems} 
-//                 />
-                
-//             </WindowBasic>
-//             <WindowBasic>
-//                 {selectedItems.map(item=><div key={item.id}>{item.id} - {item.label}</div>)}
-//             </WindowBasic>
-//         </div>
-
-//     );
-
-// }

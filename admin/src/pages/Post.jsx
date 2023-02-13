@@ -10,6 +10,7 @@ import { Suspense, useEffect, useRef, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 import { lazy } from "react";
+import Tag from "../Components/Tag";
 
 const PostTextArea = lazy(() => import("../Components/PostTextArea"))
 
@@ -232,7 +233,7 @@ export default function Post() {
                 <section>
                     <h2>Tags</h2>
                     <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                        {postState?.tags?.map(tag => <Link className="tag-link" to="/" key={uuid()}>{tag.label}</Link>)}
+                        {postState?.tags?.map(tag =><Tag key={uuid()} to="/" {...tag}/>)}
                     </div>
                 </section>
             </WindowBasic>

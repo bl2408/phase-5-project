@@ -11,6 +11,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faEdit, faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
+import Tag from "../Components/Tag";
+
 export default function PostsAll(){
 
     const posts = useSelector(state=>state.posts)
@@ -54,7 +56,7 @@ export default function PostsAll(){
         const cat = <Link to="/">{category.label}</Link>
         const tagsDisplay = (
             <div style={{display:"flex", gap: "6px", flexWrap:"wrap"}}>
-                {tags.map(tag=><Link className="tag-link" to="/" key={uuid()}>{tag.label}</Link>)}
+                {tags.map(tag=><Tag key={uuid()} to="/" {...tag}/>)}
             </div>
         );
 

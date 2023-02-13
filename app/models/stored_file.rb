@@ -8,10 +8,6 @@ class StoredFile < ApplicationRecord
 
   has_one_attached :file
 
-  def url
-    file.url
-  end
-
   def label
     file.filename
   end

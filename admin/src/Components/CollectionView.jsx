@@ -1,16 +1,17 @@
-import { faCheck, faCheckSquare, faFile, faFolder, faFolderPlus, faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { faCheckSquare, faFolder, faFolderPlus, faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo, useState } from "react";
 import { v4 as uuid } from "uuid";
 import CollectionItem from "./CollectionItem";
 
-export default function CollectionView(){
+export default function CollectionView({parentListState, parentViewState}){
     
     const BASE_PATH = "/api/admin/collections"
-    const [currentPath, setCurrentPath ] = useState(BASE_PATH)
-    const [ collection, setCollection ] = useState([])
-    const [ collectionSelected, setCollectionSelected ] = useState([])
-    
+    const [ currentPath, setCurrentPath ]                   = useState(BASE_PATH)
+    const [ collection, setCollection ]                     = useState([])
+    const [ collectionSelected, setCollectionSelected ]     = parentListState;
+    const [ viewSelected, setViewSelected ]                 = parentViewState;
+
     const loadData = async (url)=>{
         try{
             const response = await fetch(url);
@@ -32,49 +33,19 @@ export default function CollectionView(){
         loadData(currentPath)
     },[currentPath])
 
-    const handleOnSelect=(obj)=>{
+    const handleOnCheckSelect=(obj)=>{
         if(isChecked(obj.uniqId)){
-            setCollectionSelected(state=>state.filter(cs=>(
-                cs.uniqId !== obj.uniqId
-            )))
+            setCollectionSelected(state=>state.filter(cs=>cs.uniqId !== obj.uniqId))
         }else{
             setCollectionSelected(state=>[...state, obj])
         }
     };
-
     const isChecked = (uniqId)=> !!collectionSelected.find(cs=>cs.uniqId === uniqId)
 
-    // const displayCollection = ()=>{
-    //     if(collection.length <= 0){ return; } 
+    const handleOnSelect =(obj)=>{
+        setViewSelected(state=>obj);
 
-    //     return collection.map(col=>{
-            
-    //         const { id, label, display_type } = col;
-    //         const uniqId = `${display_type}-${id}-${label}`
-
-
-    //         if(col.display_type==="collection"){   
-    //             col.onClick =()=>setCurrentPath(path=>`${BASE_PATH}/${col.slug}/files`);
-    //             col.icon = <FontAwesomeIcon icon={faFolder} />;   
-    //         }else if(col.display_type==="file"){
-    //             col.onClick =()=>()=>console.log(col.label);
-    //             // col.icon = faFile;
-    //             col.icon = <img src={col.url} loading="lazy"/>;
-    //         }
-
-    //         return(
-    //             <CollectionItem
-    //                 key={uuid()}
-    //                 isChecked={isChecked(uniqId)}
-    //                 icon={col.icon}
-    //                 label={col.label}
-    //                 onClick={col.onClick}
-    //                 onCheckClick={()=>handleOnSelect({uniqId, id, label, display_type})}
-    //             />
-    //         )
-
-    //     })
-    // };
+    };
 
     const displayCollection = useMemo(()=>{
         if(collection.length <= 0){ return; } 
@@ -86,11 +57,11 @@ export default function CollectionView(){
 
 
             if(col.display_type==="collection"){   
-                col.onClick =()=>setCurrentPath(path=>`${BASE_PATH}/${col.slug}/files`);
+                col.onDblClick =()=>setCurrentPath(path=>`${BASE_PATH}/${col.slug}/files`);
+                col.onClick = {slug: col.slug};
                 col.icon = <FontAwesomeIcon icon={faFolder} />;   
             }else if(col.display_type==="file"){
-                col.onClick =()=>()=>console.log(col.label);
-                // col.icon = faFile;
+                col.onDblClick =()=>console.log(uniqId);
                 col.icon = <img src={col.url} loading="lazy"/>;
             }
 
@@ -100,13 +71,14 @@ export default function CollectionView(){
                     isChecked={isChecked(uniqId)}
                     icon={col.icon}
                     label={col.label}
-                    onClick={col.onClick}
-                    onCheckClick={()=>handleOnSelect({uniqId, id, label, display_type})}
+                    onClick={()=>handleOnSelect({id: col.id, display_type: col.display_type, ...col.onClick})}
+                    onDblClick={col.onDblClick}
+                    onCheckClick={()=>handleOnCheckSelect({uniqId, id, label, display_type})}
                 />
             )
 
         })
-    }, [collection])
+    },[collection, collectionSelected])
 
     return (
         <div className="collection-viewer">

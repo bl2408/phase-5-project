@@ -413,6 +413,9 @@ button{
     border: solid 1px transparent;
     position: relative;
 }
+.collection-button:focus{
+    background-color: rgba(93, 169, 255, 0.20);
+}
 
 .collection-button input[type="checkbox"]{
     position: absolute;

@@ -13,6 +13,8 @@ Rails.application.routes.draw do
     resources :posts
     # resources :collections, param: :slug 
 
+    resources :files, controller: :stored_files, only: [ :show]
+
     resources :collections, param: :slug do
       resources :files, controller: :stored_files, only: [ :index, :show]
     end

@@ -6,18 +6,20 @@ class Admin::StoredFilesController <  Admin::ApplicationController
         files = files.where(collection: Collection.find_by(slug: params[:collection_slug])) if params[:collection_slug]
 
         res(
-            data: files.map { |file| Admin::StoredFileSerializer.new(file) },
+            data: files.map { |file| Admin::StoredFileAllSerializer.new(file) },
             status: :ok,
         )
     end
 
     def show
         
-        file = StoredFile.find_by(id: params[:id])
-        file = file.where(collection: params[:collection_slug]) if params[:collection_slug]  
+        file = StoredFile.where(id: params[:id])
+        file = file.where(collection: Collection.find_by(slug: params[:collection_slug])) if params[:collection_slug]
+        file = file.first
 
         res(
-            data: Admin::StoredFileSerializer.new(file),
+            # data: file,
+            data: file.nil? ? nil : Admin::StoredFileSingleSerializer.new(file),
             status: :ok,
         )
     end
