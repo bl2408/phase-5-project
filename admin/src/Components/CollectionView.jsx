@@ -90,7 +90,7 @@ export default function CollectionView({
     return (
         <div className="collection-viewer">
             <div className="controls">
-                <input type="search" name="collection-search" style={{display:"inline"}}/>
+                <input placeholder="Search" type="search" name="collection-search" style={{display:"inline"}}/>
                 <button type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faSearch} /></button>
                 <button onClick={()=>setCurrentPath(path=>BASE_PATH)} type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faHome} /></button>
                 {   

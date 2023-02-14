@@ -478,6 +478,7 @@ button{
 .block-area textarea{
     width: 100%;
     min-height: 50px;
+    height: max-content;
     padding: 20px;
     box-sizing: border-box;
     outline: 0;
@@ -495,6 +496,21 @@ button{
     display: flex;
     flex-direction: column;
     gap: 30px;
+}
+
+.controls-browse{
+    width: 100%;
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.controls-browse button{
+    max-width: 200px;
+    max-height: 60px;
+    width: 50%;
+    height: 50%;
 }
 
 .loader::before{

@@ -1,12 +1,15 @@
 import { faArrowDownLong, faArrowUpLong, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useRef, useState } from "react";
+import { lazy, useEffect, useRef, useState } from "react";
 
 import CollectionView from "../Components/CollectionView"
-import CollectionSelectedList from "../Components/CollectionSelectedList"
+import SuspenseLoader from "../Components/SuspenseLoader"
+
+const CollectionSelectedList = lazy(()=>import("../Components/CollectionSelectedList"));
 
 export default function PostCollectionArea({id, t="collection", bn="", v=[], up, down, remove}){
 
+    const [tabView, setTabView]                         = useState(0)
     const [collectionSelected, setCollectionSelected]   = useState([])
     const [viewSelected, setViewSelected]               = useState([])
     const inputRef = useRef();
@@ -27,7 +30,6 @@ export default function PostCollectionArea({id, t="collection", bn="", v=[], up,
     };
 
     useEffect(()=>{
-        console.log(collectionSelected)
         obj.v = collectionSelected
         hiddenRef.current.value = JSON.stringify(obj)
     },[collectionSelected]);
@@ -47,13 +49,34 @@ export default function PostCollectionArea({id, t="collection", bn="", v=[], up,
                         parentListState={[collectionSelected, setCollectionSelected]} 
                     />
                     : null
-            }            
-            <CollectionView 
-                selectableFolders={false}
-                createNewCollection={false}
-                parentListState={[collectionSelected, setCollectionSelected]}
-                parentViewState={[viewSelected, setViewSelected]}
-            />
+            }
+
+            {
+                tabView === 0 
+                    ? <div className="controls-browse">
+                        <button 
+                            type="button" 
+                            className="btn primary" 
+                            onClick={()=>setTabView(state=>1)}
+                        >
+                            BROWSE
+                        </button>
+                    </div>
+                    : null
+            }
+            {
+                tabView === 1
+                    ? <SuspenseLoader>
+                        <CollectionView 
+                            selectableFolders={false}
+                            createNewCollection={false}
+                            parentListState={[collectionSelected, setCollectionSelected]}
+                            parentViewState={[viewSelected, setViewSelected]}
+                        />
+                    </SuspenseLoader>
+                    : null
+            }
+
 
             <input 
                 ref={hiddenRef} 
