@@ -301,13 +301,15 @@ main{
     font-size: 100%;
 }
 
-.input-tags{
+.input-tags, 
+.input-cat{
     display: inline-block;
-    max-width: 100%;
+    width: 100%;
     position: relative;
 }
 
-.input-tags > .border{
+.input-tags > .border,
+.input-cat > .border{
     border: solid 1px var(--border-col-window);
     padding: 5px;
 
@@ -320,6 +322,18 @@ main{
     overflow: hidden;
 }
 
+.input-cat .display-list{
+    overflow: hidden;
+}
+
+.input-cat .cat {
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    gap:5px;
+    background-color: var(--border-col-nav-top);
+    padding: 3px;
+}
+
 .input-tags .tag{
     display: grid;
     grid-template-columns: max-content max-content;
@@ -327,7 +341,8 @@ main{
     background-color: var(--border-col-nav-top);
     padding: 3px;
 }
-.input-tags .drop-down{
+.input-tags .drop-down,
+.input-cat .drop-down{
     position: absolute;   
     width: 100%;
     left: 0;
@@ -340,7 +355,8 @@ main{
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
 }
 
-.input-tags .drop-down > * {
+.input-tags .drop-down > * ,
+.input-cat .drop-down > * {
     padding: 10px;
     box-sizing: border-box;
 }
@@ -349,16 +365,19 @@ main{
     content: "#";
 }
 
-.input-tags .tag button{
+.input-tags .tag button,
+.input-cat .cat button{
     color: inherit;
     background-color: transparent;
 }
 
-.input-tags input[type=text]{
+.input-tags input[type=text],
+.input-cat input[type=text]{
     border: 0;
 }
 
-.input-tags .dd-item:hover{
+.input-tags .dd-item:hover,
+.input-cat .dd-item:hover{
     background-color: var(--bg-button-primary-hover);
     color: white;
 }

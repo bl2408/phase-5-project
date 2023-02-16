@@ -14,6 +14,7 @@ import Tag from "../Components/Tag";
 import SuspenseLoader from "../Components/SuspenseLoader";
 import InputTags from "../Components/InputTags";
 import { isIterable } from "../fns";
+import InputCategory from "../Components/InputCategory";
 
 const PostTextArea = lazy(() => import("../Components/PostTextArea"))
 const PostCollectionArea = lazy(() => import("../Components/PostCollectionArea"))
@@ -50,7 +51,6 @@ export default function Post() {
     const form = useRef();
 
     const [postState, setPostState] = useState({});
-    const [categories, setCategories] = useState([]);
     const [content, setContent] = useState([]);
 
     const postData = async () => {
@@ -71,35 +71,8 @@ export default function Post() {
 
     };
 
-    const categoryData = async () => {
-        try {
-            const response = await fetch(`/api/admin/category`);
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error("Server error", {
-                    cause: data.errors,
-                })
-            }
-
-            setCategories(state => data.data)
-
-        } catch (err) {
-            console.log(err)
-        }
-
-    };
-
-    const loadData = async () => {
-        await categoryData();
-
-        if (!!post_id) {
-            await postData();
-        }
-    };
-
     useEffect(() => {
         form.current.title.value = postState.title ?? ""
-        form.current.select_cat.value = postState?.category?.id ?? ""
         form.current.select_status.value = postState?.status ?? ""
 
         if (!!post_id) {
@@ -138,7 +111,9 @@ export default function Post() {
 
     useEffect(() => {
 
-        loadData()
+        if (!!post_id) {
+            postData();
+        }
 
         return () => { };
 
@@ -158,10 +133,16 @@ export default function Post() {
             content: createContentObj(),
             slug: form.current.title.value,
             publish_datetime: new Date().toISOString(),
-            category_id: form.current.select_cat.value,
             status: form.current.select_status.value,
         }
 
+        if(!form.current["category"]){
+            return
+        }
+        
+        formObj.category = form.current["category"].value
+        
+        
         if(!!form.current["tags[]"]){
             formObj.tags = isIterable(form.current["tags[]"]) 
                 ? [...form.current["tags[]"]].map(a=>a.value) 
@@ -256,27 +237,13 @@ export default function Post() {
                 </section>
                 <section>
                     <h2>Category</h2>
-                    <select name="select_cat">
-                        {categories?.map(cat => (
-                            <option key={cat.id} value={cat.id}>
-                                {cat.label}
-                            </option>
-                        ))}
-                    </select>
+                    { postState.category ? <InputCategory category={postState.category.label}/> : null}
+                    { postState.category ? null : <InputCategory />}
                 </section>
                 <section>
                     <h2>Tags</h2>
                     { postState.tags ? <InputTags tags={postState.tags}/> : null}
                     { postState.tags ? null : <InputTags />}
-                       
-                   
-                    <br />
-                    <br />
-                    <br />
-                    <br />
-                    <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
-                        {postState?.tags?.map(tag =><Tag key={uuid()} to="/" {...tag}/>)}
-                    </div>
                 </section>
             </WindowBasic>
         </form>

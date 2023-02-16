@@ -1,8 +1,15 @@
 class Admin::CategoryController < Admin::ApplicationController
 
     def index
+
+        cats = Category.all
+
+        keywords = cat_param[:keywords] unless cat_param[:keywords].nil?
+
+        cats = cats.where("lower(label) LIKE :search", search: "%#{keywords.downcase}%") unless keywords.nil?
+
         res(
-            data:Category.all.as_json(only: [:id, :label, :slug]),
+            data: cats.as_json(only: [:id, :label, :slug]),
             status: :ok
         )
     end
@@ -13,6 +20,12 @@ class Admin::CategoryController < Admin::ApplicationController
             data: cat,
             status: :ok
         )
+    end
+
+    private
+
+    def cat_param
+        params.permit(:keywords)
     end
 
 end

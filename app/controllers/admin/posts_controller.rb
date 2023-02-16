@@ -30,16 +30,17 @@ class Admin::PostsController < Admin::ApplicationController
     end
 
     def create
-        post = @user.posts.create!(post_params)
+        @post = @user.posts.create!({**post_params, **set_cat})
+        set_tags
         res(
-            data: Admin::PostSingleSerializer.new(post),
+            data: Admin::PostSingleSerializer.new(@post),
             status: :ok
         )
     end
 
     def update
         @post = Post.find_by(id: params[:id])
-        @post.update!(post_params)
+        @post.update!({**post_params, **set_cat})
         set_tags
         res(
             data: Admin::PostSingleSerializer.new(@post),
@@ -58,7 +59,7 @@ class Admin::PostsController < Admin::ApplicationController
     private 
 
     def post_params
-        params.require(:post).permit(:title, :content, :slug, :publish_datetime, :status, :category_id)
+        params.require(:post).permit(:title, :content, :slug, :publish_datetime, :status, :category)
     end
 
     def set_tags
@@ -76,6 +77,16 @@ class Admin::PostsController < Admin::ApplicationController
         else
             @post.tags.destroy_all
         end
+    end
+
+    def set_cat
+        if !params[:category]
+            raise "Category param not found!"
+        end
+        
+        { 
+            category: Category.find_or_create_by(label: params[:category])
+        }
     end
 
 end
