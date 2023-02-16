@@ -27,7 +27,9 @@ class Tag < ApplicationRecord
 
     def pre_format
         self.label = self.label.downcase
-        self.slug = self.slug.downcase.parameterize(separator: '-') unless self.slug.nil?
+        
+        self.slug = self.label if self.slug.nil?
+        self.slug = self.slug.downcase.parameterize(separator: '-')
     end
 
 end

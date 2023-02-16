@@ -11,6 +11,7 @@ Rails.application.routes.draw do
     get "/valid", to: "auth#render_user"
 
     resources :posts
+    resources :tags, param: :slug
     # resources :collections, param: :slug 
 
     resources :files, controller: :stored_files, only: [ :show]

@@ -38,10 +38,11 @@ class Admin::PostsController < Admin::ApplicationController
     end
 
     def update
-        post = Post.find_by(id: params[:id])
-        post.update!(post_params)
+        @post = Post.find_by(id: params[:id])
+        @post.update!(post_params)
+        set_tags
         res(
-            data: Admin::PostSingleSerializer.new(post),
+            data: Admin::PostSingleSerializer.new(@post),
             status: :ok
         )
     end
@@ -58,6 +59,23 @@ class Admin::PostsController < Admin::ApplicationController
 
     def post_params
         params.require(:post).permit(:title, :content, :slug, :publish_datetime, :status, :category_id)
+    end
+
+    def set_tags
+        if params[:tags]
+            # find and add tags
+            params[:tags].map do |tag|
+                tag = Tag.find_or_create_by(label: tag)
+                Taggable.find_or_create_by(tag: tag, target: @post)
+            end
+
+            # remove tags
+            @post.tags.map do |post_tag|
+                @post.tags.find_by(label: post_tag).destroy unless params[:tags].include? post_tag.label
+            end
+        else
+            @post.tags.destroy_all
+        end
     end
 
 end

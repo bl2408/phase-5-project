@@ -12,6 +12,8 @@ import { v4 as uuid } from "uuid";
 import { lazy } from "react";
 import Tag from "../Components/Tag";
 import SuspenseLoader from "../Components/SuspenseLoader";
+import InputTags from "../Components/InputTags";
+import { isIterable } from "../fns";
 
 const PostTextArea = lazy(() => import("../Components/PostTextArea"))
 const PostCollectionArea = lazy(() => import("../Components/PostCollectionArea"))
@@ -160,6 +162,13 @@ export default function Post() {
             status: form.current.select_status.value,
         }
 
+        if(!!form.current["tags[]"]){
+            formObj.tags = isIterable(form.current["tags[]"]) 
+                ? [...form.current["tags[]"]].map(a=>a.value) 
+                : [form.current["tags[]"].value]
+
+            formObj.tags = [ ...new Set(formObj.tags) ];
+        }
 
         try {
             const response = await fetch(`/api/admin/posts${!!post_id ? `/${post_id}` : ""}`, {
@@ -257,6 +266,14 @@ export default function Post() {
                 </section>
                 <section>
                     <h2>Tags</h2>
+                    { postState.tags ? <InputTags tags={postState.tags}/> : null}
+                    { postState.tags ? null : <InputTags />}
+                       
+                   
+                    <br />
+                    <br />
+                    <br />
+                    <br />
                     <div style={{ display: "flex", gap: "6px", flexWrap: "wrap" }}>
                         {postState?.tags?.map(tag =><Tag key={uuid()} to="/" {...tag}/>)}
                     </div>

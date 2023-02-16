@@ -301,6 +301,68 @@ main{
     font-size: 100%;
 }
 
+.input-tags{
+    display: inline-block;
+    max-width: 100%;
+    position: relative;
+}
+
+.input-tags > .border{
+    border: solid 1px var(--border-col-window);
+    padding: 5px;
+
+}
+
+.input-tags .display-list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    overflow: hidden;
+}
+
+.input-tags .tag{
+    display: grid;
+    grid-template-columns: max-content max-content;
+    gap:5px;
+    background-color: var(--border-col-nav-top);
+    padding: 3px;
+}
+.input-tags .drop-down{
+    position: absolute;   
+    width: 100%;
+    left: 0;
+    border: solid 1px var(--border-col-window);
+    border-top: 0;
+    padding-bottom: 10px;
+    box-sizing: border-box;
+    z-index: 1;
+    background-color: white;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-tags .drop-down > * {
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.input-tags .tag > :first-child:before{
+    content: "#";
+}
+
+.input-tags .tag button{
+    color: inherit;
+    background-color: transparent;
+}
+
+.input-tags input[type=text]{
+    border: 0;
+}
+
+.input-tags .dd-item:hover{
+    background-color: var(--bg-button-primary-hover);
+    color: white;
+}
+
 input{
     font-size: 1.6rem;
     width: 100%;
@@ -333,38 +395,57 @@ button{
     padding: 8px 10px;
 }
 
+.btn-sml-p0{
+    font-size: 1.4rem;
+}
 
 
-.btn.primary, .btn-sml.primary{
+
+.btn.primary, 
+.btn-sml.primary,
+.btn-sml-p0.primary{
     background-color: var(--bg-button-primary);
 }
 .btn.primary:hover, .btn.primary:focus,
-.btn-sml.primary:hover, .btn-sml.primary:focus{
+.btn-sml.primary:hover, .btn-sml.primary:focus,
+.btn-sml-p0.primary:hover, .btn-sml-p0.primary:focus{
     background-color: var(--bg-button-primary-hover);
 }
-.btn.primary:active, .btn-sml.primary:active{
+.btn.primary:active, 
+.btn-sml.primary:active,
+.btn-sml-p0.primary:active{
     background-color: var(--bg-button-primary-active);
 }
 
-.btn.secondary, .btn-sml.secondary{
+.btn.secondary, 
+.btn-sml.secondary,
+.btn-sml-p0.secondary{
     background-color: var(--bg-button-secondary);
 }
 .btn.secondary:hover, .btn.secondary:focus,
-.btn-sml.secondary:hover, .btn-sml.secondary:focus{
+.btn-sml.secondary:hover, .btn-sml.secondary:focus,
+.btn-sml-p0:hover, .btn-sml-p0.secondary:focus{
     background-color: var(--bg-button-secondary-hover);
 }
-.btn.secondary:active, .btn-sml.secondary:active{
+.btn.secondary:active, 
+.btn-sml.secondary:active,
+.btn-sml-p0:active{
     background-color: var(--bg-button-secondary-active);
 }
 
-.btn.red, .btn-sml.red{
+.btn.red, 
+.btn-sml.red,
+.btn-sml-p0{
     background-color: var(--bg-button-red);
 }
 .btn.red:hover, .btn.red:focus,
-.btn-sml.red:hover, .btn-sml.red:focus{
+.btn-sml.red:hover, .btn-sml.red:focus
+.btn-sml-p0.red:hover, .btn-sml-p0.red:focus{
     background-color: var(--bg-button-red-hover);
 }
-.btn.red:active, .btn-sml.red:active{
+.btn.red:active, 
+.btn-sml.red:active,
+.btn-sml-p0:active{
     background-color: var(--bg-button-red-active);
 }
 .tag-link::before{
