@@ -141,7 +141,7 @@ body.open {
     background-color: var(--bg-nav-side);
     border-right: solid 2px var(--border-col-nav-side);
     position: fixed;
-    z-index: 2;
+    z-index: 5;
 }
 
 #root>main {

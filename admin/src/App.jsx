@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { lazy, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Outlet } from "react-router-dom";
 import Login from "./Login/Login";
@@ -8,10 +8,11 @@ import { getStatusList } from "./Slices/postsSlice";
 import { validSession } from "./Slices/userSlice";
 
 
+const Notifications = lazy(()=>import("./Notifications/Notifications"))
+
 function App() {
 
 	const user = useSelector(state => state.user);
-	// const postsStatusList = useSelector(state => state.posts.statusList);
 	const dispatch = useDispatch();
 
 	const checkSession = async ()=>{
@@ -50,6 +51,7 @@ function App() {
 				:<>
 					<NavSide />
 					<NavTop />
+					<Notifications />
 					<main>
 						<Outlet />
 					</main>

@@ -11,13 +11,15 @@ import navSideSlice from './Slices/navSideSlice';
 import userSlice from './Slices/userSlice';
 import { routesList } from './pages/routesList';
 import postsSlice from './Slices/postsSlice';
+import notificationsSlice from './Slices/notificationsSlice';
 
 
 const store = configureStore({
 	reducer: {
 		navSideOpen: navSideSlice,
 		user: userSlice,
-		posts: postsSlice
+		posts: postsSlice,
+		notifications: notificationsSlice,
 	},
 	devTools: true,
 });
