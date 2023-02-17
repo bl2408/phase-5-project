@@ -29,4 +29,8 @@ Rails.application.routes.draw do
     
   end
 
+  namespace :api do
+    resources :posts, only: [:show]
+  end
+
 end
