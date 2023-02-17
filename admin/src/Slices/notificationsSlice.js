@@ -9,10 +9,11 @@ export const notificationsSlice = createSlice({
 	initialState,
 	reducers:{
 		add:(state, action)=>{
-			state.items = [...state.items, action.payload]
+			state.items.push(action.payload)
 		},
 		remove:(state, action)=>{
-			state.value = action.payload;
+			console.log(action)
+			state.items = state.items.filter(item=> item.id !== action.payload.id)
 		}
 	}
 });

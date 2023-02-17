@@ -31,8 +31,8 @@
 #notifications-main .notif {
     width: 100%;
     min-height: 50px;
-    -webkit-animation: notif .3s ease-out;
-    animation: notif .3s ease-out;
+    -webkit-animation: notif .2s ease-out; 
+    animation: notif .2s ease-out; 
     box-shadow: 0 0px 3px rgb(0 0 0 / 40%);
     position: relative;
     background-color: white;
@@ -97,58 +97,13 @@
 }
 
 
-/* 
-#notifications-main .notif > .heading {
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    align-items: center;
-    margin-top: 10px;
-}
-
-
-#notifications-main .notif .title{
-    box-sizing: border-box
-}
-#notifications-main .notif .icon{
-    font-size: 3rem;
-    display: flex;
-    justify-content: center;
-}
-
-#notifications-main .notif > .msg{
-    padding: 10px 20px;
-    box-sizing: border-box;
-}
-
-#notifications-main .notif h3,
-#notifications-main .notif p{
-    color: white;
-    padding: 0;
-    margin: 0;
-} */
-
-
 @-webkit-keyframes notif {
-    0% { -webkit-transform: translate(200%); }
+    0% { -webkit-transform: translate(100%); }
     100% { -webkit-transform: translate(0); }
 }
 
 @keyframes notif {
-    0% { transform: translate(200%); }
+    0% { transform: translate(100%); }
     100% { transform: translate(0); }
 }
-
-/*
-
-#notifications-main .success{
-    background-color: #50cf80
-}
-
-#notifications-main .fail{
-    background-color: #cf5050
-}
-
-#notifications-main .basic{
-    background-color: #7a8092
-}*/
 

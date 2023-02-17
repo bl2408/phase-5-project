@@ -1,15 +1,17 @@
 import { faCircleCheck, faCircleExclamation, faCircleXmark, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef } from "react";
+import { useDispatch } from "react-redux";
+import { remove } from "../Slices/notificationsSlice";
 
 export default function Notif({
-    
     mode=0,
     title,
     msg="",
-    removeThis=()=>{},
-
+    id,
 }){
+
+    const dispatch = useDispatch();
 
     const arr_mode = [
         {
@@ -36,19 +38,25 @@ export default function Notif({
     useEffect(()=>{
 
         timer.current = setTimeout(()=>{
+            console.log("removed")
+            close()
 
-            removeThis()
+        }, 10000)
 
-        }, 5000)
-
-
+        return ()=>{
+            clearTimeout(timer.current);
+        }
     },[])
-    
 
+    const close =()=>{
+        dispatch(remove({id}))
+    };
+
+    
     return (
         <div className={`notif ${arr_mode[mode].className}`}> 
             <div className="close">
-                <button type="button" onClick={removeThis}>
+                <button type="button" onClick={close}>
                     <FontAwesomeIcon icon={faX}/>
                 </button>
             </div>
