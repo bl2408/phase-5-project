@@ -22,17 +22,12 @@
     overflow-x: hidden;
     box-sizing: border-box;
     padding: 20px 10px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;    
 }
 
 
 #notifications-main .notif {
     width: 100%;
     min-height: 50px;
-    -webkit-animation: notif .2s ease-out; 
-    animation: notif .2s ease-out; 
     box-shadow: 0 0px 3px rgb(0 0 0 / 40%);
     position: relative;
     background-color: white;
@@ -40,10 +35,12 @@
 
     display: grid;
     grid-template-columns: 6px 40px 1fr;
-    overflow: hidden;
     color: var(--font-col-primary);
     gap: 4px;
+    transition: all 0.3s ease-out;
+    margin-bottom: 10px;
 }
+
 #notifications-main .notif {
     --notif-highlight: #7a8092
 }
@@ -97,13 +94,37 @@
 }
 
 
+#notifications-main .notif.show{
+    -webkit-animation: notif .2s ease-out reverse; 
+    animation: notif .2s ease-out reverse; 
+    animation-fill-mode: forwards;
+}
+
+#notifications-main .notif.hide{ 
+    -webkit-animation: 1 notif .2s ease-out ; 
+    animation: 1 notif .2s ease-out; 
+    animation-fill-mode: forwards;
+}
+
+#notifications-main .notif.shrink{
+    -webkit-transform: translate(150%);
+    transform: translate(150%);
+
+    overflow: hidden;
+    max-height: 0px !important;
+    min-height: 0px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+
 @-webkit-keyframes notif {
-    0% { -webkit-transform: translate(100%); }
-    100% { -webkit-transform: translate(0); }
+    0% { -webkit-transform: translate(0%); }
+    100% { -webkit-transform: translate(150%); }
 }
 
 @keyframes notif {
-    0% { transform: translate(100%); }
-    100% { transform: translate(0); }
+    0% { transform: translate(0%); }
+    100% { transform: translate(150%); }
 }
 
