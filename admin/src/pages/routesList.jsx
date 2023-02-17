@@ -24,7 +24,10 @@ export const routesList = createBrowserRouter([
 			},
 			{
 				path: "posts/:id/",
-				element: <SuspenseLoader element={<Post />} />
+				element: <SuspenseLoader element={<Post />} />,
+				loader: async ({ params }) => {
+					return postLoader(params.id);
+				},
 			},
 			{
 				path: "collections/",
@@ -34,3 +37,26 @@ export const routesList = createBrowserRouter([
 		errorElement: <SuspenseLoader element={<ErrorPage />} />
 	},
 ]);
+
+async function postLoader (id){
+	try {
+		const response = await fetch(`/api/admin/posts/${id}`);
+		const data = await response.json();
+		if (!response.ok) {
+			throw new Error("Server error", {
+				cause: data.errors,
+			})
+		}
+
+		return data
+
+	} catch (err) {
+		return {
+			errors: [
+				err,
+				err.cause
+			]
+		}
+	}
+
+};

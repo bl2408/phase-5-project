@@ -4,7 +4,7 @@ const initialState = {
 	status: 'idle',
 	items: [],
 	meta: {},
-	statusList:{}
+	statusList:[]
 };
 
 //all posts

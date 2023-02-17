@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useLoaderData, useParams } from "react-router-dom";
 import "../css/posts.css"
 import WindowBasic from "../Windows/WindowBasic";
 import { useSelector } from "react-redux";
@@ -50,27 +50,6 @@ export default function Post() {
     const [postState, setPostState]         = useState({});
     const [content, setContent]             = useState([]);
 
-    const postData = async () => {
-        try {
-            const response = await fetch(`/api/admin/posts/${post_id}`);
-            const data = await response.json();
-            if (!response.ok) {
-                throw new Error("Server error", {
-                    cause: data.errors,
-                })
-            }
-
-            setPostState(state => data.data)
-
-        } catch (err) {
-            notif({
-                msg: err.toString(),
-                mode: 2
-            })
-        }
-
-    };
-
     useEffect(() => {
         form.current.title.value = postState.title ?? ""
         form.current.select_status.value = postState?.status ?? ""
@@ -109,10 +88,18 @@ export default function Post() {
 
     }, [postState]);
 
+
+    const postData = useLoaderData();
+
     useEffect(() => {
 
         if (!!post_id) {
-            postData();
+            
+            if(!!postData.errors){
+                console.log(postData.errors)
+            }else{
+                setPostState(state => postData.data)
+            }
         }
 
         return () => { };
@@ -225,7 +212,7 @@ export default function Post() {
                 <button type="button" onClick={()=>addFormElement("text")} className="btn primary"><FontAwesomeIcon icon={faPlus} /></button>
                 <button type="button" onClick={()=>addFormElement("collection")} className="btn primary"><FontAwesomeIcon icon={faPlusSquare} /></button>
                 <div className="display-content-blocks">
-                    {content?.map(cont => cont.comp)}
+                    {content.map(cont => cont.comp)}
                 </div>
             </WindowBasic>
             <WindowBasic>
@@ -236,7 +223,7 @@ export default function Post() {
                 <section>
                     <h2>Status</h2>
                     <select name="select_status">
-                        {postsStatuses?.map(status => (
+                        {postsStatuses.map(status => (
                             <option key={uuid()} value={status.label}>
                                 {status.label}
                             </option>
