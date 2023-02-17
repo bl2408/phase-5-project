@@ -1,5 +1,4 @@
-import { Link, useParams } from "react-router-dom";
-import InputFloatingLabel from "../Components/InputFloatingLabel";
+import { useParams } from "react-router-dom";
 import "../css/posts.css"
 import WindowBasic from "../Windows/WindowBasic";
 import { useSelector } from "react-redux";
@@ -10,11 +9,11 @@ import { useEffect, useRef, useState } from "react";
 
 import { v4 as uuid } from "uuid";
 import { lazy } from "react";
-import Tag from "../Components/Tag";
 import SuspenseLoader from "../Components/SuspenseLoader";
 import InputTags from "../Components/InputTags";
 import { isIterable } from "../fns";
 import InputCategory from "../Components/InputCategory";
+import { useNotif } from "../Hooks/useNotif";
 
 const PostTextArea = lazy(() => import("../Components/PostTextArea"))
 const PostCollectionArea = lazy(() => import("../Components/PostCollectionArea"))
@@ -44,14 +43,12 @@ export default function Post() {
         }
     };
 
-    const postsStatuses = useSelector(state => state.posts.statusList)
-
-    const { id: post_id } = useParams()
-
-    const form = useRef();
-
-    const [postState, setPostState] = useState({});
-    const [content, setContent] = useState([]);
+    const postsStatuses                     = useSelector(state => state.posts.statusList)
+    const { id: post_id }                   = useParams()
+    const form                              = useRef();
+    const notif                             = useNotif()
+    const [postState, setPostState]         = useState({});
+    const [content, setContent]             = useState([]);
 
     const postData = async () => {
         try {
@@ -66,7 +63,10 @@ export default function Post() {
             setPostState(state => data.data)
 
         } catch (err) {
-            console.log(err)
+            notif({
+                msg: err.toString(),
+                mode: 2
+            })
         }
 
     };
@@ -137,6 +137,10 @@ export default function Post() {
         }
 
         if(!form.current["category"]){
+            notif({
+                msg: "Post requires a category",
+                mode: 2
+            })
             return
         }
         
@@ -167,11 +171,15 @@ export default function Post() {
                     cause: data.errors
                 })
             }
-
-            console.log(data)
-
+            notif({
+                msg: "Post saved!",
+                mode: 1
+            })
         } catch (err) {
-            console.log(err)
+            notif({
+                msg: err.toString(),
+                mode: 2
+            })
         }
 
 
