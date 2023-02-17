@@ -11,3 +11,15 @@ export const isIterable = (input) => {
 
     return typeof input[Symbol.iterator] === 'function'
 }
+
+
+export const monthsList = Array.from({ length: 12 }, (e, i) => {
+    const d = new Date(null, i + 1, null)
+    return {
+        label: d.toLocaleDateString("en", { month: "long" }),
+        index: d.toLocaleDateString("en", { month: "numeric" })
+    }
+})
+
+export const daysList = (year, month)=> new Date(year, month, 0).getDate();
+

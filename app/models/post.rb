@@ -8,7 +8,7 @@ class Post < ApplicationRecord
   has_many :tags, :through => :taggables
 
 
-  enum :status, [ :draft, :published, :waiting, :archived, :trashed ]
+  enum :status, [ :draft, :published]
 
   validates :title, 
 	presence: true

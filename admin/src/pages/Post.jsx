@@ -14,6 +14,7 @@ import InputTags from "../Components/InputTags";
 import { isIterable } from "../fns";
 import InputCategory from "../Components/InputCategory";
 import { useNotif } from "../Hooks/useNotif";
+import DatePicker from "../Components/DatePicker";
 
 const PostTextArea = lazy(() => import("../Components/PostTextArea"))
 const PostCollectionArea = lazy(() => import("../Components/PostCollectionArea"))
@@ -119,7 +120,7 @@ export default function Post() {
             title: form.current.title.value,
             content: createContentObj(),
             slug: form.current.title.value,
-            publish_datetime: new Date().toISOString(),
+            publish_datetime: form.current.pub_date.value,
             status: form.current.select_status.value,
         }
 
@@ -221,7 +222,7 @@ export default function Post() {
                     <button type="button" className="btn red">Delete</button>
                 </section>
                 <section>
-                    <h2>Status</h2>
+                    <h3>Status</h3>
                     <select name="select_status">
                         {postsStatuses.map(status => (
                             <option key={uuid()} value={status.label}>
@@ -229,14 +230,29 @@ export default function Post() {
                             </option>
                         ))}
                     </select>
+                    
                 </section>
                 <section>
-                    <h2>Category</h2>
+                    <h3>Date</h3>
+                    {
+                        postState.publish_datetime
+                            ? <DatePicker setDate={new Date(postState.publish_datetime)}/>
+                            : null
+                    }
+                    {
+                        postState.publish_datetime
+                            ? null
+                            : <DatePicker />
+                    }
+
+                </section>
+                <section>
+                    <h3>Category</h3>
                     { postState.category ? <InputCategory category={postState.category.label}/> : null}
                     { postState.category ? null : <InputCategory />}
                 </section>
                 <section>
-                    <h2>Tags</h2>
+                    <h3>Tags</h3>
                     { postState.tags ? <InputTags tags={postState.tags}/> : null}
                     { postState.tags ? null : <InputTags />}
                 </section>
