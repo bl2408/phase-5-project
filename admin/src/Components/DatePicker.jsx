@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useState } from "react";
 import { daysList, monthsList } from "../fns";
 import { v4 as uuid } from "uuid";
 
 export default function DatePicker({
-    setDate=new Date()
+    setDate=new Date(),
+    name="date"
 }){
 
     const months = monthsList
@@ -11,22 +12,15 @@ export default function DatePicker({
     const [ day, setDay ]                    = useState(setDate.getDate());
     const [ month, setMonth ]                = useState(setDate.getMonth() + 1);
     const [ year, setYear]                   = useState(setDate.getFullYear());
-    const dayRef                             = useRef()
-    const hiddenRef                          = useRef()
-
-    useEffect(()=>{
-        dayRef.current.max = daysList(year, month)
-        hiddenRef.current.value = new Date(Date.UTC(year, month-1, day)).toISOString();
-    },[day, month, year])
 
     return(
         <div className="date-picker">
 
             <div>
                 <input 
-                    ref={dayRef}
                     type="number" 
                     min="1" 
+                    max={daysList(year, month)}
                     value={day} 
                     onChange={e=>setDay(state=>e.target.value)}
                 />
@@ -54,9 +48,9 @@ export default function DatePicker({
             </div>
 
             <input 
-                ref={hiddenRef}
+                value={new Date(Date.UTC(year, month-1, day)).toISOString()}
                 type="hidden" 
-                name="pub_date"
+                name={name}
             />
         </div>
     );

@@ -236,13 +236,13 @@ export default function Post() {
                     <h3>Date</h3>
                     {
                         postState.publish_datetime
-                            ? <DatePicker setDate={new Date(postState.publish_datetime)}/>
+                            ? <DatePicker name="pub_date" setDate={new Date(postState.publish_datetime)}/>
                             : null
                     }
                     {
                         postState.publish_datetime
                             ? null
-                            : <DatePicker />
+                            : <DatePicker name="pub_date" />
                     }
 
                 </section>
