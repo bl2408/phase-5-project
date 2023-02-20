@@ -15,6 +15,7 @@ import { isIterable } from "../fns";
 import InputCategory from "../Components/InputCategory";
 import { useNotif } from "../Hooks/useNotif";
 import DatePicker from "../Components/DatePicker";
+import TimePicker from "../Components/TimePicker";
 
 const PostTextArea = lazy(() => import("../Components/PostTextArea"))
 const PostCollectionArea = lazy(() => import("../Components/PostCollectionArea"))
@@ -233,7 +234,7 @@ export default function Post() {
                     
                 </section>
                 <section>
-                    <h3>Date</h3>
+                    <h3>Date/Time</h3>
                     {
                         postState.publish_datetime
                             ? <DatePicker name="pub_date" setDate={new Date(postState.publish_datetime)}/>
@@ -243,6 +244,18 @@ export default function Post() {
                         postState.publish_datetime
                             ? null
                             : <DatePicker name="pub_date" />
+                    }
+
+                    {
+                        postState.publish_datetime
+                            ? <TimePicker name="pub_time" setTime={new Date(postState.publish_datetime)} />
+                            : null
+                    }
+
+                    {
+                        postState.publish_datetime
+                            ? null
+                            : <TimePicker name="pub_time" />
                     }
 
                 </section>

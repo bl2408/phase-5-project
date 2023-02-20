@@ -309,22 +309,32 @@ select{
     box-sizing: border-box;
 }
 .date-picker{
-    display: grid;
     grid-template-columns: 3.5em 1fr 4.5em;
+}
+.time-picker{
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.date-picker,
+.time-picker{
+    display: grid;
     width: 100%;
     box-sizing: border-box;
     justify-items: stretch;
     border: solid 1px var(--border-col-window);
 }
+
 .date-picker input,
-.date-picker select {
+.date-picker select,
+.time-picker input,
+.time-picker select {
     width: 100%;
     height: 100%;
     font-size: 1.4rem;
     border: 0;
     outline: 0;
 }
-.date-picker input:focus, .date-picker input:active{
+.date-picker input:focus, .date-picker input:active,
+.time-picker input:focus, .time-picker input:active{
     border: 0;
     outline: 0;
 }
