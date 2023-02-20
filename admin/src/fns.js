@@ -27,11 +27,7 @@ export const isValidNumber =(values)=>{
 
     if(typeof values === "string" && values.length > 0){
         values = +values;
-    }else{
-        return false
-    }
-
-    if(isIterable(values) && Array.isArray(values)){
+    }else if(isIterable(values) && Array.isArray(values)){
         values.forEach(value => {
            
             if(isNaN(value)){
@@ -40,7 +36,6 @@ export const isValidNumber =(values)=>{
             
         });
     }else{
-
         if(isNaN(values)){
             return false;
         }

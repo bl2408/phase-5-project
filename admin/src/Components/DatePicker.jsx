@@ -6,9 +6,6 @@ export default function DatePicker({
     setDate=new Date(),
     name="date"
 }){
-
-    const months = monthsList
-
     const [ day, setDay ]                    = useState(setDate.getDate());
     const [ month, setMonth ]                = useState(setDate.getMonth() + 1);
     const [ year, setYear]                   = useState(setDate.getFullYear());
@@ -52,7 +49,7 @@ export default function DatePicker({
                     onChange={e=>setMonth(state=>e.target.value)}
                 >
                     {
-                        months.map(m=><option key={uuid()} value={m.index}>{m.label}</option>)
+                        monthsList.map(m=><option key={uuid()} value={m.index}>{m.label}</option>)
                     }
                 </select>
             </div>
