@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { daysList, monthsList } from "../fns";
+import { daysList, isValidNumber, monthsList, numberRange } from "../fns";
 import { v4 as uuid } from "uuid";
 
 export default function DatePicker({
@@ -13,16 +13,36 @@ export default function DatePicker({
     const [ month, setMonth ]                = useState(setDate.getMonth() + 1);
     const [ year, setYear]                   = useState(setDate.getFullYear());
 
+    const getFullDate=()=>{
+
+        const curYear = new Date().getFullYear();
+        let dd, mm, yyyy;
+        
+        dd = !isValidNumber(day) ? 1 : day
+        
+        mm = !isValidNumber(month) ? 1 : month
+        
+        yyyy = !isValidNumber(year) ? curYear : year
+
+        yyyy = numberRange(yyyy, [curYear - 100, curYear + 100])
+        
+        dd = numberRange(dd, [1, daysList(yyyy, mm)])
+
+        return new Date(Date.UTC(yyyy, mm-1, dd)).toISOString()
+
+    }
+
     return(
         <div className="date-picker">
 
             <div>
                 <input 
-                    type="number" 
-                    min="1" 
-                    max={daysList(year, month)}
+                    type="text" 
                     value={day} 
                     onChange={e=>setDay(state=>e.target.value)}
+                    pattern={`[0-9]{2}`}
+                    inputMode="numeric"
+                    maxLength="2"
                 />
             </div>
 
@@ -39,16 +59,17 @@ export default function DatePicker({
   
             <div>
                 <input 
-                    type="number" 
+                    type="text" 
                     value={year} 
                     onChange={e=>setYear(state=>e.target.value)}
-                    min="1900" 
-                    max="9999"
+                    pattern={`[0-9]{4}`}
+                    inputMode="numeric"
+                    maxLength="4"
                 />
             </div>
 
             <input 
-                value={new Date(Date.UTC(year, month-1, day)).toISOString()}
+                value={getFullDate()}
                 type="hidden" 
                 name={name}
             />

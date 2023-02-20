@@ -23,3 +23,44 @@ export const monthsList = Array.from({ length: 12 }, (e, i) => {
 
 export const daysList = (year, month)=> new Date(year, month, 0).getDate();
 
+export const isValidNumber =(values)=>{
+
+    if(typeof values === "string" && values.length > 0){
+        values = +values;
+    }else{
+        return false
+    }
+
+    if(isIterable(values) && Array.isArray(values)){
+        values.forEach(value => {
+           
+            if(isNaN(value)){
+                return false;
+            }
+            
+        });
+    }else{
+
+        if(isNaN(values)){
+            return false;
+        }
+    }
+
+    return true;
+
+};
+
+export const numberRange =(num, range)=>{
+
+    if(num < range[0]){
+        num = 0
+    }
+
+    if(num > range[1]){
+        num = range[1]
+    }
+
+    return num
+
+}
+
