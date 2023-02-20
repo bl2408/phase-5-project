@@ -28,7 +28,8 @@ export default function DatePicker({
         
         dd = numberRange(dd, [1, daysList(yyyy, mm)])
 
-        return new Date(Date.UTC(yyyy, mm-1, dd)).toISOString()
+        const fd = new Date(Date.UTC(yyyy, mm-1, dd)).toISOString().split("T")        
+        return fd[0];
 
     }
 
@@ -40,7 +41,7 @@ export default function DatePicker({
                     type="text" 
                     value={day} 
                     onChange={e=>setDay(state=>e.target.value)}
-                    pattern={`[0-9]{2}`}
+                    pattern={`[0-9]{1,2}`}
                     inputMode="numeric"
                     maxLength="2"
                 />

@@ -53,7 +53,7 @@ export default function DatePicker({
                     type="text" 
                     value={hr} 
                     onChange={e=>setHr(state=>e.target.value)}
-                    pattern={`[0-9]{2}`}
+                    pattern={`[0-9]{1,2}`}
                     inputMode="numeric"
                     maxLength="2"
                 />
@@ -63,7 +63,7 @@ export default function DatePicker({
                     type="text" 
                     value={min} 
                     onChange={e=>setMin(state=>e.target.value)}
-                    pattern={`[0-9]{2}`}
+                    pattern={`[0-9]{1,2}`}
                     inputMode="numeric"
                     maxLength="2"
                 />

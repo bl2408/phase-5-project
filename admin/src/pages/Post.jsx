@@ -121,9 +121,11 @@ export default function Post() {
             title: form.current.title.value,
             content: createContentObj(),
             slug: form.current.title.value,
-            publish_datetime: form.current.pub_date.value,
+            publish_datetime: `${form.current.pub_date.value}${form.current.pub_time.value}`,
             status: form.current.select_status.value,
         }
+
+        console.log(formObj.publish_datetime)
 
         if(!form.current["category"]){
             notif({
