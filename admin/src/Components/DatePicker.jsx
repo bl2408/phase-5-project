@@ -14,7 +14,7 @@ export default function DatePicker({
     const [ year, setYear]                   = useState(setDate.getFullYear());
 
     const getFullDate=()=>{
-
+        
         const curYear = new Date().getFullYear();
         let dd, mm, yyyy;
         
@@ -30,7 +30,6 @@ export default function DatePicker({
 
         const fd = new Date(Date.UTC(yyyy, mm-1, dd)).toISOString().split("T")        
         return fd[0];
-
     }
 
     return(

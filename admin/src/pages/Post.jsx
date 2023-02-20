@@ -1,4 +1,4 @@
-import { useLoaderData, useParams } from "react-router-dom";
+import { useLoaderData, useNavigate, useParams } from "react-router-dom";
 import "../css/posts.css"
 import WindowBasic from "../Windows/WindowBasic";
 import { useSelector } from "react-redux";
@@ -21,6 +21,8 @@ const PostTextArea = lazy(() => import("../Components/PostTextArea"))
 const PostCollectionArea = lazy(() => import("../Components/PostCollectionArea"))
 
 export default function Post() {
+
+    const navigate = useNavigate()
 
     const SuspenseBlockObj = (props = {}) => {
         const compId = uuid();
@@ -125,8 +127,6 @@ export default function Post() {
             status: form.current.select_status.value,
         }
 
-        console.log(formObj.publish_datetime)
-
         if(!form.current["category"]){
             notif({
                 msg: "Post requires a category",
@@ -166,6 +166,7 @@ export default function Post() {
                 msg: "Post saved!",
                 mode: 1
             })
+            navigate("/posts")
         } catch (err) {
             notif({
                 msg: err.toString(),
