@@ -233,7 +233,12 @@ export default function Post() {
             <WindowBasic>
                 <section>
                     <button className="btn primary">{!!post_id ? "Update" : "Create"}</button>
-                    <button type="button" className="btn red">Delete</button>
+                    {
+                        !!post_id 
+                            ? <button type="button" className="btn red">Delete</button>
+                            : null
+                    }
+                    
                 </section>
                 <section>
                     <h3>Status</h3>
