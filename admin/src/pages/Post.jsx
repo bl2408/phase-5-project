@@ -4,7 +4,7 @@ import WindowBasic from "../Windows/WindowBasic";
 import { useSelector } from "react-redux";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus, faPlusSquare } from '@fortawesome/free-solid-svg-icons'
+import { faFolder, faFont } from '@fortawesome/free-solid-svg-icons'
 import { useEffect, useRef, useState } from "react";
 
 import { v4 as uuid } from "uuid";
@@ -19,6 +19,7 @@ import TimePicker from "../Components/TimePicker";
 
 const PostTextArea = lazy(() => import("../Components/PostTextArea"))
 const PostCollectionArea = lazy(() => import("../Components/PostCollectionArea"))
+const PostTextCollect = lazy(() => import("../Components/PostTextCollect"))
 
 export default function Post() {
 
@@ -37,6 +38,10 @@ export default function Post() {
                 break;
             case "collection":
                 component = <PostCollectionArea {...props} />
+                break
+
+            case "textcollect":
+            component = <PostTextCollect {...props} />
                 break
         }
         return {
@@ -68,6 +73,8 @@ export default function Post() {
                             case "text":
                                 return SuspenseBlockObj({ ...a })
                             case "collection":
+                                return SuspenseBlockObj({ ...a })
+                            case "textcollect":
                                 return SuspenseBlockObj({ ...a })
                             default:
                                 return
@@ -212,10 +219,13 @@ export default function Post() {
 
     return (
         <form ref={form} onSubmit={handleSubmit} className="grid-2">
-            <WindowBasic>
+            <WindowBasic className="post">
                 <input type="text" placeholder="Title" name="title" style={{ fontSize: "3rem" }} />
-                <button type="button" onClick={()=>addFormElement("text")} className="btn primary"><FontAwesomeIcon icon={faPlus} /></button>
-                <button type="button" onClick={()=>addFormElement("collection")} className="btn primary"><FontAwesomeIcon icon={faPlusSquare} /></button>
+                <div className="controls">
+                    <button title="Text" type="button" onClick={()=>addFormElement("text")} className="btn primary"><FontAwesomeIcon icon={faFont} /></button>
+                    <button title="Collection" type="button" onClick={()=>addFormElement("collection")} className="btn primary"><FontAwesomeIcon icon={faFolder} /></button>
+                    <button title="Text and Collection" type="button" onClick={()=>addFormElement("textcollect")} className="btn primary"><FontAwesomeIcon icon={faFont}/> + <FontAwesomeIcon icon={faFolder} /></button>
+                </div>
                 <div className="display-content-blocks">
                     {content.map(cont => cont.comp)}
                 </div>

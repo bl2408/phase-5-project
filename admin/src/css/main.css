@@ -616,7 +616,7 @@ button{
 .block-area textarea{
     width: 100%;
     min-height: 50px;
-    height: max-content;
+    /* height: max-content; */
     padding: 20px;
     box-sizing: border-box;
     outline: 0;
@@ -650,6 +650,17 @@ button{
     width: 50%;
     height: 50%;
 }
+
+
+.post > .controls {
+    display: flex;
+    gap: 5px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: rgba(0, 0, 0, 0.05);
+    margin: 10px 0;
+}
+
 
 .loader::before{
     content: '';

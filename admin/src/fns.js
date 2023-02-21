@@ -59,3 +59,18 @@ export const numberRange =(num, range)=>{
 
 }
 
+const countBreaks = (str)=>{
+    try {
+        return((str.match(/[^\n]*\n[^\n]*/gi).length));
+    } catch(e) {
+        return 0;
+    } 
+};
+
+export const adjustTextArea =(str)=>{
+
+    const hei = countBreaks(str);
+    return hei
+
+};
+
