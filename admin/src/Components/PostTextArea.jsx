@@ -1,7 +1,7 @@
 import { faArrowDownLong, faArrowUpLong, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef } from "react";
-import { adjustTextArea } from "../fns";
+import { countBreaks } from "../fns";
 // import { v1 as uuid } from "uuid";
 
 export default function PostTextArea({id, t="text", bn="", v="", up, down, remove}){
@@ -15,7 +15,7 @@ export default function PostTextArea({id, t="text", bn="", v="", up, down, remov
 
         inputRef.current.value = bn
         textareaRef.current.value = v
-        textareaRef.current.rows = `${adjustTextArea(textareaRef.current.value) + 2}`
+        textareaRef.current.rows = `${countBreaks(textareaRef.current.value) + 2}`
         hiddenRef.current.value = JSON.stringify(obj)
         return ()=>{};
     },[]);
@@ -24,7 +24,7 @@ export default function PostTextArea({id, t="text", bn="", v="", up, down, remov
     const textAreaUpdateHidden = (e)=>{
         const txtArea = e.target
         obj.v = txtArea.value
-        textareaRef.current.rows = `${adjustTextArea(textareaRef.current.value) + 2}`
+        textareaRef.current.rows = `${countBreaks(textareaRef.current.value) + 2}`
         hiddenRef.current.value = JSON.stringify(obj)
     };
     const inputUpdateHidden = (e)=>{

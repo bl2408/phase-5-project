@@ -54,3 +54,18 @@
     box-sizing: border-box;
 }
 
+.post-text-collect-grid{
+    display: grid;
+}
+
+@media only screen and (min-width: 1200px) {
+    .post-text-collect-grid{
+        grid-template-columns: 1.2fr .8fr;
+    }
+    .post-text-collect-grid > :first-child{
+        border-right: solid 1px var(--font-col-nav-side-active);
+    }
+    
+}
+
+

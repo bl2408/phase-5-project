@@ -4,7 +4,7 @@ import { lazy, useEffect, useRef, useState } from "react";
 
 import CollectionView from "../Components/CollectionView"
 import SuspenseLoader from "../Components/SuspenseLoader"
-import { adjustTextArea } from "../fns";
+import { countBreaks } from "../fns";
 
 const CollectionSelectedList = lazy(()=>import("../Components/CollectionSelectedList"));
 
@@ -23,7 +23,7 @@ export default function PostTextCollect({id, t="textcollect", bn="", v={t: "", c
         inputRef.current.value = bn
         setCollectionSelected(state=>v.c)
         textareaRef.current.value = v.t
-        textareaRef.current.rows = `${adjustTextArea(textareaRef.current.value) + 2}`
+        textareaRef.current.rows = `${countBreaks(textareaRef.current.value) + 2}`
         hiddenRef.current.value = JSON.stringify(obj.current)
         return ()=>{};
     },[]);
@@ -37,7 +37,7 @@ export default function PostTextCollect({id, t="textcollect", bn="", v={t: "", c
     const textAreaUpdateHidden = (e)=>{
         const txtArea = e.target
         obj.current.v = { c: [...obj.current.v.c], t: txtArea.value }
-        textareaRef.current.rows = `${adjustTextArea(textareaRef.current.value) + 2}`
+        textareaRef.current.rows = `${countBreaks(textareaRef.current.value) + 2}`
         hiddenRef.current.value = JSON.stringify(obj.current)
     };
 
@@ -56,11 +56,13 @@ export default function PostTextCollect({id, t="textcollect", bn="", v={t: "", c
                 <button onClick={()=>remove(id)} type="button" className="btn-sml red"><FontAwesomeIcon icon={faX}/></button>  
             </div>
 
-            <div style={{display: "grid", gridTemplateColumns: "1fr 1fr"}}>
+            <div className="post-text-collect-grid">
 
-                <textarea ref={textareaRef} onChange={textAreaUpdateHidden} placeholder="Add text"></textarea>
+                <div>
+                    <textarea ref={textareaRef} onChange={textAreaUpdateHidden} placeholder="Add text"></textarea>
+                </div>
 
-                <div style={{borderLeft:"solid 1px var(--font-col-nav-side-active)"}}>
+                <div>
                 {
                     collectionSelected.length > 0
                         ? <CollectionSelectedList
