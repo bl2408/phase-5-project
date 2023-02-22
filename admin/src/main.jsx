@@ -12,6 +12,7 @@ import userSlice from './Slices/userSlice';
 import { routesList } from './pages/routesList';
 import postsSlice from './Slices/postsSlice';
 import notificationsSlice from './Slices/notificationsSlice';
+import popupSlice from './Slices/popupSlice';
 
 
 const store = configureStore({
@@ -20,6 +21,7 @@ const store = configureStore({
 		user: userSlice,
 		posts: postsSlice,
 		notifications: notificationsSlice,
+		popup: popupSlice,
 	},
 	devTools: true,
 });

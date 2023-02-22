@@ -107,6 +107,7 @@ body.open {
 @media only screen and (max-width: 700px) {
 
     #nav-top,
+    .window-popup,
     #root>main {
         --width-nav-side-current: var(--width-nav-side-closed)
     }
@@ -131,7 +132,7 @@ body.open {
     position: fixed;
 
     left: var(--width-nav-side-current);
-    z-index: 1;
+    z-index: 4;
 }
 
 #nav-side {
@@ -242,7 +243,6 @@ body.open {
 }
 
 .window{
-    
     min-width: 100px;
     min-height: 100px;
 
@@ -252,6 +252,33 @@ body.open {
 
     padding: 26px;
     box-sizing: border-box;
+}
+
+.window-popup{
+    position: absolute;
+    left: var(--width-nav-side-current);
+    top: var(--height-nav-top);
+    box-sizing: border-box;
+
+    width: calc(100% - var(--width-nav-side-current));
+    height: 100%;
+
+    z-index: 3;
+    background-color: rgba(255,255,255, 0.6);
+    backdrop-filter: blur(2px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.window-popup > .window{
+    max-width: 500px;
+    max-height: 800px;
+    overflow: auto;
+    width: max-content;
 }
 
 main{
@@ -307,7 +334,24 @@ select{
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
+    
 }
+.txtarea{
+    border: solid 1px var(--border-col-window);
+    font-size: 1.6rem;
+    font-family: inherit;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none;
+    outline: none;
+}
+
+.txtarea:active{
+    outline: none
+}
+
+
 .date-picker{
     grid-template-columns: 3.5em 1fr 4.5em;
 }

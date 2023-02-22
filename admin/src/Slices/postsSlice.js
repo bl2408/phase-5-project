@@ -24,8 +24,8 @@ export const getPostsAll = createAsyncThunk('posts/all', async (paramsObj, { rej
 });
 
 
-//all posts
-export const getStatusList = createAsyncThunk('posts/statuses', async (paramsObj, { rejectWithValue }) => {
+//all post statuses
+export const getStatusList = createAsyncThunk('posts/statuses', async (_, { rejectWithValue }) => {
 	const response = await fetch(`/api/admin/posts/list/status`, {
 		method: "GET",
 		headers: {

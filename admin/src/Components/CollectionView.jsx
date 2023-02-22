@@ -1,7 +1,9 @@
 import { faCheckSquare, faFolder, faFolderPlus, faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo, useState } from "react";
+import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
+import { open } from "../Slices/popupSlice";
 import CollectionItem from "./CollectionItem";
 
 export default function CollectionView({
@@ -16,6 +18,7 @@ export default function CollectionView({
     const [ collection, setCollection ]                     = useState([])
     const [ collectionSelected, setCollectionSelected ]     = parentListState;
     const [ viewSelected, setViewSelected ]                 = parentViewState;
+    const dispatch = useDispatch()
 
     const loadData = async (url)=>{
         try{
@@ -87,6 +90,12 @@ export default function CollectionView({
         })
     },[collection, collectionSelected])
 
+    const handleCreateCollection = ()=>{
+        dispatch(open("CollectionNew"))
+    };
+
+   
+
     return (
         <div className="collection-viewer">
             <div className="controls">
@@ -95,7 +104,7 @@ export default function CollectionView({
                 <button onClick={()=>setCurrentPath(path=>BASE_PATH)} type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faHome} /></button>
                 {   
                     createNewCollection
-                    ? <button type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faFolderPlus} /></button>
+                    ? <button type="button" className="btn-sml secondary" onClick={handleCreateCollection}><FontAwesomeIcon icon={faFolderPlus} /></button>
                     : null
                 }
                 <button type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faCheckSquare} /></button>

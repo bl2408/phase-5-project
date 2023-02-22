@@ -132,7 +132,7 @@ export default function InputTags({
                     <input 
                         ref={inputRef}
                         type="text" 
-                        placeholder="Enter tag" 
+                        placeholder="Enter tags" 
                         onKeyUp={handleKeyUp} 
                         onKeyDown={e=>{
                             if(e.key === "Enter") { e.preventDefault(); }

@@ -67,4 +67,8 @@ export const countBreaks = (str)=>{
     } 
 };
 
+export const convertToSlug=(str)=>{
+    return str.replace(/\s+/g, '-').toLowerCase();
+}
+
 

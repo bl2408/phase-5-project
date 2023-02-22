@@ -63,4 +63,33 @@ class Admin::ApplicationController < ApplicationController
         
         return {order: order, order_by: order_by, limit: limit, offset: offset}
     end
+
+
+    def set_tags target
+        if params[:tags]
+            # find and add tags
+            params[:tags].map do |tag|
+                tag = Tag.find_or_create_by(label: tag)
+                Taggable.find_or_create_by(tag: tag, target: target)
+            end
+
+            # remove tags
+            target.tags.map do |target_tag|
+                target.tags.find_by(label: target_tag).destroy unless params[:tags].include? target_tag.label
+            end
+        else
+            target.tags.destroy_all
+        end
+    end
+
+    def set_cat
+        if !params[:category]
+            raise "Category param not found!"
+        end
+        
+        { 
+            category: Category.find_or_create_by(label: params[:category])
+        }
+    end
+
 end

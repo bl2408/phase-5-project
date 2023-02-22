@@ -15,4 +15,19 @@ class Admin::CollectionsController < Admin::ApplicationController
         )
     end
 
+    def create
+        coll = Collection.create!(collection_params)
+        set_tags coll
+        res(
+            data: Admin::CollectionSingleSerializer.new(coll),
+            status: :ok
+        )
+    end
+
+    private
+
+    def collection_params
+        params.require(:collection).permit(:label, :description, :slug)
+    end
+
 end
