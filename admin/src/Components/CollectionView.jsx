@@ -1,6 +1,6 @@
 import { faCheckSquare, faFolder, faFolderPlus, faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
 import { open } from "../Slices/popupSlice";
@@ -19,6 +19,7 @@ export default function CollectionView({
     const [ collectionSelected, setCollectionSelected ]     = parentListState;
     const [ viewSelected, setViewSelected ]                 = parentViewState;
     const dispatch = useDispatch()
+    const contentsDivRef = useRef();
 
     const loadData = async (url)=>{
         try{
@@ -94,7 +95,26 @@ export default function CollectionView({
         dispatch(open("CollectionNew"))
     };
 
+    const handleSelectAll = ()=>{ 
+        
+        const currentCollectionUniqIds = collection.map(col=>{
+            const { id, label, display_type } = col;
+            const uniqId =  `${display_type}-${id}-${label}`;
+            return ({uniqId, id, label, display_type})
+        });
    
+        const containsAll = currentCollectionUniqIds.every((a)=>collectionSelected.find(b=>b.uniqId === a.uniqId));
+
+        contentsDivRef.current.querySelectorAll(".collection-button input[type='checkbox']").forEach(el=>{
+            if(containsAll){
+                el.click()
+            }else{
+                if(!el.checked){
+                    el.click()
+                }
+            }
+        });
+    };
 
     return (
         <div className="collection-viewer">
@@ -107,9 +127,18 @@ export default function CollectionView({
                     ? <button type="button" className="btn-sml secondary" onClick={handleCreateCollection}><FontAwesomeIcon icon={faFolderPlus} /></button>
                     : null
                 }
-                <button type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faCheckSquare} /></button>
+                {
+                    currentPath !== BASE_PATH
+                        ? <button onClick={handleSelectAll} type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faCheckSquare} /></button>
+                        : null
+                }
+                {
+                    currentPath === BASE_PATH && selectableFolders
+                        ? <button onClick={handleSelectAll} type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faCheckSquare} /></button>
+                        : null
+                }
             </div>
-            <div className="contents">
+            <div ref={contentsDivRef} className="contents">
                 {displayCollection}
             </div>
         </div>
