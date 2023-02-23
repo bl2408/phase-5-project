@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 	open: false,
 	component: "",
+	data: {}
 };
 
 export const popupSlice = createSlice({
@@ -10,11 +11,14 @@ export const popupSlice = createSlice({
 	initialState,
 	reducers:{
 		open:(state, action)=>{
-			state.open = true;
-			state.component = action.payload
+			state.open = true,
+			state.component = action.payload.component,
+			state.data = action.payload.data?? {}
 		},
 		close:(state)=>{
-			state.open = false;
+			state.open = false,
+			state.component = '',
+			state.data = {}
 		}
 	}
 });

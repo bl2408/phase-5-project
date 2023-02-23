@@ -1,17 +1,17 @@
 import { lazy } from "react";
-import { useDispatch } from "react-redux";
-import { close } from "../Slices/popupSlice";
+import { usePopup } from "../Hooks/usePopup";
 
-const CollectionNew = lazy(()=>import("../Components/CollectionNew"))
+const CollectionNew = lazy(()=>import("../Components/CollectionNew"));
+const ItemDelete = lazy(()=>import("../Components/ItemDelete"));
 
 export default function WindowPopup({
     component
 }){
 
-    const dispatch = useDispatch()
+    const popup = usePopup()
 
     const handleClose=()=>{
-        dispatch(close())
+        popup({open:false})
     };
 
     const displayComponent=()=>{
@@ -19,6 +19,8 @@ export default function WindowPopup({
         switch(component){
             case "CollectionNew":
                 return <CollectionNew close={handleClose} />
+            case "ItemDelete":
+                return <ItemDelete close={handleClose}/>
         }
 
     };

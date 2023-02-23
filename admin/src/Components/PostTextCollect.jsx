@@ -42,7 +42,6 @@ export default function PostTextCollect({id, t="textcollect", bn="", v={t: "", c
     };
 
     useEffect(()=>{
-        console.log(obj.current.v)
         obj.current.v = { c: collectionSelected, t: obj.current.v.t}
         hiddenRef.current.value = JSON.stringify(obj.current)
     },[collectionSelected]);

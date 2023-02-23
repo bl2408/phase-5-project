@@ -9,12 +9,12 @@ import { validSession } from "./Slices/userSlice";
 
 
 const Notifications = lazy(()=>import("./Notifications/Notifications"))
-const Popup = lazy(()=>import("./Windows/WindowPopup"))
+const WindowPopup = lazy(()=>import("./Windows/WindowPopup"))
 
 function App() {
 
 	const user = useSelector(state => state.user);
-	const popup = useSelector(state => state.popup);
+	const popupState = useSelector(state => state.popup);
 	const dispatch = useDispatch();
 
 	const checkSession = async ()=>{
@@ -54,8 +54,8 @@ function App() {
 					<NavSide />
 					<NavTop />
 					<Notifications />
-					{	popup.open
-							? <Popup component={popup.component}/>
+					{	popupState.open
+							? <WindowPopup {...popupState} />
 							: null
 					}
 					<main>

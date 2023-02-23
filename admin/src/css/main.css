@@ -736,6 +736,12 @@ button{
     margin: 10px 0;
 }
 
+.right-controls{
+    display: flex;
+    gap: 5px;
+    justify-content: flex-end;
+}
+
 
 .loader::before{
     content: '';

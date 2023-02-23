@@ -16,6 +16,7 @@ import InputCategory from "../Components/InputCategory";
 import { useNotif } from "../Hooks/useNotif";
 import DatePicker from "../Components/DatePicker";
 import TimePicker from "../Components/TimePicker";
+import { usePopup } from "../Hooks/usePopup";
 
 const PostTextArea = lazy(() => import("../Components/PostTextArea"))
 const PostCollectionArea = lazy(() => import("../Components/PostCollectionArea"))
@@ -56,6 +57,7 @@ export default function Post() {
     const { id: post_id }                   = useParams()
     const form                              = useRef();
     const notif                             = useNotif()
+    const popup                             = usePopup()
     const [postState, setPostState]         = useState({});
     const [content, setContent]             = useState([]);
 
@@ -216,6 +218,25 @@ export default function Post() {
         })
     }
 
+    const handleDeletePost = ()=>{
+
+        popup({
+            open:true,
+            component: "ItemDelete",
+            data: {
+                itemType: "post",
+                typeUrl: "posts",
+                returnUrl: "/posts",
+                items: [
+                    {
+                        title: postState.title,
+                        id: post_id
+                    }
+                ]
+            }
+        })
+
+    };
 
     return (
         <form ref={form} onSubmit={handleSubmit} className="grid-2">
@@ -235,7 +256,7 @@ export default function Post() {
                     <button className="btn primary">{!!post_id ? "Update" : "Create"}</button>
                     {
                         !!post_id 
-                            ? <button type="button" className="btn red">Delete</button>
+                            ? <button type="button" className="btn red" onClick={handleDeletePost}>Delete</button>
                             : null
                     }
                     

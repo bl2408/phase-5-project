@@ -11,8 +11,10 @@ Rails.application.routes.draw do
     get "/valid", to: "auth#render_user"
 
     resources :posts
+    delete "/posts/batch", to: "posts#destroy"
+
+
     resources :tags, param: :slug
-    # resources :collections, param: :slug 
 
     resources :files, controller: :stored_files, only: [ :show]
 

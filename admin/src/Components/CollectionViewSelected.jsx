@@ -29,7 +29,6 @@ export default function CollectionViewSelected({parentViewState}){
             }
 
             setViewing(state=>data.data)
-            console.log(viewing)
 
         }catch(err){
             console.log(err)

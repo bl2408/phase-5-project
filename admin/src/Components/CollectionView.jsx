@@ -1,9 +1,8 @@
 import { faCheckSquare, faFolder, faFolderPlus, faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { v4 as uuid } from "uuid";
-import { open } from "../Slices/popupSlice";
+import { usePopup } from "../Hooks/usePopup";
 import CollectionItem from "./CollectionItem";
 
 export default function CollectionView({
@@ -18,8 +17,8 @@ export default function CollectionView({
     const [ collection, setCollection ]                     = useState([])
     const [ collectionSelected, setCollectionSelected ]     = parentListState;
     const [ viewSelected, setViewSelected ]                 = parentViewState;
-    const dispatch = useDispatch()
     const contentsDivRef = useRef();
+    const popup = usePopup()
 
     const loadData = async (url)=>{
         try{
@@ -92,7 +91,7 @@ export default function CollectionView({
     },[collection, collectionSelected])
 
     const handleCreateCollection = ()=>{
-        dispatch(open("CollectionNew"))
+        popup({open:true, component:"CollectionNew"})
     };
 
     const handleSelectAll = ()=>{ 

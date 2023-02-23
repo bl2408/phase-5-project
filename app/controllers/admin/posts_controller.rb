@@ -47,6 +47,12 @@ class Admin::PostsController < Admin::ApplicationController
             status: :ok
         )
     end
+
+    def destroy
+        items = !!params[:items] ? params[:items] : params[:id]
+        Post.destroy(items)
+        render :no_content, status: :ok
+    end
     
 
     def status_list

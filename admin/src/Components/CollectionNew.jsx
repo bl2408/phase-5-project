@@ -68,7 +68,7 @@ export default function CollectionNew({
                 <input type="text" name="slug" placeholder="Collection slug" required/>
                 <textarea name="desc" rows="10" className="txtarea" placeholder="Description"></textarea>
                 <InputTags />
-                <div style={{display: "flex", gap:"5px", justifyContent: "flex-end"}}>
+                <div className="right-controls">
                     <button className="btn primary">Create</button>
                     <button onClick={close} type="button" className="btn secondary">Cancel</button>
                 </div>
