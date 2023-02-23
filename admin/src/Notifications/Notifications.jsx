@@ -7,7 +7,7 @@ export default function Notifications(){
 
     return (
         <div id="notifications-main" >
-            <div className="display thin-scroll">   
+            <div className="display thin-scroll ts-dark">   
                 {
                     notifications.map(item=>(
                         <Notif 

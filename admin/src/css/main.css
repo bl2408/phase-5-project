@@ -41,7 +41,8 @@
     --font-col-nav-side-hover: hsl(214, 20%, 95%);
     --font-col-nav-side-active: hsl(210, 6%, 80%);
 
-    --scroll-col-nav-side: rgba(240, 242, 245, 0.5);
+    --scroll-col-light: rgba(240, 242, 245, 0.5);
+    --scroll-col-dark: hsla(216, 20%, 5%, 0.2);
 
 
     margin: 0;
@@ -57,7 +58,6 @@
 
 .thin-scroll {
     scrollbar-width: thin;
-    scrollbar-color: var(--scroll-col-nav-side) transparent;
 }
 
 .thin-scroll::-webkit-scrollbar {
@@ -69,9 +69,22 @@
 }
 
 .thin-scroll::-webkit-scrollbar-thumb {
-    background-color: var(--scroll-col-nav-side);
+    
     border-radius: 20px;
     border: transparent;
+}
+.ts-light{
+    scrollbar-color: var(--scroll-col-light) transparent;
+}
+.ts-light::-webkit-scrollbar-thumb{
+    background-color: var(--scroll-col-light);
+}
+
+.ts-dark{
+    scrollbar-color: var(--scroll-col-dark) transparent;
+}
+.ts-dark::-webkit-scrollbar-thumb{
+    background-color: var(--scroll-col-dark);
 }
 
 
@@ -582,9 +595,27 @@ button{
     box-sizing: border-box;
 }
 
+.post-text-collect-grid .collection-viewer > .contents {
+    min-height: 300px;
+}
+
+.post-text-collect-grid > *{
+    overflow: auto;
+    max-height: 500px;
+}
+
+.post-text-collect-grid .collection-button {
+    width: 100px;
+    height: 100px
+}
+.post-text-collect-grid .collection-button .icon-area{
+    font-size: 4rem;
+}
+
 .collection-viewer > .contents{
     display: flex;
     flex-wrap: wrap;
+    justify-content: flex-start
 }
 
 .collection-button{
@@ -628,7 +659,7 @@ button{
     align-items: center;
     font-size: 8rem;
     width: 100%;
-    height: 90px;
+    /* height: 90px; */
     padding-bottom: 5px;
     box-sizing: border-box;
 }

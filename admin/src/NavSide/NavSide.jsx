@@ -29,7 +29,7 @@ export default function NavSide() {
                 HEADING
             </header>
 
-            <section className="thin-scroll">
+            <section className="thin-scroll ts-light">
                 <ButtonList />
             </section>
 

@@ -58,11 +58,11 @@ export default function PostTextCollect({id, t="textcollect", bn="", v={t: "", c
 
             <div className="post-text-collect-grid">
 
-                <div>
+                <div className="thin-scroll ts-dark">
                     <textarea ref={textareaRef} onChange={textAreaUpdateHidden} placeholder="Add text"></textarea>
                 </div>
 
-                <div>
+                <div className="thin-scroll ts-dark">
                 {
                     collectionSelected.length > 0
                         ? <CollectionSelectedList
