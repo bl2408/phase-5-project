@@ -24,6 +24,12 @@ class Admin::CollectionsController < Admin::ApplicationController
         )
     end
 
+    def destroy
+        items = !!params[:items] ? params[:items] : params[:id]
+        Collection.destroy(items)
+        render :no_content, status: :ok
+    end
+
     private
 
     def collection_params

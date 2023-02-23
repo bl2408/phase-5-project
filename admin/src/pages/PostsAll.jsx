@@ -75,7 +75,7 @@ export default function PostsAll(){
         return (
 
             <div key={id} className="row">
-                <div><input type="checkbox" onClick={e=>handleOnRowCheck(e, {id, title: title})}/></div>
+                <div><input type="checkbox" onClick={e=>handleOnRowCheck(e, {id, label: title})}/></div>
                 <div><Link to={`/posts/${id}`}>{title}</Link></div>
                 <div>{displayDate(publish_datetime)}</div>
                 <div><Link to="/">{category.label}</Link></div>

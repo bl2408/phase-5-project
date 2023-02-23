@@ -62,13 +62,18 @@ export default function ItemDelete({
                     : ""
                 }
                 ?
-            </p>
+            </p>           
             {
                 items.map(item=>(
                     <p key={uuid()}>
-                        <i>"{item.title}"</i>
+                        <i>"{item.label}"</i>
                     </p>
                 ))
+            }
+            {
+                !!popupState.extraMsg
+                    ? <p>{popupState.extraMsg}</p>
+                    : null
             }
             <div className="right-controls">
                 <button onClick={handleDelete} type="button" className="btn red">Delete</button>

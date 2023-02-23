@@ -18,10 +18,15 @@ class Admin::StoredFilesController <  Admin::ApplicationController
         file = file.first
 
         res(
-            # data: file,
             data: file.nil? ? nil : Admin::StoredFileSingleSerializer.new(file),
             status: :ok,
         )
+    end
+
+    def destroy
+        items = !!params[:items] ? params[:items] : params[:id]
+        StoredFile.destroy(items)
+        render :no_content, status: :ok
     end
 
 end

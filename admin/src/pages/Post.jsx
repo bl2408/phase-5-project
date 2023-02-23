@@ -229,7 +229,7 @@ export default function Post() {
                 returnUrl: "/posts",
                 items: [
                     {
-                        title: postState.title,
+                        label: postState.title,
                         id: post_id
                     }
                 ]

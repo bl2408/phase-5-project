@@ -27,7 +27,7 @@ export default function Collections() {
                 {
                     viewSelected?.id 
                         ? <SuspenseLoader>
-                            <CollectionViewSelected 
+                            <CollectionViewSelected
                                 parentViewState={viewSelected}
                             />
                         </SuspenseLoader>
@@ -38,6 +38,7 @@ export default function Collections() {
                     collectionSelected.length > 0 
                         ? <SuspenseLoader>
                             <CollectionSelectedList 
+                                showControls={true}
                                 parentListState={[collectionSelected, setCollectionSelected]} 
                             />
                         </SuspenseLoader>

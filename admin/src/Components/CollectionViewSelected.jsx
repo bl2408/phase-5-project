@@ -1,14 +1,16 @@
-import { faExternalLink, faFile, faFolder } from "@fortawesome/free-solid-svg-icons";
+import { faExternalLink, faFile, faFolder, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
 import Tag from "../Components/Tag";
 import { v4 as uuid } from "uuid";
+import { usePopup } from "../Hooks/usePopup";
 
 export default function CollectionViewSelected({parentViewState}){
 
     const controller = new AbortController()
     const [ viewing, setViewing ] = useState({})
+    const popup = usePopup()
 
     const loadItem = async ()=>{
 
@@ -44,6 +46,44 @@ export default function CollectionViewSelected({parentViewState}){
         }
         return ()=> controller.abort();
     },[parentViewState])
+
+    const handleDelete =()=>{
+        if(viewing.display_type ==="collection"){
+            popup({
+                open:true,
+                component: "ItemDelete",
+                data: {
+                    itemType: "collection",
+                    typeUrl: "collections",
+                    extraMsg: "Files under this collection will also be deleted!",
+                    returnUrl: 0,
+                    items: [
+                        {
+                            id: viewing.id,
+                            label: viewing.label
+                        }
+                    ]
+                }
+            })
+        }else if(viewing.display_type ==="file"){
+            popup({
+                open:true,
+                component: "ItemDelete",
+                data: {
+                    itemType: "file",
+                    typeUrl: "files",
+                    returnUrl: 0,
+                    items: [
+                        {
+                            id: viewing.id,
+                            label: viewing.label
+                        }
+                    ]
+                }
+            })
+        }
+        
+    };
 
     return(
         
@@ -111,6 +151,12 @@ export default function CollectionViewSelected({parentViewState}){
                                     {viewing.tags?.map(tag=><Tag key={uuid()} to="/" {...tag}/>)}
                                 </div>
                             </div> 
+                            <div className="row">
+                                <div>Actions:</div>
+                                <div className="right-controls">
+                                    <button onClick={handleDelete} className="btn-sml red"><FontAwesomeIcon icon={faTrash}/></button>
+                                </div>
+                            </div>
                         </div>                       
                     </div>
                     : <div className="loader"></div>

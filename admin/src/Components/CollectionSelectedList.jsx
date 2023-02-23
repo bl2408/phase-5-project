@@ -1,13 +1,18 @@
 
 import { v4 as uuid } from "uuid";
-import { faFile, faFolder, faX } from "@fortawesome/free-solid-svg-icons";
+import { faFile, faFolder, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import {usePopup} from "../Hooks/usePopup"
 
 
 export default function collectionSelectedList({
     showHeading = true,
+    showControls = false,
     parentListState
 }){
+
+    const popup = usePopup()
 
     const [ collectionSelected, setCollectionSelected ]     = parentListState;
 
@@ -27,19 +32,82 @@ export default function collectionSelectedList({
         setCollectionSelected(state=>state.filter(item=>item.uniqId !== uniqId))
     };
 
+    const collectionsList = sortedList.filter(item=>item.display_type === "collection")
+    const filesList = sortedList.filter(item=>item.display_type === "file")
+
+    const handleDelete =(type)=>{
+        if(type==="collection"){
+            popup({
+                open:true,
+                component: "ItemDelete",
+                data: {
+                    itemType: "collection",
+                    typeUrl: "collections",
+                    extraMsg: "Files under this collection will also be deleted!",
+                    returnUrl: 0,
+                    items: [
+                        ...collectionsList
+                    ]
+                }
+            })
+        }else if(type==="files"){
+            popup({
+                open:true,
+                component: "ItemDelete",
+                data: {
+                    itemType: "file",
+                    typeUrl: "files",
+                    returnUrl: 0,
+                    items: [
+                        ...filesList
+                    ]
+                }
+            })
+        }
+    };
+
     return (
 
         <>
             {showHeading ? <h3>Selections</h3> : null}
             <div className="collection-sl">
                 {
-                    sortedList.filter(item=>item.display_type === "collection").map(item=><CollectionSlItem key={uuid()} {...item} onRemove={handleRemoveSelectedItem} />)
+                    collectionsList.length > 0
+                        ? <>
+                            <div style={{width:"100%"}}><b>Collections:</b></div>
+                            {
+                                collectionsList.map(item=><CollectionSlItem key={uuid()} {...item} onRemove={handleRemoveSelectedItem} />)
+                            }
+                            {
+                                showControls
+                                    ? <div className="right-controls">
+                                        <button onClick={()=>handleDelete("collection")} className="btn-sml red"><FontAwesomeIcon icon={faTrash}/> {collectionsList.length}</button>
+                                    </div>
+                                    : null
+                            }
+                        </>
+                        : null
                 }
             </div>  
             <div className="collection-sl">
                 {
-                    sortedList.filter(item=>item.display_type === "file").map(item=><CollectionSlItem key={uuid()} {...item} onRemove={handleRemoveSelectedItem} />)
+                    filesList.length > 0 
+                        ? <>
+                            <div style={{width:"100%"}}><b>Files:</b></div>
+                            {
+                                filesList.map(item=><CollectionSlItem key={uuid()} {...item} onRemove={handleRemoveSelectedItem} />)
+                            }
+                            {
+                                showControls
+                                    ? <div className="right-controls">
+                                        <button onClick={()=>handleDelete("files")} className="btn-sml red"><FontAwesomeIcon icon={faTrash}/> {filesList.length}</button>
+                                    </div>
+                                    : null
+                            }
+                        </>
+                        : null
                 }
+                
             </div>
 
         </>

@@ -347,6 +347,7 @@ select{
     width: 100%;
     padding: 10px;
     box-sizing: border-box;
+    font-family: inherit;
     
 }
 .txtarea{
@@ -485,6 +486,10 @@ input{
     border: 0;
     border-bottom: solid 1px var(--border-col-window);
     padding: 8px;
+    font-family: inherit;
+}
+textarea{
+    font-family: inherit;
 }
 
 input:focus{
@@ -667,6 +672,10 @@ button{
     max-width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.collection-sl .right-controls{
+    margin-top: 10px;
 }
 
 .collection-sl-item button{
