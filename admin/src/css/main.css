@@ -411,32 +411,46 @@ select{
 
 }
 
-.input-tags .display-list{
+.input-tags .display-list, .file-uploader .display-list{
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
     overflow: hidden;
+}
+.file-uploader .display-list{
+    margin-bottom: 5px;
 }
 
 .input-cat .display-list{
     overflow: hidden;
 }
 
-.input-cat .cat {
+.input-cat .cat{
     display: grid;
     grid-template-columns: 1fr max-content;
     gap:5px;
     background-color: var(--border-col-nav-top);
     padding: 3px;
+    box-sizing: border-box;
 }
 
-.input-tags .tag{
+.input-tags .tag, .file-uploader .file-item {
     display: grid;
-    grid-template-columns: max-content max-content;
+    max-width: 100%;
+    grid-template-columns: auto max-content;
     gap:5px;
     background-color: var(--border-col-nav-top);
     padding: 3px;
+    box-sizing: border-box;
+    
 }
+.input-tags .tag > :first-child,
+.file-uploader .file-item > :first-child{
+    word-wrap: break-word;
+    word-break: break-all;
+}
+
+
 .input-tags .drop-down,
 .input-cat .drop-down{
     position: absolute;   
@@ -462,7 +476,8 @@ select{
 }
 
 .input-tags .tag button,
-.input-cat .cat button{
+.input-cat .cat button,
+.file-uploader .file-item button{
     color: inherit;
     background-color: transparent;
 }
@@ -476,6 +491,38 @@ select{
 .input-cat .dd-item:hover{
     background-color: var(--bg-button-primary-hover);
     color: white;
+}
+
+.file-uploader{
+    font-size: 1.6rem;
+    border: solid 1px var(--border-col-window) !important;
+    border-radius: unset !important;
+    font-family: inherit !important;
+    margin-bottom: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.file-uploader .contents{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px; 
+}
+
+.file-uploader .contents.shrink{
+    display: flex;
+    flex-direction: row;
+    gap: 10px; 
+}
+
+.file-uploader .icon{
+    font-size: 6rem;
+    color: var(--font-col-secondary);
+}
+
+.file-uploader .shrink .icon{
+    font-size: 3rem;
 }
 
 input{

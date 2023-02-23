@@ -23,10 +23,27 @@ class Admin::StoredFilesController <  Admin::ApplicationController
         )
     end
 
+    def update
+        file = StoredFile.find_by(id: params[:id])
+
+        file.update!({**stored_files_params, collection: Collection.find_by(id: params[:collection_id])})
+        set_tags file
+        res(
+            data: Admin::StoredFileSingleSerializer.new(file),
+            status: :ok
+        )
+    end
+
     def destroy
         items = !!params[:items] ? params[:items] : params[:id]
         StoredFile.destroy(items)
         render :no_content, status: :ok
+    end
+
+    private 
+
+    def stored_files_params
+        params.require(:stored_file).permit(:alt_text)
     end
 
 end

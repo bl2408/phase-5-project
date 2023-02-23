@@ -25,7 +25,7 @@ Rails.application.routes.draw do
       resources :files, controller: :stored_files, only: [ :index, :show]
     end
 
-    resources :files, controller: :stored_files, only: [ :destroy]
+    resources :files, controller: :stored_files, only: [ :update, :destroy]
     delete "/files/batch", to: "stored_files#destroy"
 
     get "/posts/list/status", to: "posts#status_list"

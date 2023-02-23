@@ -4,7 +4,7 @@ class Admin::StoredFileSingleSerializer < ActiveModel::Serializer
 
   has_many :tags, serializer: Admin::TagsSerializer
   belongs_to :collection, serializer: Admin::CollectionAllSerializer
-  attributes :id, :label, :type, :url, :display_type
+  attributes :id, :label, :type, :url, :display_type, :alt_text
 
   def display_type
     "file"

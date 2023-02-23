@@ -86,7 +86,11 @@ export default function CollectionViewSelected({parentViewState}){
     };
 
     const handleEdit =()=>{
-        popup({open:true, component:"CollectionNew", data:viewing})
+        if(viewing.display_type ==="collection"){
+            popup({open:true, component:"CollectionNew", data:viewing})
+        } else if(viewing.display_type ==="file"){
+            popup({open:true, component:"File", data:viewing})
+        }
     }
 
     return(
@@ -132,6 +136,10 @@ export default function CollectionViewSelected({parentViewState}){
                                     :<>
                                          <div className="row">
                                             <div>Type:</div><div>{viewing.type}</div>
+                                        </div>
+
+                                        <div className="row">
+                                            <div>Alt:</div><div>{viewing.alt_text}</div>
                                         </div>
 
                                         <div className="row">
