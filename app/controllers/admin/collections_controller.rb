@@ -24,6 +24,16 @@ class Admin::CollectionsController < Admin::ApplicationController
         )
     end
 
+    def update
+        coll = Collection.find_by(id: params[:id])
+        coll.update!(collection_params)
+        set_tags coll
+        res(
+            data: Admin::CollectionSingleSerializer.new(coll),
+            status: :ok
+        )
+    end
+
     def destroy
         items = !!params[:items] ? params[:items] : params[:id]
         Collection.destroy(items)

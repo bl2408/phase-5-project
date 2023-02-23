@@ -305,7 +305,7 @@ export default function Post() {
                 </section>
                 <section>
                     <h3>Tags</h3>
-                    { postState.tags ? <InputTags tags={postState.tags}/> : null}
+                    { postState.tags ? <InputTags tags={postState.tags} /> : null}
                     { postState.tags ? null : <InputTags />}
                 </section>
             </WindowBasic>

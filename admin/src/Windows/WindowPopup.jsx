@@ -1,7 +1,7 @@
 import { lazy } from "react";
 import { usePopup } from "../Hooks/usePopup";
 
-const CollectionNew = lazy(()=>import("../Components/CollectionNew"));
+const CollectionNewEdit = lazy(()=>import("../Components/CollectionNewEdit"));
 const ItemDelete = lazy(()=>import("../Components/ItemDelete"));
 
 export default function WindowPopup({
@@ -18,7 +18,7 @@ export default function WindowPopup({
 
         switch(component){
             case "CollectionNew":
-                return <CollectionNew close={handleClose} />
+                return <CollectionNewEdit close={handleClose} />
             case "ItemDelete":
                 return <ItemDelete close={handleClose}/>
         }

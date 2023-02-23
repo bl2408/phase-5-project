@@ -18,7 +18,7 @@ Rails.application.routes.draw do
 
     resources :files, controller: :stored_files, only: [ :show]
 
-    resources :collections, only: [:destroy]
+    resources :collections, only: [:update, :destroy]
     delete "/collections/batch", to: "collections#destroy"
 
     resources :collections, param: :slug do

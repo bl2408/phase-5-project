@@ -1,4 +1,4 @@
-import { faExternalLink, faFile, faFolder, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faEdit, faExternalLink, faFile, faFolder, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useState } from "react";
 
@@ -85,6 +85,10 @@ export default function CollectionViewSelected({parentViewState}){
         
     };
 
+    const handleEdit =()=>{
+        popup({open:true, component:"CollectionNew", data:viewing})
+    }
+
     return(
         
         <>
@@ -154,6 +158,7 @@ export default function CollectionViewSelected({parentViewState}){
                             <div className="row">
                                 <div>Actions:</div>
                                 <div className="right-controls">
+                                    <button onClick={handleEdit} className="btn-sml secondary"><FontAwesomeIcon icon={faEdit}/></button>
                                     <button onClick={handleDelete} className="btn-sml red"><FontAwesomeIcon icon={faTrash}/></button>
                                 </div>
                             </div>

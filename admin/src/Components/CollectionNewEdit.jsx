@@ -1,12 +1,14 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { convertToSlug, isIterable } from "../fns";
 import InputTags from "./InputTags";
 
-export default function CollectionNew({
+export default function CollectionNewEdit({
     close
 }){
 
+    const popupState = useSelector(state=>state.popup)
     const navigate = useNavigate();
 
     const formRef = useRef()
@@ -28,8 +30,8 @@ export default function CollectionNew({
         }
 
         try{
-            const response = await fetch("/api/admin/collections",{
-                method: "POST",
+            const response = await fetch(`/api/admin/collections/${editMode ? popupState.data.id : ""}`,{
+                method: editMode ? "PATCH" : "POST",
                 headers:{
                     "Content-Type":"application/json"
                 },
@@ -59,17 +61,45 @@ export default function CollectionNew({
         formRef.current.slug.value = convertToSlug(value)
     };
 
+    const editMode = JSON.stringify(popupState.data) !== "{}"
+
+    useEffect(()=>{
+
+        if(editMode){
+
+            const { label, slug, description } = popupState.data
+
+            formRef.current.label.value = label
+            formRef.current.slug.value = slug
+            formRef.current.desc.value = description
+        }
+
+    },[])
+
     return (
 
         <div>
-            <h2>New Collection</h2>
+            <h2>
+                {
+                    editMode 
+                        ? "Edit"
+                        : "New"
+                } Collection</h2>
             <form ref={formRef} onSubmit={handleSubmit}>
                 <input onChange={handleLabelChange} type="text" name="label" placeholder="Collection label" required/>
                 <input type="text" name="slug" placeholder="Collection slug" required/>
                 <textarea name="desc" rows="10" className="txtarea" placeholder="Description"></textarea>
-                <InputTags />
+
+                <InputTags tags={popupState.data.tags} />
+
                 <div className="right-controls">
-                    <button className="btn primary">Create</button>
+                    <button className="btn primary">
+                        {
+                            editMode
+                                ? "Update"
+                                : "Create"
+                        }
+                    </button>
                     <button onClick={close} type="button" className="btn secondary">Cancel</button>
                 </div>
                 
