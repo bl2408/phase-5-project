@@ -31,7 +31,7 @@ class Admin::PostsController < Admin::ApplicationController
 
     def create
         post = @user.posts.create!({**post_params, **set_cat})
-        set_tags @post
+        set_tags post
         res(
             data: Admin::PostSingleSerializer.new(post),
             status: :ok
@@ -41,7 +41,7 @@ class Admin::PostsController < Admin::ApplicationController
     def update
         post = Post.find_by(id: params[:id])
         post.update!({**post_params, **set_cat})
-        set_tags @post
+        set_tags post
         res(
             data: Admin::PostSingleSerializer.new(post),
             status: :ok
