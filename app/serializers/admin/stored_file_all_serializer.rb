@@ -24,7 +24,10 @@ class Admin::StoredFileAllSerializer < ActiveModel::Serializer
     #   # url2: object.file.url
     # }
     # rails_representation_url(object.file)
-    url_for(object.file)
+
+    # pp object.file.attached?
+    # pp object.file
+    url_for(object.file) if object.file.attached?
     
   end
 

@@ -4,14 +4,14 @@ class Admin::StoredFileSingleSerializer < ActiveModel::Serializer
 
   has_many :tags, serializer: Admin::TagsSerializer
   belongs_to :collection, serializer: Admin::CollectionAllSerializer
-  attributes :id, :label, :type, :url, :display_type, :alt_text
+  attributes :id, :label, :type, :url, :display_type, :alt_text, :internal_label
 
   def display_type
     "file"
   end
 
   def url
-    url_for(object.file)
+    url_for(object.file) if object.file.attached?
   end
 
 end

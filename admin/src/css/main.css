@@ -448,7 +448,11 @@ select{
     
 }
 .input-tags .tag > :first-child,
-.file-uploader .file-item > :first-child{
+.file-uploader .file-item > :first-child,
+.collection-button > .text-area,
+.collection-view *,
+.window-popup h2,
+.collection-sl-item{
     word-wrap: break-word;
     word-break: break-all;
 }
@@ -661,26 +665,31 @@ button{
 
 .post-text-collect-grid .collection-button {
     width: 100px;
-    height: 100px
+    min-height: 100px
 }
 .post-text-collect-grid .collection-button .icon-area{
     font-size: 4rem;
+    height: 60px;
 }
 
 .collection-viewer > .contents{
     display: flex;
     flex-wrap: wrap;
-    justify-content: flex-start
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 .collection-button{
     background-color: transparent;
     width: 130px;
-    height: 130px;
+    min-height: 130px;
     color: var(--font-col-secondary);
     box-sizing: border-box;
     border: solid 1px transparent;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 .collection-button:focus{
     background-color: rgba(93, 169, 255, 0.20);
@@ -705,7 +714,7 @@ button{
     top:0; bottom: 0; left:0; right: 0;
 }
 .collection-button > .text-area{
-    height: 30px;
+    min-height: 30px;
     box-sizing: border-box;
 }
 .collection-button > .icon-area{
@@ -714,7 +723,7 @@ button{
     align-items: center;
     font-size: 8rem;
     width: 100%;
-    /* height: 90px; */
+    height: 90px;
     padding-bottom: 5px;
     box-sizing: border-box;
 }

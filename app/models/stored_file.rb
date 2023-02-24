@@ -9,6 +9,10 @@ class StoredFile < ApplicationRecord
   has_one_attached :file
 
   def label
+    "file-#{id}"
+  end
+
+  def internal_label
     file.filename
   end
   

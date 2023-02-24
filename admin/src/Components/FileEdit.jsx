@@ -4,6 +4,7 @@ import InputTags from "./InputTags";
 import { v4 as uuid } from "uuid";
 import { isIterable } from "../fns";
 import InputFileUpload from "./InputFileUpload";
+import { useNavigate } from "react-router-dom";
 
 
 export default function FileEdit({
@@ -13,6 +14,7 @@ export default function FileEdit({
     const formRef = useRef()
     const { id, label, tags, collection, alt_text } = useSelector(state=>state.popup.data)
     const [ collectionList, setCollectionList ] = useState([])
+    const navigate = useNavigate()
 
     const getCollectionList = async ()=>{
         try{
@@ -46,31 +48,28 @@ export default function FileEdit({
 
     const handleSubmit  = async e =>{
         e.preventDefault()
+        const formData = new FormData();
 
-        console.log(formRef.current.fileUpload.files)
+        formData.append("collection_id",formRef.current.selectCollection.value)
+        formData.append("alt_text",formRef.current.altText.value)
 
-        return
-
-        const formObj = {
-            collection_id: formRef.current.selectCollection.value,
-            alt_text: formRef.current.altText.value,
-        }
+        const filesInput = formRef.current.fileUpload.files;
+        [...filesInput].forEach(file=>formData.append("file[]", file));
 
         if(!!formRef.current["tags[]"]){
-            formObj.tags = isIterable(formRef.current["tags[]"]) 
-                ? [...formRef.current["tags[]"]].map(a=>a.value) 
-                : [formRef.current["tags[]"].value]
 
-            formObj.tags = [ ...new Set(formObj.tags) ];
+            if(isIterable(formRef.current["tags[]"]) ){
+                [...formRef.current["tags[]"]].forEach(tag=>formData.append("tags[]", tag.value));
+            }else{
+                formData.append("tags[]", formRef.current["tags[]"].value)
+            }
+            
         }
-
+        
         try{
             const response = await fetch(`/api/admin/files/${id}`,{
                 method: "PATCH",
-                headers:{
-                    "Content-Type":"application/json"
-                },
-                body: JSON.stringify(formObj)
+                body: formData
             })
 
             const data = await response.json()
@@ -81,10 +80,8 @@ export default function FileEdit({
                 })
             }
 
-            console.log(data)
-
-            // navigate(0)
-            // close()
+            navigate(0)
+            close()
 
         }catch(err){
             console.log(err)
@@ -93,7 +90,6 @@ export default function FileEdit({
 
     }
 
-    const fileTypes = ["JPG", "PNG","GIF","JPEG"]
 
     return (
 
@@ -104,8 +100,7 @@ export default function FileEdit({
                 <input type="text" name="altText" placeholder="Alternate text"/>
 
                 <InputFileUpload 
-                    multiple={true}
-                    fileTypes={fileTypes}
+                    multiple={false}
                     name="fileUpload"
                 />
 

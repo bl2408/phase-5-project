@@ -134,7 +134,10 @@ export default function CollectionViewSelected({parentViewState}){
                                         </>
                                     )  
                                     :<>
-                                         <div className="row">
+                                        <div className="row">
+                                            <div>file name:</div><div>{viewing.internal_label}</div>
+                                        </div>
+                                        <div className="row">
                                             <div>Type:</div><div>{viewing.type}</div>
                                         </div>
 

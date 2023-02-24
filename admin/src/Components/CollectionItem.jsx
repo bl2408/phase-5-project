@@ -1,3 +1,5 @@
+import { faFileCircleQuestion } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useEffect, useRef } from "react";
 
 
@@ -49,7 +51,9 @@ return (
 
         </div>
         <div className="icon-area">
-            {icon}
+            {
+                icon ? icon : <FontAwesomeIcon icon={faFileCircleQuestion} />
+            }
         </div>
         <div className="text-area">
             {label}

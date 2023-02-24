@@ -58,7 +58,7 @@ export default function InputFileUpload({
                 multiple={multiple}
                 fileOrFiles={null}
                 handleChange={(files)=>{
-                    setCurrentFiles(state=>[...files])
+                    setCurrentFiles(state=>(multiple ? [...files] :[files]))
                 }}
             >
                 <div className={`contents ${currentFiles.length > 0 ? "shrink" : ""}`}>

@@ -24,10 +24,16 @@ class Admin::StoredFilesController <  Admin::ApplicationController
     end
 
     def update
+
         file = StoredFile.find_by(id: params[:id])
 
-        file.update!({**stored_files_params, collection: Collection.find_by(id: params[:collection_id])})
+        file.update!({
+            alt_text: stored_files_params[:alt_text], 
+            collection: Collection.find_by(id: params[:collection_id])
+        })
         set_tags file
+        set_file file      
+
         res(
             data: Admin::StoredFileSingleSerializer.new(file),
             status: :ok
@@ -43,7 +49,14 @@ class Admin::StoredFilesController <  Admin::ApplicationController
     private 
 
     def stored_files_params
-        params.require(:stored_file).permit(:alt_text)
+        params.permit(:id, :alt_text, :collection_id, file:[], tags:[])
+    end
+
+    def set_file file
+        if !!params[:file] && !!params[:file][0]
+            file.file.attach(params[:file][0])
+        end
+
     end
 
 end

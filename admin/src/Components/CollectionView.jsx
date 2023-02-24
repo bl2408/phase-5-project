@@ -60,7 +60,7 @@ export default function CollectionView({
 
         return collection.map(col=>{
             
-            const { id, label, display_type } = col;
+            const { id, label, display_type, type } = col;
             const uniqId = `${display_type}-${id}-${label}`
 
 
@@ -71,7 +71,7 @@ export default function CollectionView({
                 col.selectable = selectableFolders  
             }else if(col.display_type==="file"){
                 col.onDblClick =()=>console.log(uniqId);
-                col.icon = <img src={col.url} loading="lazy"/>;
+                col.icon = type.includes("image") ? <img src={col.url} loading="lazy"/> : null;
             }
 
             return(
