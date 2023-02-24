@@ -75,10 +75,10 @@ class Admin::ApplicationController < ApplicationController
 
             # remove tags
             target.tags.map do |target_tag|
-                target.tags.find_by(label: target_tag).destroy unless params[:tags].include? target_tag.label
+                target.taggables.find_by(tag: target_tag).destroy unless params[:tags].include? target_tag.label
             end
         else
-            target.tags.destroy_all
+            target.taggables.destroy_all
         end
     end
 
