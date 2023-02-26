@@ -1,5 +1,6 @@
 import { lazy } from "react";
 import { createBrowserRouter } from "react-router-dom";
+import Refresh from "../Components/Refresh";
 import SuspenseLoader from "../Components/SuspenseLoader";
 
 const App = lazy(() => import('../App'));
@@ -32,6 +33,14 @@ export const routesList = createBrowserRouter([
 			{
 				path: "collections/",
 				element: <SuspenseLoader element={<Collections />} />
+			},
+			{
+				path: "collections/:id",
+				element: <SuspenseLoader element={<Collections />} />
+			},
+			{
+				path: "refresh/",
+				element: <Refresh />
 			},
 		],
 		errorElement: <SuspenseLoader element={<ErrorPage />} />

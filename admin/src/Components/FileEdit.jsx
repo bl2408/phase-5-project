@@ -80,7 +80,7 @@ export default function FileEdit({
                 })
             }
 
-            navigate(0)
+            navigate("/refresh", {replace: false, state: {next: `/collections/${data.data.collection.slug}`}})
             close()
 
         }catch(err){

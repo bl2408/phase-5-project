@@ -3,7 +3,9 @@ class Admin::StoredFilesController <  Admin::ApplicationController
     def index
 
         files = StoredFile.all
-        files = files.where(collection: Collection.find_by(slug: params[:collection_slug])) if params[:collection_slug]
+        coll = Collection.find_by(slug: params[:collection_slug])
+        return res_err_nf if coll.nil?
+        files = files.where(collection: coll) if params[:collection_slug]
 
         res(
             data: files.map { |file| Admin::StoredFileAllSerializer.new(file) },
@@ -20,6 +22,21 @@ class Admin::StoredFilesController <  Admin::ApplicationController
         res(
             data: file.nil? ? nil : Admin::StoredFileSingleSerializer.new(file),
             status: :ok,
+        )
+    end
+
+    def create
+        # puts "#########################################"
+        # pp params 
+        coll = Collection.find_by(slug: params[:collection_slug])
+
+        return res_err_nf if coll.nil?
+        file = StoredFile.create(collection: coll)
+        set_file file
+
+        res(
+            data: Admin::StoredFileSingleSerializer.new(file),
+            status: :ok
         )
     end
 

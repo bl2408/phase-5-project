@@ -52,18 +52,6 @@ export default function PostsAll(){
 
     };
 
-    // const templateRow =(id, items)=>{
-    //     return (
-    //         <div key={id} className="row">
-    //             <div><input type="checkbox" onClick={e=>handleOnRowCheck({id, title: items[0]})}/></div>
-    //             <div>{items[0]}</div>
-    //             <div>{items[1]}</div>
-    //             <div>{items[2]}</div>
-    //             <div>{items[3]}</div>
-    //         </div>
-    //     );
-    // };
-
     const displayPosts = posts.items?.map(post =>{
         const { id, title, status, publish_datetime, slug, category, tags } = post;
         const tagsDisplay = (
@@ -78,13 +66,11 @@ export default function PostsAll(){
                 <div><input type="checkbox" onClick={e=>handleOnRowCheck(e, {id, label: title})}/></div>
                 <div><Link to={`/posts/${id}`}>{title}</Link></div>
                 <div>{displayDate(publish_datetime)}</div>
-                <div><Link to="/">{category.label}</Link></div>
+                <div><Link to="/">{category?.label}</Link></div>
                 <div>{tagsDisplay}</div>
             </div>
 
         );
-
-        // return templateRow(id, [linkTitle, displayDate(publish_datetime), cat, tagsDisplay/*controls*/]); 
     });
 
     const handleTitlesSort =(title)=>{
@@ -105,7 +91,7 @@ export default function PostsAll(){
             data: {
                 itemType: "post",
                 typeUrl: "posts",
-                returnUrl: 0,
+                returnUrl: "/posts",
                 items: [
                     ...selectedPosts
                 ]

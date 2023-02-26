@@ -39,8 +39,7 @@ export default function ItemDelete({
                     cause: data.errors
                 })
             }
-
-            navigate(popupState.returnUrl)
+            navigate("/refresh", {replace: false, state: {next: popupState.returnUrl}})
             close()
 
         }catch(err){

@@ -18,7 +18,7 @@ export default function WindowPopup({
     const displayComponent=()=>{
 
         switch(component){
-            case "CollectionNew":
+            case "CollectionNewEdit":
                 return <CollectionNewEdit close={handleClose} />
             case "ItemDelete":
                 return <ItemDelete close={handleClose}/>

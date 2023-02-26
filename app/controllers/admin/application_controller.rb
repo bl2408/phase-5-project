@@ -5,6 +5,9 @@ class Admin::ApplicationController < ApplicationController
     def res_err_ue msg
         res_err msg: msg, status: :unprocessable_entity
     end 
+    def res_err_nf 
+        res_err msg: ["Not found!"], status: :not_found
+    end 
 
     def res_err_ua
         res_err msg: ["Access denied"], status: :unauthorized

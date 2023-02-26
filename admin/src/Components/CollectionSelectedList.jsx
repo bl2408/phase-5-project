@@ -4,6 +4,7 @@ import { faFile, faFolder, faTrash, faX } from "@fortawesome/free-solid-svg-icon
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {usePopup} from "../Hooks/usePopup"
+import { useParams } from "react-router-dom";
 
 
 export default function collectionSelectedList({
@@ -13,6 +14,7 @@ export default function collectionSelectedList({
 }){
 
     const popup = usePopup()
+    const { id } = useParams()
 
     const [ collectionSelected, setCollectionSelected ]     = parentListState;
 
@@ -44,20 +46,21 @@ export default function collectionSelectedList({
                     itemType: "collection",
                     typeUrl: "collections",
                     extraMsg: "Files under this collection will also be deleted!",
-                    returnUrl: 0,
+                    returnUrl: "/collections",
                     items: [
                         ...collectionsList
                     ]
                 }
             })
         }else if(type==="files"){
+            console.log(id)
             popup({
                 open:true,
                 component: "ItemDelete",
                 data: {
                     itemType: "file",
                     typeUrl: "files",
-                    returnUrl: 0,
+                    returnUrl: `/collections/${id}`,
                     items: [
                         ...filesList
                     ]

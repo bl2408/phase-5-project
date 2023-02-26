@@ -22,6 +22,8 @@
     --bg-button-red-hover: #e16a6a;
     --bg-button-red-active: #975252;
 
+    --bg-button-green: hsl(138, 57%, 56%);
+
     --border-col-nav-top: #dededf;
     --border-col-nav-side: #53657a;
     --border-col-window: #d1d5d9;
@@ -297,6 +299,77 @@ body.open {
     box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
 }
 
+.window-uploader{
+    width: 320px;
+    height: 300px;
+
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 3;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: max-content 1fr;
+    
+}
+
+.window-uploader.collapsed{
+    height: 10px;
+}
+.window-uploader .summary{
+    width: 100%;
+    padding: 5px;
+}
+
+.window-uploader.collapsed .contents{
+    overflow: hidden;
+}
+
+.window-uploader .contents{
+    padding: 10px 0;
+    box-sizing: border-box;
+    overflow: auto;
+}
+.window-uploader .contents .row{
+    width: 100%;
+    min-height: 40px;
+    display: grid;
+    grid-template-columns: 1fr 50px;
+    align-items: center;
+    padding: 4px 2px 4px 10px;
+    box-sizing: border-box;
+}
+.window-uploader .contents .row > :last-child{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--bg-button-green);
+}
+
+.error-red{
+    color: var(--bg-button-red);
+}
+
+.success-green{
+    color: var(--bg-button-green);
+}
+
+.window-uploader .contents .row:nth-child(odd){
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.window-uploader .title-area{
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr max-content;
+}
+
+.window-uploader .contents .row-title{
+    display: grid;
+    grid-template-columns: 30px 1fr;
+}
+
 main{
     display: flex;
     flex-wrap: wrap;
@@ -515,12 +588,15 @@ select{
     flex-direction: column;
     align-items: center;
     gap: 10px; 
+    margin: 10px 0;
 }
 
 .file-uploader .contents.shrink{
     display: flex;
     flex-direction: row;
     gap: 10px; 
+    justify-content: center;
+    margin: 20px 0;
 }
 
 .file-uploader .icon{
@@ -759,7 +835,6 @@ button{
 .block-area textarea{
     width: 100%;
     min-height: 50px;
-    /* height: max-content; */
     padding: 20px;
     box-sizing: border-box;
     outline: 0;

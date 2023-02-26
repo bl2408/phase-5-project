@@ -56,7 +56,7 @@ export default function CollectionViewSelected({parentViewState}){
                     itemType: "collection",
                     typeUrl: "collections",
                     extraMsg: "Files under this collection will also be deleted!",
-                    returnUrl: 0,
+                    returnUrl: "/collections",
                     items: [
                         {
                             id: viewing.id,
@@ -66,13 +66,14 @@ export default function CollectionViewSelected({parentViewState}){
                 }
             })
         }else if(viewing.display_type ==="file"){
+            console.log(viewing)
             popup({
                 open:true,
                 component: "ItemDelete",
                 data: {
                     itemType: "file",
                     typeUrl: "files",
-                    returnUrl: 0,
+                    returnUrl: viewing.collection.slug,
                     items: [
                         {
                             id: viewing.id,
@@ -87,7 +88,7 @@ export default function CollectionViewSelected({parentViewState}){
 
     const handleEdit =()=>{
         if(viewing.display_type ==="collection"){
-            popup({open:true, component:"CollectionNew", data:viewing})
+            popup({open:true, component:"CollectionNewEdit", data:viewing})
         } else if(viewing.display_type ==="file"){
             popup({open:true, component:"File", data:viewing})
         }

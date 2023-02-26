@@ -4,12 +4,17 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { v4 as uuid } from "uuid";
 import { usePopup } from "../Hooks/usePopup";
 import CollectionItem from "./CollectionItem";
+import InputFileUpload from "../Components/InputFileUpload"
+import { useNavigate, useParams } from "react-router-dom";
+
 
 export default function CollectionView({
     selectableFolders=true,
     createNewCollection =true, 
     parentListState, 
-    parentViewState
+    parentViewState,
+    showUpload=false,
+    useLocationPath=false,
 }){
     
     const BASE_PATH = "/api/admin/collections"
@@ -17,8 +22,10 @@ export default function CollectionView({
     const [ collection, setCollection ]                     = useState([])
     const [ collectionSelected, setCollectionSelected ]     = parentListState;
     const [ viewSelected, setViewSelected ]                 = parentViewState;
-    const contentsDivRef = useRef();
-    const popup = usePopup()
+    const contentsDivRef                                    = useRef();
+    const popup                                             = usePopup()
+    const navigate                                          = useNavigate();
+    const { id }                                            = useParams()
 
     const loadData = async (url)=>{
         try{
@@ -32,11 +39,24 @@ export default function CollectionView({
             }
 
             setCollection(state=>data.data)
+            setViewSelected(state=>{})
 
         }catch(err){
             console.log(err)
+            if(useLocationPath){ navigate(`/collections`) }
         }
     };
+
+    useEffect(()=>{
+        if(useLocationPath){
+            if(!!id){
+                setCurrentPath(path=>`${BASE_PATH}/${id}/files`);
+            }else{
+                setCurrentPath(path=>BASE_PATH);
+            }
+        }
+    },[id])
+
     useEffect(()=>{
         loadData(currentPath)
     },[currentPath])
@@ -52,7 +72,6 @@ export default function CollectionView({
 
     const handleOnSelect =(obj)=>{
         setViewSelected(state=>obj);
-
     };
 
     const displayCollection = useMemo(()=>{
@@ -65,13 +84,17 @@ export default function CollectionView({
 
 
             if(col.display_type==="collection"){   
-                col.onDblClick =()=>setCurrentPath(path=>`${BASE_PATH}/${col.slug}/files`);
+                if(useLocationPath){
+                    col.onDblClick =()=>navigate(`/collections/${col.slug}`)
+                }else{
+                    col.onDblClick =()=>setCurrentPath(path=>`${BASE_PATH}/${col.slug}/files`);
+                }
                 col.onClick = {slug: col.slug};
                 col.icon = <FontAwesomeIcon icon={faFolder} />;
                 col.selectable = selectableFolders  
             }else if(col.display_type==="file"){
                 col.onDblClick =()=>console.log(uniqId);
-                col.icon = type.includes("image") ? <img src={col.url} loading="lazy"/> : null;
+                col.icon = type?.includes("image") ? <img src={col.url} loading="lazy"/> : null;
             }
 
             return(
@@ -91,7 +114,7 @@ export default function CollectionView({
     },[collection, collectionSelected])
 
     const handleCreateCollection = ()=>{
-        popup({open:true, component:"CollectionNew"})
+        popup({open:true, component:"CollectionNewEdit"})
     };
 
     const handleSelectAll = ()=>{ 
@@ -117,10 +140,28 @@ export default function CollectionView({
 
     return (
         <div className="collection-viewer">
+            {
+                currentPath !== BASE_PATH && showUpload
+                    ?<div style={{width:"100%"}}>
+                        <h3>
+                            Upload to:<br />
+                            {
+                                !!id ? id.split("-").join(" ") : ""
+                            }
+                        </h3>
+                        <InputFileUpload 
+                            multiple={true}
+                            name="fileUpload"
+                            sendToUploader={true}
+                            collectionSlug={id}
+                        />
+                    </div>
+                    : null
+            }
             <div className="controls">
                 <input placeholder="Search" type="search" name="collection-search" style={{display:"inline"}}/>
                 <button type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faSearch} /></button>
-                <button onClick={()=>setCurrentPath(path=>BASE_PATH)} type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faHome} /></button>
+                <button onClick={()=>useLocationPath ? navigate(`/collections`): setCurrentPath(path=>BASE_PATH)} type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faHome} /></button>
                 {   
                     createNewCollection
                     ? <button type="button" className="btn-sml secondary" onClick={handleCreateCollection}><FontAwesomeIcon icon={faFolderPlus} /></button>
@@ -137,7 +178,7 @@ export default function CollectionView({
                         : null
                 }
             </div>
-            <div ref={contentsDivRef} className="contents">
+            <div ref={contentsDivRef} className="contents">                    
                 {displayCollection}
             </div>
         </div>

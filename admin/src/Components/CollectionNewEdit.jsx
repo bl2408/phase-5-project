@@ -7,7 +7,6 @@ import InputTags from "./InputTags";
 export default function CollectionNewEdit({
     close
 }){
-
     const popupState = useSelector(state=>state.popup)
     const navigate = useNavigate();
 
@@ -46,7 +45,7 @@ export default function CollectionNewEdit({
                 })
             }
 
-            navigate(0)
+            navigate("/refresh", {replace: false, state: {next: "/collections"}})
             close()
 
         }catch(err){

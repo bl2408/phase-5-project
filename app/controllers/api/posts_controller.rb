@@ -45,8 +45,6 @@ class Api::PostsController < Api::ApplicationController
             data: post,
             status: :ok
         )
-
-
     end
 
     private
@@ -54,8 +52,9 @@ class Api::PostsController < Api::ApplicationController
     def parse_collection value
         value.map do | coll_item |
             sf = StoredFile.find_by(id: coll_item["id"])
-            {alt_text: sf.alt_text, url: sf.file.url, tags: sf.tags.as_json(only: [:label, :slug])}
-        end
+            {alt_text: sf.alt_text, url: sf.file.url, tags: sf.tags.as_json(only: [:label, :slug])} unless sf.nil?
+
+        end.compact
     end
 
 end

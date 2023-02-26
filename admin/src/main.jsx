@@ -13,6 +13,7 @@ import { routesList } from './pages/routesList';
 import postsSlice from './Slices/postsSlice';
 import notificationsSlice from './Slices/notificationsSlice';
 import popupSlice from './Slices/popupSlice';
+import uploaderSlice from './Slices/uploaderSlice';
 
 
 const store = configureStore({
@@ -22,10 +23,10 @@ const store = configureStore({
 		posts: postsSlice,
 		notifications: notificationsSlice,
 		popup: popupSlice,
+		uploader: uploaderSlice
 	},
 	devTools: true,
 });
-
 
 ReactDOM.createRoot(document.getElementById('root')).render(
 	<React.StrictMode>
