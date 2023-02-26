@@ -32,7 +32,6 @@ export default function ItemDelete({
 
             const response = await fetch(url, initObj);
 
-            
             if(!response.ok){
                 const data = await response.json();
                 throw new Error("Server Error",{

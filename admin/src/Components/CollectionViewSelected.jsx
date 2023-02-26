@@ -73,7 +73,7 @@ export default function CollectionViewSelected({parentViewState}){
                 data: {
                     itemType: "file",
                     typeUrl: "files",
-                    returnUrl: viewing.collection.slug,
+                    returnUrl: `/collections/${viewing.collection.slug}`,
                     items: [
                         {
                             id: viewing.id,
