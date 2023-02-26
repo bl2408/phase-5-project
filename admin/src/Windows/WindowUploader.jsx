@@ -5,12 +5,15 @@ import { useDispatch, useSelector } from "react-redux";
 import { UploaderContext } from "../App";
 import { setView } from "../Slices/uploaderSlice";
 import { v4 as uuid } from "uuid";
+import { useNotif } from "../Hooks/useNotif";
+
 
 export default function WindowUploader(){
 
     const { view } = useSelector(state=>state.uploader)
     const { uploadFiles, setUploadFiles } = useContext(UploaderContext)
     const dispatch = useDispatch()
+    const notif = useNotif()
 
     useEffect(()=>{
 
@@ -25,23 +28,41 @@ export default function WindowUploader(){
             }
             const file = uploadFiles.find(a=>a.status === "idle");
 
+            if(uploadFiles.filter(a=>a.status === "completed").length === uploadFiles.length){
+                notif({
+                    msg: `Uploaded ${uploadFiles.length} file(s) successfully!`,
+                    mode: 1
+                })
+                return;
+            } 
+
+
+
             if(!file){
+                if(uploadFiles.filter(a=>a.status === "failed").length === uploadFiles.length){
+                    notif({
+                        msg: `Uploaded ${uploadFiles.length} file(s) failed!`,
+                        mode: 2
+                    })
+                }
                 return
             }
 
-            if(file.retries > 2){
+            console.log(file)
+
+            if(!!file.retries && file.retries > 2){
                 file.status = "failed"
                 setUploadFiles(state=>[
+                    file,
                     ...state.filter(s=> s.uuid !== file.uuid),
-                    file
                 ])
                 return
             }
 
             file.status = "uploading"
             setUploadFiles(state=>[
+                file,
                 ...state.filter(s=> s.uuid !== file.uuid),
-                file
             ])
             uploadFile(file)
 
@@ -50,7 +71,8 @@ export default function WindowUploader(){
 
     const toggleCollapse = ()=>{
         if(uploadFiles.length > 0){
-            if(uploadFiles.filter(a=>a.status === "completed").length === uploadFiles.length){
+            if(uploadFiles.filter(a=>a.status === "completed").length === uploadFiles.length
+                || uploadFiles.filter(a=>a.status === "failed").length === uploadFiles.length){
                 setUploadFiles(state=>[]);
                 dispatch(setView(0))
                 return;
@@ -79,8 +101,8 @@ export default function WindowUploader(){
                             <div key={uuid()} className="row">
                                 <div>
                                     {
-                                        row.file.name.length > 10
-                                            ? `${row.file.name.substring(0, 3)}...${row.file.name.slice(-6)}`
+                                        row.file.name.length > 12
+                                            ? `${row.file.name.substring(0, 4)}...${row.file.name.slice(-6)}`
                                             : row.file.name
                                     }
                                 </div>
@@ -118,8 +140,8 @@ export default function WindowUploader(){
                 file.status = "idle"
                 file.retries = file.retries === undefined ? 1 : (file.retries + 1)
                 setUploadFiles(state=>[
+                    file,
                     ...state.filter(s=> s.uuid !== file.uuid),
-                    file
                 ])
             }
             const data = await response.json();
@@ -133,8 +155,8 @@ export default function WindowUploader(){
 
             file.status = "completed"
             setUploadFiles(state=>[
+                file,
                 ...state.filter(s=> s.uuid !== file.uuid),
-                file
             ])
         }catch(err){
             console.log(err)
