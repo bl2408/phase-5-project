@@ -1,5 +1,6 @@
 import { useRef } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import { isIterable } from "../fns";
 import InputTags from "./InputTags";
@@ -11,6 +12,7 @@ export default function GroupTag({
     const popupState = useSelector(state=>state.popup.data)
     const items = popupState?.items?? [];
     const formRef = useRef()
+    const navigate = useNavigate()
 
     const handleTagging = async()=>{        
         try{
