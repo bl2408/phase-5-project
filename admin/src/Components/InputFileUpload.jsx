@@ -12,6 +12,7 @@ export default function InputFileUpload({
     name,
     sendToUploader=false,
     collectionSlug,
+    callback,
 }){
 
     const [ currentFiles, setCurrentFiles ]                 = useState([])
@@ -44,6 +45,7 @@ export default function InputFileUpload({
             }))
         ])
         setCurrentFiles(state=>[])
+        if(!!callback){ callback() }
     };
 
     return (

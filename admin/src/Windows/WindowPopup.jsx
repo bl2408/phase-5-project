@@ -5,6 +5,7 @@ const CollectionNewEdit = lazy(()=>import("../Components/CollectionNewEdit"));
 const ItemDelete = lazy(()=>import("../Components/ItemDelete"));
 const FileEdit = lazy(()=>import("../Components/FileEdit"));
 const GroupTag = lazy(()=>import("../Components/GroupTag"));
+const CollectionUpload = lazy(()=>import("../Components/CollectionUpload"));
 
 export default function WindowPopup({
     component
@@ -27,6 +28,8 @@ export default function WindowPopup({
                 return <GroupTag close={handleClose}/>
             case "File":
                 return <FileEdit close={handleClose}/>
+            case "CollectionUpload":
+                return <CollectionUpload close={handleClose}/>
         }
 
     };

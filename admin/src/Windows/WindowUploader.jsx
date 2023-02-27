@@ -47,9 +47,7 @@ export default function WindowUploader(){
                 }
                 return
             }
-
-            console.log(file)
-
+            
             if(!!file.retries && file.retries > 2){
                 file.status = "failed"
                 setUploadFiles(state=>[
