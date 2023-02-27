@@ -34,6 +34,25 @@ class Admin::CollectionsController < Admin::ApplicationController
         )
     end
 
+    def batch_update
+
+        tags_list = params[:tags].map do |tag|
+            Tag.find_or_create_by(label: tag)
+        end
+
+        Collection.where(id: params[:items]).find_each do |coll|
+            tags_list.each do |tag|
+                Taggable.find_or_create_by(tag: tag, target: coll)
+            end
+        end
+        
+        res(
+            data: {}, #Admin::StoredFileSingleSerializer.new(file),
+            status: :ok
+        )
+
+    end
+
     def destroy
         items = !!params[:items] ? params[:items] : params[:id]
         Collection.destroy(items)
@@ -43,7 +62,7 @@ class Admin::CollectionsController < Admin::ApplicationController
     private
 
     def collection_params
-        params.require(:collection).permit(:label, :description, :slug)
+        params.permit(:label, :description, :slug, tags:[], items:[])
     end
 
 end

@@ -18,15 +18,21 @@ Rails.application.routes.draw do
 
     resources :files, controller: :stored_files, only: [ :create, :show]
 
-    resources :collections, only: [:update, :destroy]
     delete "/collections/batch", to: "collections#destroy"
+    patch "/collections/batch", to: "collections#batch_update"
+    put "/collections/batch", to: "collections#batch_update"
+    
+    resources :collections, only: [:update, :destroy]
 
     resources :collections, param: :slug do
       resources :files, controller: :stored_files, only: [ :index, :show]
     end
 
-    resources :files, controller: :stored_files, only: [ :update, :destroy]
     delete "/files/batch", to: "stored_files#destroy"
+    patch "/files/batch", to: "stored_files#batch_update"
+    put "/files/batch", to: "stored_files#batch_update"
+    
+    resources :files, controller: :stored_files, only: [ :update, :destroy]
 
     get "/posts/list/status", to: "posts#status_list"
 

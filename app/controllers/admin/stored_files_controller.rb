@@ -26,8 +26,6 @@ class Admin::StoredFilesController <  Admin::ApplicationController
     end
 
     def create
-        # puts "#########################################"
-        # pp params 
         coll = Collection.find_by(slug: params[:collection_slug])
 
         return res_err_nf if coll.nil?
@@ -41,9 +39,7 @@ class Admin::StoredFilesController <  Admin::ApplicationController
     end
 
     def update
-
         file = StoredFile.find_by(id: params[:id])
-
         file.update!({
             alt_text: stored_files_params[:alt_text], 
             collection: Collection.find_by(id: params[:collection_id])
@@ -57,6 +53,25 @@ class Admin::StoredFilesController <  Admin::ApplicationController
         )
     end
 
+    def batch_update
+
+        tags_list = params[:tags].map do |tag|
+            Tag.find_or_create_by(label: tag)
+        end
+
+        StoredFile.where(id: params[:items]).find_each do |file|
+            tags_list.each do |tag|
+                Taggable.find_or_create_by(tag: tag, target: file)
+            end
+        end
+        
+        res(
+            data: {}, #Admin::StoredFileSingleSerializer.new(file),
+            status: :ok
+        )
+
+    end
+
     def destroy
         items = !!params[:items] ? params[:items] : params[:id]
         StoredFile.destroy(items)
@@ -66,7 +81,7 @@ class Admin::StoredFilesController <  Admin::ApplicationController
     private 
 
     def stored_files_params
-        params.permit(:id, :alt_text, :collection_id, file:[], tags:[])
+        params.permit(:id, :alt_text, :collection_id, file:[], tags:[], items:[])
     end
 
     def set_file file

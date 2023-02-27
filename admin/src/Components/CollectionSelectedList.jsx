@@ -1,6 +1,6 @@
 
 import { v4 as uuid } from "uuid";
-import { faFile, faFolder, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
+import { faFile, faFolder, faTags, faTrash, faX } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import {usePopup} from "../Hooks/usePopup"
@@ -69,6 +69,37 @@ export default function collectionSelectedList({
         }
     };
 
+    const handleTags =(type)=>{
+        if(type==="collection"){
+            popup({
+                open:true,
+                component: "GroupTag",
+                data: {
+                    itemType: "collection",
+                    typeUrl: "collections",
+                    returnUrl: "/collections",
+                    items: [
+                        ...collectionsList
+                    ]
+                }
+            })
+        }else if(type==="files"){
+            console.log(id)
+            popup({
+                open:true,
+                component: "GroupTag",
+                data: {
+                    itemType: "file",
+                    typeUrl: "files",
+                    returnUrl: `/collections/${id}`,
+                    items: [
+                        ...filesList
+                    ]
+                }
+            })
+        }
+    };
+
     return (
 
         <>
@@ -84,6 +115,7 @@ export default function collectionSelectedList({
                             {
                                 showControls
                                     ? <div className="right-controls">
+                                        <button onClick={()=>handleTags("collection")} className="btn-sml secondary"><FontAwesomeIcon icon={faTags}/> {collectionsList.length}</button>
                                         <button onClick={()=>handleDelete("collection")} className="btn-sml red"><FontAwesomeIcon icon={faTrash}/> {collectionsList.length}</button>
                                     </div>
                                     : null
@@ -103,6 +135,7 @@ export default function collectionSelectedList({
                             {
                                 showControls
                                     ? <div className="right-controls">
+                                        <button onClick={()=>handleTags("files")} className="btn-sml secondary"><FontAwesomeIcon icon={faTags}/> {filesList.length}</button>
                                         <button onClick={()=>handleDelete("files")} className="btn-sml red"><FontAwesomeIcon icon={faTrash}/> {filesList.length}</button>
                                     </div>
                                     : null

@@ -4,6 +4,7 @@ import { usePopup } from "../Hooks/usePopup";
 const CollectionNewEdit = lazy(()=>import("../Components/CollectionNewEdit"));
 const ItemDelete = lazy(()=>import("../Components/ItemDelete"));
 const FileEdit = lazy(()=>import("../Components/FileEdit"));
+const GroupTag = lazy(()=>import("../Components/GroupTag"));
 
 export default function WindowPopup({
     component
@@ -22,6 +23,8 @@ export default function WindowPopup({
                 return <CollectionNewEdit close={handleClose} />
             case "ItemDelete":
                 return <ItemDelete close={handleClose}/>
+            case "GroupTag":
+                return <GroupTag close={handleClose}/>
             case "File":
                 return <FileEdit close={handleClose}/>
         }
