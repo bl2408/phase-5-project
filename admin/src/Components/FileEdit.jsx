@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 import { isIterable } from "../fns";
 import InputFileUpload from "./InputFileUpload";
 import { useNavigate } from "react-router-dom";
+import { useNotif } from "../Hooks/useNotif";
 
 
 export default function FileEdit({
@@ -15,6 +16,7 @@ export default function FileEdit({
     const { id, label, tags, collection, alt_text } = useSelector(state=>state.popup.data)
     const [ collectionList, setCollectionList ] = useState([])
     const navigate = useNavigate()
+    const notif = useNotif()
 
     const getCollectionList = async ()=>{
         try{
@@ -32,14 +34,17 @@ export default function FileEdit({
             
 
         }catch(err){
-            console.log(err)
-            console.log(err.cause)
+            notif({
+                msg: `Error fetching collection list.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
+                mode: 2
+            });
         }
     };
 
     useEffect(()=>{
         getCollectionList();
-    },[]);
+        return ()=>{}
+    },[])
 
     useEffect(()=>{
         formRef.current.selectCollection.value = collection.id
@@ -81,11 +86,17 @@ export default function FileEdit({
             }
 
             navigate("/refresh", {replace: false, state: {next: `/collections/${data.data.collection.slug}`}})
+            notif({
+                msg: `Successfully edited file.`,
+                mode: 2
+            });
             close()
 
         }catch(err){
-            console.log(err)
-            console.log(err.cause)
+            notif({
+                msg: `Error Editing file.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
+                mode: 2
+            });
         }
 
     }

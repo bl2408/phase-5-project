@@ -5,19 +5,20 @@ import { useEffect, useState } from "react";
 import Tag from "../Components/Tag";
 import { v4 as uuid } from "uuid";
 import { usePopup } from "../Hooks/usePopup";
+import { useNotif } from "../Hooks/useNotif";
 
 export default function CollectionViewSelected({parentViewState}){
 
     const controller = new AbortController()
     const [ viewing, setViewing ] = useState({})
     const popup = usePopup()
+    const notif = useNotif()
 
     const loadItem = async ()=>{
 
         const urlPlus = parentViewState.display_type === "collection" 
                         ?   `collections/${parentViewState.slug}`
                         :   `files/${parentViewState.id}` 
-
         try{
             const response = await fetch(`/api/admin/${urlPlus}`,{
                 signal: controller.signal
@@ -33,8 +34,10 @@ export default function CollectionViewSelected({parentViewState}){
             setViewing(state=>data.data)
 
         }catch(err){
-            console.log(err)
-            console.log(err.cause)
+            notif({
+                msg: `Error fetching ${urlPlus}.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
+                mode: 2
+            });
         }
 
     };

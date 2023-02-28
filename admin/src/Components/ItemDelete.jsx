@@ -1,6 +1,8 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
+import { useNotif } from "../Hooks/useNotif";
 
 export default function ItemDelete({
     close
@@ -11,6 +13,7 @@ export default function ItemDelete({
     const items = popupState?.items?? [];
     
     const navigate = useNavigate()
+    const notif = useNotif()
     
     const handleDelete = async ()=>{
 
@@ -39,14 +42,27 @@ export default function ItemDelete({
                 })
             }
             navigate("/refresh", {replace: false, state: {next: popupState.returnUrl}})
+            notif({
+                msg: `Successfully deleted ${items.length} ${popupState.itemType}${items.length > 1 ? "s" : "" }.`,
+                mode: 1
+            });
             close()
 
         }catch(err){
-            console.log(err)
-            console.log(err.cause)
+            notif({
+                msg: `Error deleting ${items.length} ${popupState.itemType}${items.length > 1 ? "s" : "" }.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
+                mode: 2
+            });
         }
 
     };
+
+    useEffect(()=>{
+        if(items.length === 0){
+            close()
+        }
+        return ()=>{}
+    },[])
 
     return(
 

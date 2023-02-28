@@ -6,6 +6,7 @@ import { usePopup } from "../Hooks/usePopup";
 import CollectionItem from "./CollectionItem";
 import InputFileUpload from "../Components/InputFileUpload"
 import { useNavigate, useParams } from "react-router-dom";
+import { useNotif } from "../Hooks/useNotif";
 
 
 export default function CollectionView({
@@ -26,6 +27,7 @@ export default function CollectionView({
     const popup                                             = usePopup()
     const navigate                                          = useNavigate();
     const { id }                                            = useParams()
+    const notif                                             = useNotif()
 
     const loadData = async (url)=>{
         try{
@@ -42,7 +44,10 @@ export default function CollectionView({
             setViewSelected(state=>{})
 
         }catch(err){
-            console.log(err)
+            notif({
+                msg: `Error fetching ${url}.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
+                mode: 2
+            });
             if(useLocationPath){ navigate(`/collections`) }
         }
     };

@@ -16,7 +16,7 @@ class Admin::CollectionsController < Admin::ApplicationController
     end
 
     def create
-        coll = Collection.create!(collection_params)
+        coll = Collection.create!(collection_params.except(:items, :tags))
         set_tags coll
         res(
             data: Admin::CollectionSingleSerializer.new(coll),
@@ -26,7 +26,7 @@ class Admin::CollectionsController < Admin::ApplicationController
 
     def update
         coll = Collection.find_by(id: params[:id])
-        coll.update!(collection_params)
+        coll.update!(collection_params.except(:items, :tags))
         set_tags coll
         res(
             data: Admin::CollectionSingleSerializer.new(coll),
@@ -47,7 +47,7 @@ class Admin::CollectionsController < Admin::ApplicationController
         end
         
         res(
-            data: {}, #Admin::StoredFileSingleSerializer.new(file),
+            data: {},
             status: :ok
         )
 

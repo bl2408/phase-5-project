@@ -10,8 +10,7 @@ export default function TagNewEdit({
     label,
     description,
     slug,
-    close,
-    onDelete
+    close
 }){
 
     const formRef = useRef();
@@ -74,8 +73,10 @@ export default function TagNewEdit({
             
 
         }catch(err){
-            console.log(err)
-            console.log(err.cause)
+            notif({
+                msg: `Error ${modeEdit ? "editing" : "adding"} tag.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
+                mode: 2
+            });
         }
     };
 

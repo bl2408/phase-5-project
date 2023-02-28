@@ -17,7 +17,6 @@ export default function WindowPopup({
     const handleClose=()=>{
         popup({open:false})
     };
-
     const displayComponent=()=>{
 
         switch(component){

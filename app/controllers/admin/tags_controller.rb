@@ -10,10 +10,6 @@ class Admin::TagsController < Admin::ApplicationController
         query_total = tags.order("label ASC")
 
         query_total = query_total.map { |tag| tag.attributes.merge({count: tag.targets.count})} unless params[:count].nil?
-
-    
-        # query_total = { **query_total, target_count: Tag.joins(:taggables).group(:target_type).size } unless params[:count].nil?
-
         res(
             data: query_total,
             meta:  params[:count].nil? ? nil : { target_count: Tag.joins(:taggables).group(:target_type).size },
@@ -22,7 +18,7 @@ class Admin::TagsController < Admin::ApplicationController
     end
 
     def create
-        tag = Tag.create!({label: tags_param[:label], description: tags_param[:description], slug: tags_param[:slug]})
+        tag = Tag.create!(tags_param.except(:keywords, :count))
         res(
             data: tag,
             status: :ok
@@ -31,7 +27,7 @@ class Admin::TagsController < Admin::ApplicationController
 
     def update
         tag = Tag.find_by(id: params[:id])
-        tag.update!({label: tags_param[:label], description: tags_param[:description], slug: tags_param[:slug]})
+        tag.update!(tags_param.except(:keywords, :count))
         res(
             data: tag,
             status: :ok

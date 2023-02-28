@@ -1,9 +1,10 @@
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuid } from "uuid";
 import { isIterable } from "../fns";
 import InputTags from "./InputTags";
+import {useNotif} from "../Hooks/useNotif"
 
 export default function GroupTag({
     close
@@ -13,6 +14,7 @@ export default function GroupTag({
     const items = popupState?.items?? [];
     const formRef = useRef()
     const navigate = useNavigate()
+    const notif = useNotif()
 
     const handleTagging = async()=>{        
         try{
@@ -41,15 +43,10 @@ export default function GroupTag({
                 close();
             }
             
-            if(items.length === 1){
-                url = `${url}${items[0].id}`
-            }else if(items.length > 1){
-                url = `${url}batch`
-                initObj.body = JSON.stringify(formObj)
-            }
+            url = `${url}batch`
+            initObj.body = JSON.stringify(formObj)
             
-            console.log(formObj)
-
+            
             const response = await fetch(url, initObj);
 
             if(!response.ok){
@@ -59,14 +56,26 @@ export default function GroupTag({
                 })
             }
             navigate("/refresh", {replace: false, state: {next: popupState.returnUrl}})
+            notif({
+                msg: `Successfully tagged ${formObj.items.length} items.`,
+                mode: 1
+            });
             close()
 
         }catch(err){
-            console.log(err)
-            console.log(err.cause)
+            notif({
+                msg: `Error tagging ${formObj.items.length} items.\n\n${!!err ? err : "" }${!!err?.cause ? `\n\n${err.cause}` : ""}`,
+                mode: 2
+            });
         }
-
     };
+
+    useEffect(()=>{
+        if(items.length === 0){
+            close()
+        }
+        return ()=>{}
+    },[])
     
     return(
 
