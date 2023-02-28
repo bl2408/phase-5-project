@@ -6,6 +6,7 @@ import { displayTagMeta } from "../fns";
 import { usePopup } from "../Hooks/usePopup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { useNotif } from "../Hooks/useNotif"
 import "../css/table.css"
 
 
@@ -17,6 +18,7 @@ export default function TagsAll() {
     const [ selectedTags, setSelectedTags ]     = useState([])
     const popup                                 = usePopup()
     const contentsDivRef                        = useRef()
+    const notif                                 = useNotif()
 
     const getTags = async ()=>{
 
@@ -32,8 +34,10 @@ export default function TagsAll() {
             setTagsList(state=>data.data)
             setMeta(state=>data.meta.target_count)
         }catch(err){
-            console.log(err)
-            console.log(err.cause)
+            notif({
+                msg: `Error fetching tags list.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
+                mode: 2
+            });
         }
 
     };
