@@ -9,7 +9,7 @@ import { displayDate } from "../fns";
 import { v4 as uuid } from "uuid"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEdit, faInfoCircle, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit, faInfoCircle, faPlus, faTags } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import Tag from "../Components/Tag";
@@ -22,8 +22,9 @@ export default function PostsAll(){
     const navigate = useNavigate()
     const popup = usePopup()
 
-    const [searchParams] = useSearchParams()
-    const [ selectedPosts, setSelectedPosts ] = useState([])
+    const [ searchParams ]                        = useSearchParams()
+    const [ selectedPosts, setSelectedPosts ]   = useState([])
+    const contentsDivRef                        = useRef()
 
     const allPosts = async ()=>{
         let paramsObj = ""
@@ -101,25 +102,61 @@ export default function PostsAll(){
 
     };
 
+    const handleTags=()=>{
+        popup({
+            open:true,
+            component: "GroupTag",
+            data: {
+                itemType: "post",
+                typeUrl: "posts",
+                returnUrl: "/posts",
+                items: [
+                    ...selectedPosts
+                ]
+            }
+        })
+    }
+
+    const handleSelectAll =()=>{
+        const containsAll = posts.items.every((a)=>selectedPosts.find(b=>b.id === a.id));
+        contentsDivRef.current.querySelectorAll("input[type='checkbox']").forEach(el=>{
+            if(containsAll){
+                el.click()
+            }else{
+                if(!el.checked){
+                    el.click()
+                }
+            }
+        });
+    };
+
     return (
         <WindowBasic className="window-full">
             <div className="header-controls">
                 <h1>Posts</h1>
                 <div className="right-controls">
                     <button onClick={()=>navigate("/posts/new")} className="btn primary"><FontAwesomeIcon icon={faEdit}/></button>
+                    <button onClick={handleTags} className="btn secondary"><FontAwesomeIcon icon={faTags}/> {selectedPosts.length}</button>
                     <button onClick={handleDeletePost} className="btn red"><FontAwesomeIcon icon={faTrash}/> {selectedPosts.length}</button>
                 </div>
             </div>
             
             <section className="table-display col5">
                 <div className="row header">
-                    <div></div>
+                    <div>
+                        <input 
+                            type="checkbox"
+                            onClick={handleSelectAll}
+                        />
+                    </div>
                     <div onClick={()=>handleTitlesSort("title")}>Title</div>
                     <div onClick={()=>handleTitlesSort("publish_datetime")}>Date/Time</div>
                     <div onClick={()=>handleTitlesSort("category")}>Category</div>
                     <div onClick={()=>handleTitlesSort("tags")}>Tags</div>
-                </div>                
+                </div> 
+                <div ref={contentsDivRef}>
                     {displayPosts}
+                </div>               
                 <div className="bottom">
                     <div>
                         Displaying { posts.items.length } of {posts.items.length}

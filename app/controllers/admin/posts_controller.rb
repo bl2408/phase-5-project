@@ -48,6 +48,23 @@ class Admin::PostsController < Admin::ApplicationController
         )
     end
 
+    def batch_update
+        tags_list = params[:tags].map do |tag|
+            Tag.find_or_create_by(label: tag)
+        end
+
+        Post.where(id: params[:items]).find_each do |coll|
+            tags_list.each do |tag|
+                Taggable.find_or_create_by(tag: tag, target: coll)
+            end
+        end
+        
+        res(
+            data: {},
+            status: :ok
+        )
+    end
+
     def destroy
         items = !!params[:items] ? params[:items] : params[:id]
         Post.destroy(items)
@@ -65,7 +82,7 @@ class Admin::PostsController < Admin::ApplicationController
     private 
 
     def post_params
-        params.require(:post).permit(:title, :content, :slug, :publish_datetime, :status, :category)
+        params.require(:post).permit(:title, :content, :slug, :publish_datetime, :status, :category, items:[], tags:[])
     end
 
 end

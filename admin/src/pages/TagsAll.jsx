@@ -66,9 +66,6 @@ export default function TagsAll() {
         );
     });
     const handleOnRowCheck =(e, obj)=>{
-        if(obj.all){
-
-        }
         const target = e.target
         if(target.checked){
             setSelectedTags(state=>[...state, obj])
@@ -88,7 +85,6 @@ export default function TagsAll() {
                 }
             }
         });
-
     };
 
     const handleDeleteTags = ()=>{
@@ -148,7 +144,7 @@ export default function TagsAll() {
                                 <div>
                                     <input 
                                         type="checkbox"
-                                        onClick={e=>handleSelectAll(e)}
+                                        onClick={handleSelectAll}
                                     />
                                 </div>
                                 <div>Label</div>

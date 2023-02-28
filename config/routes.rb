@@ -10,8 +10,10 @@ Rails.application.routes.draw do
     post "/logout", to: "auth#destroy"
     get "/valid", to: "auth#render_user"
 
-    resources :posts
     delete "/posts/batch", to: "posts#destroy"
+    patch "/posts/batch", to: "posts#batch_update"
+    put "/posts/batch", to: "posts#batch_update"
+    resources :posts
 
 
     resources :tags, param: :slug, only: [:show, :index]
