@@ -39,10 +39,12 @@ Rails.application.routes.draw do
 
     get "/posts/list/status", to: "posts#status_list"
 
-
-    resources :category, param: :slug do
+    
+    resources :category, param: :slug, only: [:index, :show] do
       resources :posts, only: [:index, :show]
     end
+    
+    resources :category
     
   end
 

@@ -4,6 +4,7 @@ import WindowBasic from "../Windows/WindowBasic";
 import { v4 as uuid } from "uuid";
 import { displayTagMeta } from "../fns";
 import TagNewEdit from "../Components/TagNewEdit";
+import { useNotif } from "../Hooks/useNotif";
 
 
 export default function Tag(){
@@ -11,6 +12,8 @@ export default function Tag(){
     const { tagSlug }                   = useParams();
     const [ tagInfo, setTagInfo ]       = useState({})
     const [ meta, setMeta ]             = useState({})
+    const notif                         = useNotif()
+
 
     const getTagInfo = async()=>{
 
@@ -28,8 +31,10 @@ export default function Tag(){
             setMeta(state=>data.meta)
 
         }catch(err){
-            console.log(err)
-            console.log(err.cause)
+            notif({
+                msg: `Error fetching tag.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
+                mode: 2
+            });
         }
 
     };

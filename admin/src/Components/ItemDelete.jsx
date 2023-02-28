@@ -43,14 +43,14 @@ export default function ItemDelete({
             }
             navigate("/refresh", {replace: false, state: {next: popupState.returnUrl}})
             notif({
-                msg: `Successfully deleted ${items.length} ${popupState.itemType}${items.length > 1 ? "s" : "" }.`,
+                msg: `Successfully deleted ${items.length} ${ items.length > 1 ? popupState.itemTypePlural  : popupState.itemType }.`,
                 mode: 1
             });
             close()
 
         }catch(err){
             notif({
-                msg: `Error deleting ${items.length} ${popupState.itemType}${items.length > 1 ? "s" : "" }.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
+                msg: `Error deleting ${items.length} ${ items.length > 1 ? popupState.itemTypePlural  : popupState.itemType }.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
                 mode: 2
             });
         }
@@ -69,13 +69,7 @@ export default function ItemDelete({
         <>
             <h2>Delete</h2>
             <p>
-                Are you sure you want to delete the following {popupState.itemType}
-                {
-                    items.length > 1
-                    ? "s"
-                    : ""
-                }
-                ?
+                Are you sure you want to delete the following { items.length > 1 ? popupState.itemTypePlural  : popupState.itemType }?
             </p>           
             {
                 items.map(item=>(

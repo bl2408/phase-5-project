@@ -114,11 +114,7 @@ export default function TagsAll() {
 
     return (
         <div className="grid-2 reverse">
-            <WindowBasic style={{display:"flex", flexDirection:"column", gap:"20px"}}>
-                <div>
-                    <h2>Filter</h2>
-                    <input type="search" placeholder="Keyword" value={keyword} onChange={e=>setKeyword(state=>e.target.value)}/>
-                </div>
+            <WindowBasic style={{display:"flex", flexDirection:"column", gap:"20px"}}>                
                 <div>
                     <h2>Totals</h2>
                     {
@@ -140,6 +136,9 @@ export default function TagsAll() {
                         <button onClick={handleDeleteTags} className="btn red"><FontAwesomeIcon icon={faTrash}/> {selectedTags.length}</button>
 
                     </div>
+                </div>
+                <div className="right-controls" style={{margin:"10px 0"}}>
+                    <input style={{width:"200px"}}type="search" placeholder="Search" value={keyword} onChange={e=>setKeyword(state=>e.target.value)}/>
                 </div>
                 {
                     filterTags().length > 0

@@ -57,6 +57,7 @@ export default function CollectionViewSelected({parentViewState}){
                 component: "ItemDelete",
                 data: {
                     itemType: "collection",
+                    itemTypePlural: "collections",
                     typeUrl: "collections",
                     extraMsg: "Files under this collection will also be deleted!",
                     returnUrl: "/collections",
@@ -75,6 +76,7 @@ export default function CollectionViewSelected({parentViewState}){
                 component: "ItemDelete",
                 data: {
                     itemType: "file",
+                    itemTypePlural: "files",
                     typeUrl: "files",
                     returnUrl: `/collections/${viewing.collection.slug}`,
                     items: [

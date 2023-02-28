@@ -44,6 +44,7 @@ export default function collectionSelectedList({
                 component: "ItemDelete",
                 data: {
                     itemType: "collection",
+                    itemTypePlural: "collections",
                     typeUrl: "collections",
                     extraMsg: "Files under this collection will also be deleted!",
                     returnUrl: "/collections",
@@ -53,12 +54,12 @@ export default function collectionSelectedList({
                 }
             })
         }else if(type==="files"){
-            console.log(id)
             popup({
                 open:true,
                 component: "ItemDelete",
                 data: {
                     itemType: "file",
+                    itemTypePlural: "files",
                     typeUrl: "files",
                     returnUrl: `/collections/${id}`,
                     items: [
@@ -76,6 +77,7 @@ export default function collectionSelectedList({
                 component: "GroupTag",
                 data: {
                     itemType: "collection",
+                    itemTypePlural: "collections",
                     typeUrl: "collections",
                     returnUrl: "/collections",
                     items: [
@@ -90,6 +92,7 @@ export default function collectionSelectedList({
                 component: "GroupTag",
                 data: {
                     itemType: "file",
+                    itemTypePlural: "files",
                     typeUrl: "files",
                     returnUrl: `/collections/${id}`,
                     items: [

@@ -5,7 +5,7 @@ import { useNotif } from "../Hooks/useNotif"
 import { useNavigate } from "react-router-dom";
 import { usePopup } from "../Hooks/usePopup";
 
-export default function TagNewEdit({
+export default function CategoryNewEdit({
     id,
     label,
     description,
@@ -31,7 +31,7 @@ export default function TagNewEdit({
     };
 
     const refresh =()=>{
-        navigate("/refresh",{ replace: false, state: { next: "/tags"}})
+        navigate("/refresh",{ replace: false, state: { next: "/categories"}})
     };
 
     const handleSubmit = async e=>{
@@ -44,7 +44,7 @@ export default function TagNewEdit({
         }
 
         const modeEdit = !!id
-        const url = `/api/admin/tags/${ modeEdit ? id : ""}`
+        const url = `/api/admin/category/${ modeEdit ? id : ""}`
         const initObj = {
             method: modeEdit ? "PATCH" : "POST",
             headers:{
@@ -63,7 +63,7 @@ export default function TagNewEdit({
             }
 
             notif({
-                msg: `Tag successfully ${modeEdit ? "updated!" : "created!"}`,
+                msg: `Category successfully ${modeEdit ? "updated!" : "created!"}`,
                 mode: 1
             })
             if(!!close){ 
@@ -74,7 +74,7 @@ export default function TagNewEdit({
 
         }catch(err){
             notif({
-                msg: `Error ${modeEdit ? "editing" : "adding"} tag.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
+                msg: `Error ${modeEdit ? "editing" : "adding"} category.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
                 mode: 2
             });
         }
@@ -85,11 +85,11 @@ export default function TagNewEdit({
             open:true,
             component: "ItemDelete",
             data: {
-                itemType: "tag",
-                itemTypePlural: "tags",
-                typeUrl: "tags",
-                extraMsg: "Any items which used this Tag will be removed.",
-                returnUrl: "/tags",
+                itemType: "category",
+                itemTypePlural: "categories",
+                typeUrl: "category",
+                extraMsg: `Posts which used this category will be removed and categorized as "uncategorized".`,
+                returnUrl: "/categories",
                 items: [
                     {
                         id, label
@@ -102,7 +102,7 @@ export default function TagNewEdit({
     return(
         <>
             <h1>
-                Tag 
+                Category 
                 {
                     !!label ? <>: <i>{label}</i></> : ""
                 }
