@@ -92,7 +92,7 @@ export default function CollectionNewEdit({
                         ? "Edit"
                         : "New"
                 } Collection</h2>
-            <form ref={formRef} onSubmit={handleSubmit}>
+            <form ref={formRef} onSubmit={handleSubmit} autoComplete="off">
                 <input onChange={handleLabelChange} type="text" name="label" placeholder="Collection label" required/>
                 <input type="text" name="slug" placeholder="Collection slug" required/>
                 <textarea name="desc" rows="10" className="txtarea" placeholder="Description"></textarea>

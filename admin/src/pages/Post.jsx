@@ -239,7 +239,7 @@ export default function Post() {
     };
 
     return (
-        <form ref={form} onSubmit={handleSubmit} className="grid-2">
+        <form ref={form} onSubmit={handleSubmit} className="grid-2" autoComplete="off">
             <WindowBasic className="post">
                 <input type="text" placeholder="Title" name="title" style={{ fontSize: "3rem" }} />
                 <div className="controls">

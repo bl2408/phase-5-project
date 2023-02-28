@@ -107,7 +107,7 @@ export default function CategoryNewEdit({
                     !!label ? <>: <i>{label}</i></> : ""
                 }
             </h1>
-            <form ref={formRef} onSubmit={handleSubmit}>
+            <form ref={formRef} onSubmit={handleSubmit} autoComplete="off">
                 <InputFloatingLabel onChange={handleLabelChange} type="text" name="label" label="Label"/>
                 <InputFloatingLabel type="text" name="slug" label="Slug"/>
                 <textarea 

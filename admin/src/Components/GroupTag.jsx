@@ -101,7 +101,7 @@ export default function GroupTag({
                     : null
             }
             
-            <form ref={formRef}>
+            <form ref={formRef} autoComplete="off">
                 <InputTags />
             </form>
 

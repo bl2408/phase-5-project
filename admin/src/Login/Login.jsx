@@ -49,7 +49,7 @@ export default function Login(){
                         : null
                 }
                 <h1>Login</h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} autoComplete="off">
                     <InputFloatingLabel label="Username" type="text" name="username"/>
                     <InputFloatingLabel label="Password" type="password" name="password"/>
 

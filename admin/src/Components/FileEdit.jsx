@@ -107,7 +107,7 @@ export default function FileEdit({
         <div>
 
             <h2>Edit - {label}</h2>
-            <form ref={formRef} onSubmit={handleSubmit}>
+            <form ref={formRef} onSubmit={handleSubmit} autoComplete="off">
                 <input type="text" name="altText" placeholder="Alternate text"/>
 
                 <InputFileUpload 
