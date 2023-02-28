@@ -72,3 +72,22 @@ export const convertToSlug=(str)=>{
 }
 
 
+export const displayTagMeta =(meta)=>{
+
+    if(JSON.stringify(meta) === "{}"){ return [] }
+
+    const kvp = []
+
+    for(const [k,v] of Object.entries(meta)){
+        const target = `${k === "StoredFile" ? "File" : k}s`
+        kvp.push({
+            target,
+            total: v
+        })
+    }
+
+    return kvp
+
+};
+
+

@@ -1,0 +1,55 @@
+.table-display{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    width: 100%;
+    margin-top: 16px;
+}
+
+.table-display .row{
+    display: grid;
+    padding: 16px 0;
+    border-bottom: solid 1px var(--border-col-window);
+    align-items: center;
+}
+.table-display.col4 .row{
+    grid-template-columns: 50px repeat(3, 1fr);
+}
+
+.table-display.col5 .row{
+    grid-template-columns: 50px repeat(4, 1fr);
+}
+
+.table-display .row.header:hover{
+    background-color: unset;
+}
+.table-display .row:hover{
+    background-color: rgba(0, 0, 0, 0.02);
+}
+
+.table-display .row.header:has(input[type="checkbox"]:checked){
+    background-color: unset;
+}
+
+.table-display .row:has(input[type="checkbox"]:checked){
+    background-color: rgba(0, 0, 0, 0.04);
+}
+.table-display input[type="checkbox"]{
+    padding: unset;
+}
+
+.table-display .header{
+    font-weight: bold;
+    font-size: 1.8rem;
+    color: var(--font-col-secondary);
+}
+
+.table-display .bottom{
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.table-display .bottom > :last-child{
+    align-self: center;
+}

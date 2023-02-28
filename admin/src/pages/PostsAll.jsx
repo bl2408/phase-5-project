@@ -1,5 +1,6 @@
 import WindowBasic from "../Windows/WindowBasic";
 import "../css/posts.css"
+import "../css/table.css"
 import { useEffect, useRef, useState } from "react";
 import { getPostsAll } from "../Slices/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -56,7 +57,7 @@ export default function PostsAll(){
         const { id, title, status, publish_datetime, slug, category, tags } = post;
         const tagsDisplay = (
             <div style={{display:"flex", gap: "6px", flexWrap:"wrap"}}>
-                {tags.map(tag=><Tag key={uuid()} to="/" {...tag}/>)}
+                {tags.map(tag=><Tag key={uuid()} {...tag}/>)}
             </div>
         );
 
@@ -101,14 +102,16 @@ export default function PostsAll(){
     };
 
     return (
-        <WindowBasic style={{width:"100%", maxWidth: "1200px"}}>
-            <h1>Posts</h1>
-            <div className="right-controls">
-                <button onClick={()=>navigate("/posts/new")} className="btn primary"><FontAwesomeIcon icon={faEdit}/></button>
-                <button onClick={handleDeletePost} className="btn red"><FontAwesomeIcon icon={faTrash}/> {selectedPosts.length}</button>
+        <WindowBasic className="window-full">
+            <div className="header-controls">
+                <h1>Posts</h1>
+                <div className="right-controls">
+                    <button onClick={()=>navigate("/posts/new")} className="btn primary"><FontAwesomeIcon icon={faEdit}/></button>
+                    <button onClick={handleDeletePost} className="btn red"><FontAwesomeIcon icon={faTrash}/> {selectedPosts.length}</button>
+                </div>
             </div>
             
-            <section className="table-posts">
+            <section className="table-display col5">
                 <div className="row header">
                     <div></div>
                     <div onClick={()=>handleTitlesSort("title")}>Title</div>

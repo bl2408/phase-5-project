@@ -14,7 +14,8 @@ Rails.application.routes.draw do
     delete "/posts/batch", to: "posts#destroy"
 
 
-    resources :tags, param: :slug
+    resources :tags, param: :slug, only: [:show, :index]
+    resources :tags
 
     resources :files, controller: :stored_files, only: [ :create, :show]
 

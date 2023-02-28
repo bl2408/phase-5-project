@@ -719,6 +719,10 @@ button{
     gap: 10px;
 }
 
+.grid-2.reverse {
+    grid-template-columns: 300px auto;
+}
+
 .collection-viewer{
     width: 100%;
 }
@@ -828,6 +832,31 @@ button{
 .collection-button:hover{
     border-color:  var(--font-col-secondary);
 }
+
+.window-full{
+    width: 100%; 
+    max-width: 1200px;
+}
+
+.tags-display .tag-link{
+    font-size: 1.6rem;
+}
+
+.row-meta{
+    display: grid;
+    grid-template-columns: 1fr max-content;
+    margin: 10px 0;
+    padding-left: 10px;
+    box-sizing: border-box;
+}
+
+.header-controls{
+    display: grid;
+    grid-template-columns: 1fr max-content;
+}
+
+
+
 .block-area{
     border: solid 1px var(--font-col-nav-side-active);
 }
@@ -842,6 +871,7 @@ button{
     resize: vertical;
     font-size: inherit;
 }
+
 
 .block-area > .controls{
     justify-content: flex-end;

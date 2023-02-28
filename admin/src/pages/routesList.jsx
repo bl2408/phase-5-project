@@ -7,6 +7,8 @@ const App = lazy(() => import('../App'));
 const PostsAll = lazy(() => import("./PostsAll"));
 const Post =  lazy(() => import("./Post"));
 const Collections = lazy(() => import('./Collections'));
+const TagsAll = lazy(() => import('./TagsAll'));
+const Tag = lazy(() => import('./Tag'));
 const ErrorPage = lazy(() => import('./ErrorPage'));
 
 
@@ -37,6 +39,14 @@ export const routesList = createBrowserRouter([
 			{
 				path: "collections/:id",
 				element: <SuspenseLoader element={<Collections />} />
+			},
+			{
+				path: "tags/",
+				element: <SuspenseLoader element={<TagsAll />} />
+			},
+			{
+				path: "tags/:tagSlug",
+				element: <SuspenseLoader element={<Tag/>} />
 			},
 			{
 				path: "refresh/",
