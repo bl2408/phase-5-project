@@ -140,7 +140,7 @@ body.open {
 
 
 #nav-top {
-    width: 100%;
+    width: calc(100% - var(--width-nav-side-current));
     height: var(--height-nav-top);
     background-color: var(--bg-nav-top);
     border-bottom: solid 1px var(--border-col-nav-top);
@@ -148,6 +148,17 @@ body.open {
 
     left: var(--width-nav-side-current);
     z-index: 4;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-sizing: border-box;
+    padding: 0 20px;
+}
+
+#nav-top > :last-child{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
 }
 
 #nav-side {
@@ -166,12 +177,6 @@ body.open {
     top: var(--height-nav-top);
     width: calc(100% - var(--width-nav-side-current));
     padding: 20px;
-}
-
-#nav-top {
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
 }
 
 #nav-side {
@@ -568,7 +573,8 @@ select{
 }
 
 .input-tags .dd-item:hover,
-.input-cat .dd-item:hover{
+.input-cat .dd-item:hover,
+.user-account .menu button:hover{
     background-color: var(--bg-button-primary-hover);
     color: white;
 }
@@ -913,6 +919,58 @@ button{
     display: flex;
     gap: 5px;
     justify-content: flex-end;
+}
+
+.user-account{
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    padding: 0 10px;
+}
+.user-account:hover .menu{
+    max-height: 100%;
+}
+
+.user-account .rounded{
+    background-color: var(--bg-nav-side);
+    padding: 10px;
+    border-radius: 50%;
+    color: var(--bg-main);
+    aspect-ratio: 1/1;
+    text-align: center;
+}
+.user-account > :first-child {
+    text-transform: capitalize;
+}
+
+.user-account .menu{
+    position: absolute;
+    left: 0;
+    right:0;
+    top:100%;
+    background-color: var(--bg-nav-top);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.1s ease-in-out;
+}
+
+.user-account .menu button{
+    width: 100%;
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 10px 5px;
+    color: var(--font-col-primary);
+    font-size: inherit;
+    display: grid;
+    grid-template-columns: 1fr 20px;
+    align-items: center;
+}
+
+.user-account .menu button:hover{
+
 }
 
 

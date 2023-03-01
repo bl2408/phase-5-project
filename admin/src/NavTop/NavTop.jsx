@@ -1,3 +1,5 @@
+import { faArrowRightFromBracket, faArrowRightFromFile, faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux"
 import { logout } from "../Slices/userSlice";
 
@@ -16,8 +18,20 @@ export default function NavTop(){
 
     return (
         <nav id="nav-top">
-            User: {user.info.username}
-            <button onClick={handleLogout} className="btn secondary">Logout</button>
+            <div>
+                skldjflksdjf
+            </div>
+            <div>
+                <div className="user-account">
+                    <div>{user.info.username}</div>
+                    <div >
+                        <FontAwesomeIcon className="rounded" icon={faUser} />
+                    </div>
+                    <div className="menu">
+                        <button type="button" onClick={handleLogout}>Logout <FontAwesomeIcon icon={faRightFromBracket} /></button>
+                    </div>
+                </div>
+            </div>   
         </nav>
     )
 
