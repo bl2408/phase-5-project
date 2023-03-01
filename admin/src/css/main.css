@@ -153,11 +153,12 @@ body.open {
     box-sizing: border-box;
     padding: 0 20px;
 }
-
-#nav-top > :last-child{
+#nav-top > * {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
+}
+#nav-top > :last-child{
+    justify-content: flex-end;
     gap: 10px;
 }
 
@@ -969,10 +970,15 @@ button{
     align-items: center;
 }
 
-.user-account .menu button:hover{
 
+.breadcrumb > :not(:first-child)::before{
+    content: "\00BB";
+    padding: 0 10px;
+    box-sizing: border-box;
+    font-family: inherit;
+    font-size: 1.4rem;
+    color: var(--bg-button-secondary-hover);
 }
-
 
 .loader::before{
     content: '';

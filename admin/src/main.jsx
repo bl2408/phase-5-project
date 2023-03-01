@@ -14,6 +14,7 @@ import postsSlice from './Slices/postsSlice';
 import notificationsSlice from './Slices/notificationsSlice';
 import popupSlice from './Slices/popupSlice';
 import uploaderSlice from './Slices/uploaderSlice';
+import navTopSlice from './Slices/navTopSlice';
 
 
 const store = configureStore({
@@ -23,7 +24,8 @@ const store = configureStore({
 		posts: postsSlice,
 		notifications: notificationsSlice,
 		popup: popupSlice,
-		uploader: uploaderSlice
+		uploader: uploaderSlice,
+		navTop: navTopSlice
 	},
 	devTools: true,
 });

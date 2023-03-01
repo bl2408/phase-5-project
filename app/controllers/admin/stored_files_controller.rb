@@ -9,6 +9,7 @@ class Admin::StoredFilesController <  Admin::ApplicationController
 
         res(
             data: files.map { |file| Admin::StoredFileAllSerializer.new(file) },
+            meta: { collection: coll.as_json(only: [:label])},
             status: :ok,
         )
     end

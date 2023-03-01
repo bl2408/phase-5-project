@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNotif } from "../Hooks/useNotif"
 import "../css/table.css"
+import { useBreadcrumbs } from "../Hooks/useBreadcrumbs";
 
 
 export default function TagsAll() {
@@ -19,6 +20,7 @@ export default function TagsAll() {
     const popup                                 = usePopup()
     const contentsDivRef                        = useRef()
     const notif                                 = useNotif()
+    const breadcrumb                            = useBreadcrumbs()
 
     const getTags = async ()=>{
 
@@ -110,6 +112,11 @@ export default function TagsAll() {
 
     useEffect(()=>{
         getTags();
+        breadcrumb({
+            label: "Tags",
+            path: "/tags",
+        })
+        return ()=>{}
     },[])
 
     return (

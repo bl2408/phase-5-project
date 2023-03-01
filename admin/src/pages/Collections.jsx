@@ -9,8 +9,8 @@ const CollectionSelectedList = lazy(()=>import("../Components/CollectionSelected
 
 export default function Collections() {
 
-    const [ collectionSelected, setCollectionSelected ] = useState([])
-    const [ viewSelected, setViewSelected ] = useState({})
+    const [ collectionSelected, setCollectionSelected ]     = useState([])
+    const [ viewSelected, setViewSelected ]                 = useState({})
 
     return (
         <div className="grid-2">

@@ -5,8 +5,9 @@ import { v4 as uuid } from "uuid";
 import { usePopup } from "../Hooks/usePopup";
 import CollectionItem from "./CollectionItem";
 import InputFileUpload from "../Components/InputFileUpload"
-import { useNavigate, useParams } from "react-router-dom";
+import { json, useNavigate, useParams } from "react-router-dom";
 import { useNotif } from "../Hooks/useNotif";
+import { useBreadcrumbs } from "../Hooks/useBreadcrumbs";
 
 
 export default function CollectionView({
@@ -21,6 +22,7 @@ export default function CollectionView({
     const BASE_PATH = "/api/admin/collections"
     const [ currentPath, setCurrentPath ]                   = useState(BASE_PATH)
     const [ collection, setCollection ]                     = useState([])
+    const [ meta, setMeta ]                                 = useState({})
     const [ collectionSelected, setCollectionSelected ]     = parentListState;
     const [ viewSelected, setViewSelected ]                 = parentViewState;
     const contentsDivRef                                    = useRef();
@@ -28,6 +30,7 @@ export default function CollectionView({
     const navigate                                          = useNavigate();
     const { id }                                            = useParams()
     const notif                                             = useNotif()
+    const breadcrumb                                        = useBreadcrumbs()
 
     const loadData = async (url)=>{
         try{
@@ -41,8 +44,8 @@ export default function CollectionView({
             }
 
             setCollection(state=>data.data)
+            setMeta(state=>data.meta? data.meta : {})
             setViewSelected(state=>{})
-
         }catch(err){
             notif({
                 msg: `Error fetching ${url}.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
@@ -61,6 +64,22 @@ export default function CollectionView({
             }
         }
     },[id])
+
+    useEffect(()=>{
+        if(useLocationPath){
+            const bcObj = {
+                label: "Collections",
+                path: "/collections"
+            }
+            if(JSON.stringify(meta) !== "{}"){
+                bcObj.child = {
+                    label: meta.collection.label,
+                    path: ""
+                } 
+            }
+            breadcrumb(bcObj)
+        }
+    },[meta])
 
     useEffect(()=>{
         loadData(currentPath)
@@ -148,12 +167,6 @@ export default function CollectionView({
             {
                 currentPath !== BASE_PATH && showUpload
                     ?<div style={{width:"100%"}}>
-                        <h3>
-                            Upload to:<br />
-                            {
-                                !!id ? id.split("-").join(" ") : ""
-                            }
-                        </h3>
                         <InputFileUpload 
                             multiple={true}
                             name="fileUpload"

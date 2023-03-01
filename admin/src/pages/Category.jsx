@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import WindowBasic from "../Windows/WindowBasic";
 import { useNotif } from "../Hooks/useNotif";
 import CategoryNewEdit from "../Components/CategoryNewEdit";
+import { useBreadcrumbs } from "../Hooks/useBreadcrumbs";
 
 
 export default function Category(){
@@ -10,10 +11,14 @@ export default function Category(){
     const { categorySlug }                          = useParams();
     const [ categoryInfo, setCategoryInfo ]         = useState({})
     const notif                                     = useNotif()
-
-    console.log(categorySlug)
+    const breadcrumb                                = useBreadcrumbs()
 
     const getCategoryInfo = async()=>{
+
+        const bcObj = {
+            label: "Categories",
+            path: "/categories",
+        }
 
         try{
             const response = await fetch(`/api/admin/category/${categorySlug}`)
@@ -26,18 +31,30 @@ export default function Category(){
             }
 
             setCategoryInfo(state=>data.data)
+            bcObj.child = {
+                label: data.data.label,
+                path:""
+            }
+            
 
         }catch(err){
             notif({
                 msg: `Error fetching category.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
                 mode: 2
             });
+            bcObj.child = {
+                label: "Error",
+                path:""
+            }
         }
+
+        breadcrumb(bcObj)
 
     };
 
     useEffect(()=>{
         getCategoryInfo()
+        return ()=>{}
     },[])
 
     return (

@@ -6,6 +6,7 @@ import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "../css/table.css"
 import { useNotif } from "../Hooks/useNotif";
 import Category from "../Components/Category";
+import { useBreadcrumbs } from "../Hooks/useBreadcrumbs";
 
 
 export default function CategoryAll() {
@@ -16,6 +17,15 @@ export default function CategoryAll() {
     const popup                                             = usePopup()
     const contentsDivRef                                    = useRef()
     const notif                                             = useNotif()
+    const breadcrumb                                        = useBreadcrumbs()
+    
+    useEffect(()=>{
+        breadcrumb({
+            label: "Categories",
+            path: "/categories",
+        })
+        return ()=>{}
+    },[])
 
     const getCategories = async ()=>{
 

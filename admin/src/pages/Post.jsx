@@ -17,6 +17,7 @@ import { useNotif } from "../Hooks/useNotif";
 import DatePicker from "../Components/DatePicker";
 import TimePicker from "../Components/TimePicker";
 import { usePopup } from "../Hooks/usePopup";
+import {useBreadcrumbs} from "../Hooks/useBreadcrumbs"
 
 const PostTextArea = lazy(() => import("../Components/PostTextArea"))
 const PostCollectionArea = lazy(() => import("../Components/PostCollectionArea"))
@@ -60,6 +61,7 @@ export default function Post() {
     const popup                             = usePopup()
     const [postState, setPostState]         = useState({});
     const [content, setContent]             = useState([]);
+    const breadcrumb                        = useBreadcrumbs()
 
     useEffect(() => {
         form.current.title.value = postState.title ?? ""
@@ -106,14 +108,34 @@ export default function Post() {
 
     useEffect(() => {
 
+        const bcObj = {
+            label: "Posts",
+            path: "/posts",
+        }
+
         if (!!post_id) {
             
             if(!!postData.errors){
                 console.log(postData.errors)
+                bcObj.child = {
+                    label: "Error",
+                    path: ""
+                }
             }else{
                 setPostState(state => postData.data)
+                bcObj.child = {
+                    label: postData.data.title,
+                    path: ""
+                }
+            }
+        }else{
+            bcObj.child = {
+                label: "New",
+                path: "/new"
             }
         }
+
+        breadcrumb(bcObj)
 
         return () => { };
 

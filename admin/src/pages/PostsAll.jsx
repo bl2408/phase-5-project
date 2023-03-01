@@ -14,6 +14,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import Tag from "../Components/Tag";
 import { usePopup } from "../Hooks/usePopup";
+import { useBreadcrumbs } from "../Hooks/useBreadcrumbs";
 
 export default function PostsAll(){
 
@@ -22,9 +23,18 @@ export default function PostsAll(){
     const navigate = useNavigate()
     const popup = usePopup()
 
-    const [ searchParams ]                        = useSearchParams()
+    const [ searchParams ]                      = useSearchParams()
     const [ selectedPosts, setSelectedPosts ]   = useState([])
     const contentsDivRef                        = useRef()
+    const breadcrumb                            = useBreadcrumbs()
+    
+    useEffect(()=>{
+        breadcrumb({
+            label: "Posts",
+            path: "/posts",
+        })
+        return ()=>{}
+    },[])
 
     const allPosts = async ()=>{
         let paramsObj = ""

@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 import { displayTagMeta } from "../fns";
 import TagNewEdit from "../Components/TagNewEdit";
 import { useNotif } from "../Hooks/useNotif";
+import { useBreadcrumbs } from "../Hooks/useBreadcrumbs";
 
 
 export default function Tag(){
@@ -13,9 +14,15 @@ export default function Tag(){
     const [ tagInfo, setTagInfo ]       = useState({})
     const [ meta, setMeta ]             = useState({})
     const notif                         = useNotif()
+    const breadcrumb                    = useBreadcrumbs()
 
 
     const getTagInfo = async()=>{
+
+        const bcObj = {
+            label: "Tags",
+            path: "/tags",
+        }
 
         try{
             const response = await fetch(`/api/admin/tags/${tagSlug}`)
@@ -29,14 +36,22 @@ export default function Tag(){
 
             setTagInfo(state=>data.data)
             setMeta(state=>data.meta)
+            bcObj.child = {
+                label: data.data.label,
+                path:""
+            }
 
         }catch(err){
             notif({
                 msg: `Error fetching tag.${<br/>}${<br/>}${!!err ? err : "" }${!!err?.cause ? `${<br/>}${<br/>}${err.cause}` : ""}`,
                 mode: 2
             });
+            bcObj.child = {
+                label: "Error",
+                path:""
+            }
         }
-
+        breadcrumb(bcObj)
     };
 
     useEffect(()=>{
