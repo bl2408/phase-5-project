@@ -176,9 +176,7 @@ export default function CollectionView({
                     </div>
                     : null
             }
-            <div className="controls">
-                <input placeholder="Search" type="search" name="collection-search" style={{display:"inline"}}/>
-                <button type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faSearch} /></button>
+            <div className="right-controls">
                 <button onClick={()=>useLocationPath ? navigate(`/collections`): setCurrentPath(path=>BASE_PATH)} type="button" className="btn-sml secondary"><FontAwesomeIcon icon={faHome} /></button>
                 {   
                     createNewCollection
