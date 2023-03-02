@@ -131,7 +131,7 @@ export default function Post() {
         }else{
             bcObj.child = {
                 label: "New",
-                path: "/new"
+                path: ""
             }
         }
 

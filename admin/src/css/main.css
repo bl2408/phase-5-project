@@ -862,7 +862,18 @@ button{
     grid-template-columns: 1fr max-content;
 }
 
-
+.load-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left:0;
+    background-color: rgba(255,255,255, 0.6);
+    z-index: 1;
+}
 
 .block-area{
     border: solid 1px var(--font-col-nav-side-active);
@@ -970,6 +981,16 @@ button{
     align-items: center;
 }
 
+.btn-check{
+    background-color: transparent;
+    padding: 5px;
+    color: var(--bg-button-secondary);
+    font-size: 1.6rem;
+}
+.btn-check:hover{
+    color: var(--bg-button-secondary-hover);
+}
+
 
 .breadcrumb > :not(:first-child)::before{
     content: "\00BB";
@@ -994,6 +1015,39 @@ button{
     border-top: 5px solid rgb(74, 74, 74);
     -webkit-animation: spin .3s linear infinite;
     animation: spin .3s linear infinite;
+}
+
+.pagination{
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 8px;
+    align-items: flex-end;
+    justify-content: center;
+
+}
+.pagination a, 
+.pagination .disabled { 
+    height:100%;
+    width: min-content;
+    padding: 5px 8px;
+    box-sizing: border-box;
+}
+
+.pagination a {
+    background-color:  var(--bg-button-secondary);
+    color: var(--font-col-button)
+}
+.pagination a:hover {
+    background-color:  var(--bg-button-secondary-hover);
+}
+.pagination .disabled {
+    background-color: var(--bg-button-secondary-active);
+    color: var(--font-col-button)
+}
+
+.pagination .spacer:before{
+    display: inline-block;
+    content: "...";
 }
 
 

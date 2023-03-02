@@ -36,10 +36,14 @@ cat0 = Category.create(label: "uncategorized", slug: "uncategorized", descriptio
 cat1 = Category.create(label: "TEST", slug: "test", description: "description for test category")
 cat2 = Category.create(label: "TEST with spaces", slug: "TEST With SpAcEs", description: "description for test with spaces category")
 
+arr_cat = [cat0, cat1, cat2]
+
 
 # Tags
 tag1 = Tag.create(label: "test tag", slug:"test-tag", description: "Description for test tag 1")
 tag2 = Tag.create(label: "test tag 2", slug:"test-tag-2", description: "Description for test tag 2")
+
+arr_tag = [tag1, tag2]
 
 # Posts
 Post.create(
@@ -52,6 +56,21 @@ Post.create(
     category: cat1,
     tags: [tag1, tag2]
 )
+
+144.times do |i|
+    title = Faker::Book.title
+    
+    Post.create(
+        title: title,
+        slug: title,
+        content: "[{\"t\":\"text\",\"bn\":\"basic\",\"v\":\"basic text\"}]",
+        publish_datetime: DateTime.now,
+        author: user1,
+        status: rand(1),
+        category: arr_cat[rand(arr_cat.size)],
+        tags: [arr_tag[rand(arr_tag.size)]]
+    )
+end
 
 # Collection
 collection1 = Collection.create(

@@ -1,7 +1,7 @@
 import WindowBasic from "../Windows/WindowBasic";
 import "../css/posts.css"
 import "../css/table.css"
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { getPostsAll } from "../Slices/postsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { displayDate } from "../fns";
@@ -9,12 +9,13 @@ import { displayDate } from "../fns";
 import { v4 as uuid } from "uuid"
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faTrash, faEdit, faInfoCircle, faPlus, faTags } from '@fortawesome/free-solid-svg-icons'
+import { faTrash, faEdit, faInfoCircle, faPlus, faTags, faCheckSquare } from '@fortawesome/free-solid-svg-icons'
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
 
 import Tag from "../Components/Tag";
 import { usePopup } from "../Hooks/usePopup";
 import { useBreadcrumbs } from "../Hooks/useBreadcrumbs";
+import Category from "../Components/Category";
 
 export default function PostsAll(){
 
@@ -42,7 +43,7 @@ export default function PostsAll(){
         if(sp.length > 0){
             paramsObj = sp
         }
-
+        
         try{
             await dispatch(getPostsAll(paramsObj)).unwrap();
         }catch(err){
@@ -64,8 +65,10 @@ export default function PostsAll(){
 
     };
 
+    const isChecked = (id)=> !!selectedPosts.find(sp=>sp.id === id)
+
     const displayPosts = posts.items?.map(post =>{
-        const { id, title, status, publish_datetime, slug, category, tags } = post;
+        const { id, title, publish_datetime, category, tags } = post;
         const tagsDisplay = (
             <div style={{display:"flex", gap: "6px", flexWrap:"wrap"}}>
                 {tags.map(tag=><Tag key={uuid()} {...tag}/>)}
@@ -75,15 +78,45 @@ export default function PostsAll(){
         return (
 
             <div key={id} className="row">
-                <div><input type="checkbox" onClick={e=>handleOnRowCheck(e, {id, label: title})}/></div>
+                <div>
+                    <input 
+                        type="checkbox" 
+                        onClick={e=>handleOnRowCheck(e, {id, label: title})}
+                        defaultChecked={isChecked(id)}
+                    />
+                </div>
                 <div><Link to={`/posts/${id}`}>{title}</Link></div>
                 <div>{displayDate(publish_datetime)}</div>
-                <div><Link to="/">{category?.label}</Link></div>
+                <div><Category {...category}/></div>
                 <div>{tagsDisplay}</div>
             </div>
 
         );
     });
+
+     const displayPagination = posts.meta?.pagination?.map(item=>{
+        return(
+
+            <Fragment key={uuid()}>
+                {
+                    item.end
+                        ? <span className="spacer"></span>
+                        : null
+                }
+                {
+                    item.current
+                        ? <span className="disabled">{item.label}</span>
+                        : <Link to={`?${item.query_string}`} preventScrollReset={true}>{item.label}</Link>
+                }
+                {
+                    item.start
+                        ? <span className="spacer"></span>
+                        : null
+                }
+            </Fragment>
+
+        );
+     });
 
     const handleTitlesSort =(title)=>{
         searchParams.set("order_by", title)
@@ -127,10 +160,11 @@ export default function PostsAll(){
         })
     }
 
+    const currentPostsAllSelected =()=> posts.items.every((a)=>selectedPosts.find(b=>b.id === a.id));
+
     const handleSelectAll =()=>{
-        const containsAll = posts.items.every((a)=>selectedPosts.find(b=>b.id === a.id));
         contentsDivRef.current.querySelectorAll("input[type='checkbox']").forEach(el=>{
-            if(containsAll){
+            if(currentPostsAllSelected()){
                 el.click()
             }else{
                 if(!el.checked){
@@ -141,38 +175,39 @@ export default function PostsAll(){
     };
 
     return (
-        <WindowBasic className="window-full">
+        <WindowBasic className="window-full" style={{position: "relative"}}>
+            {
+                posts.status === "loading"
+                    ? <div className="load-area"><div className="loader"></div></div>
+                    : null
+            }
             <div className="header-controls">
-                <h1>Posts</h1>
+                <h1>Posts </h1>
                 <div className="right-controls">
                     <button onClick={()=>navigate("/posts/new")} className="btn primary"><FontAwesomeIcon icon={faEdit}/></button>
-                    <button onClick={handleTags} className="btn secondary"><FontAwesomeIcon icon={faTags}/> {selectedPosts.length}</button>
-                    <button onClick={handleDeletePost} className="btn red"><FontAwesomeIcon icon={faTrash}/> {selectedPosts.length}</button>
+                    <button onClick={handleTags} className="btn secondary"><FontAwesomeIcon icon={faTags}/>{selectedPosts.length}</button>
+                    <button onClick={handleDeletePost} className="btn red"><FontAwesomeIcon icon={faTrash}/>{selectedPosts.length}</button>
                 </div>
-            </div>
-            
+            </div>            
             <section className="table-display col5">
                 <div className="row header">
                     <div>
-                        <input 
-                            type="checkbox"
-                            onClick={handleSelectAll}
-                        />
+                        <button type="button" className="btn-check" onClick={handleSelectAll}><FontAwesomeIcon icon={faCheckSquare} /></button>
                     </div>
                     <div onClick={()=>handleTitlesSort("title")}>Title</div>
                     <div onClick={()=>handleTitlesSort("publish_datetime")}>Date/Time</div>
-                    <div onClick={()=>handleTitlesSort("category")}>Category</div>
-                    <div onClick={()=>handleTitlesSort("tags")}>Tags</div>
+                    <div>Category</div>
+                    <div>Tags</div>
                 </div> 
                 <div ref={contentsDivRef}>
                     {displayPosts}
                 </div>               
                 <div className="bottom">
                     <div>
-                        Displaying { posts.items.length } of {posts.items.length}
+                        Displaying {posts.meta.offset + 1} - { posts.meta.offset + posts.meta.count} of {posts.meta.total}
                     </div>
-                    <div>
-                        pagination
+                    <div className="pagination">
+                        {displayPagination}
                     </div>
                 </div>
             </section>

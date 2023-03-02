@@ -6,6 +6,11 @@
     margin-top: 16px;
 }
 
+.table-display .row > :first-child{
+    display: flex;
+    justify-content: center;
+}
+
 .table-display .row{
     display: grid;
     padding: 16px 0;

@@ -45,10 +45,10 @@ export const postsSlice = createSlice({
 	initialState,
 	extraReducers: (builder) => {
 		// get all posts
-		builder.addCase(getPostsAll.pending, (state, action) => {
+		builder.addCase(getPostsAll.pending, (state) => {
 			state.status = 'loading'
 		}),
-		builder.addCase(getPostsAll.rejected, (state, action) => {
+		builder.addCase(getPostsAll.rejected, (state) => {
 			state.status = 'failed'
 		}),
 		builder.addCase(getPostsAll.fulfilled, (state, action) => {
