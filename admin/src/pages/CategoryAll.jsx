@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import WindowBasic from "../Windows/WindowBasic";
 import { usePopup } from "../Hooks/usePopup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheckSquare, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import "../css/table.css"
 import { useNotif } from "../Hooks/useNotif";
 import Category from "../Components/Category";
@@ -59,9 +59,10 @@ export default function CategoryAll() {
             if(cat.description !== null && cat.description.toLowerCase().includes(keyword)){
                 return cat
             }
-
+            
         })
     };
+    const isChecked = (id)=> !!selectedCategories.find(cat=>cat.id === id)
 
     const displayCategory =(cats)=>cats.map(cat =>{
         const { id, label, slug, count } = cat;
@@ -71,7 +72,7 @@ export default function CategoryAll() {
                     {
                         label === "uncategorized"
                             ? null
-                            : <input type="checkbox" defaultChecked={selectedCategories.find(cat=>cat.id === id)} onClick={e=>handleOnRowCheck(e, {id, label})}/>
+                            : <input type="checkbox" defaultChecked={isChecked(id)} onClick={e=>handleOnRowCheck(e, {id, label})}/>
                     }
                 </div>
                 <div><Category {...cat}/></div>
@@ -89,11 +90,11 @@ export default function CategoryAll() {
             setSelectedCategories(state=>state.filter(cat=>cat.id !== obj.id))
         }
     };
+    const currentCategoryAllSelected =()=> filterCategories().filter(cat=>cat.label !== "uncategorized").every((a)=>selectedCategories.find(b=>b.id === a.id));
 
     const handleSelectAll = ()=>{
-        const containsAll = filterCategories().every((a)=>selectedCategories.find(b=>b.id === a.id));
         contentsDivRef.current.querySelectorAll("input[type='checkbox']").forEach(el=>{
-            if(containsAll){
+            if(currentCategoryAllSelected()){
                 el.click()
             }else{
                 if(!el.checked){
@@ -142,10 +143,11 @@ export default function CategoryAll() {
                     ? <section className="table-display col4">
                         <div className="row header">
                             <div>
-                                <input 
+                                <button type="button" className="btn-check" onClick={handleSelectAll}><FontAwesomeIcon icon={faCheckSquare} /></button>
+                                {/* <input 
                                     type="checkbox"
                                     onClick={handleSelectAll}
-                                />
+                                /> */}
                             </div>
                             <div>Label</div>
                             <div>Slug</div>

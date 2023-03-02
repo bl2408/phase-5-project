@@ -5,7 +5,7 @@ import Tag from "../Components/Tag"
 import { displayTagMeta } from "../fns";
 import { usePopup } from "../Hooks/usePopup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faCheckSquare, faEdit, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { useNotif } from "../Hooks/useNotif"
 import "../css/table.css"
 import { useBreadcrumbs } from "../Hooks/useBreadcrumbs";
@@ -141,7 +141,6 @@ export default function TagsAll() {
                     <div className="right-controls">
                         <button onClick={()=>popup({open:true, component:"TagNewEdit"})} className="btn primary"><FontAwesomeIcon icon={faEdit}/></button>
                         <button onClick={handleDeleteTags} className="btn red"><FontAwesomeIcon icon={faTrash}/> {selectedTags.length}</button>
-
                     </div>
                 </div>
                 <div className="right-controls" style={{margin:"10px 0"}}>
@@ -152,10 +151,7 @@ export default function TagsAll() {
                         ? <section className="table-display col4 tags-display">
                             <div className="row header">
                                 <div>
-                                    <input 
-                                        type="checkbox"
-                                        onClick={handleSelectAll}
-                                    />
+                                    <button type="button" className="btn-check" onClick={handleSelectAll}><FontAwesomeIcon icon={faCheckSquare} /></button>
                                 </div>
                                 <div>Label</div>
                                 <div>Slug</div>
