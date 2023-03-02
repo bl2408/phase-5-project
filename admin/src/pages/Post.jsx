@@ -11,13 +11,14 @@ import { v4 as uuid } from "uuid";
 import { lazy } from "react";
 import SuspenseLoader from "../Components/SuspenseLoader";
 import InputTags from "../Components/InputTags";
-import { isIterable } from "../fns";
+import { convertToSlug, isIterable } from "../fns";
 import InputCategory from "../Components/InputCategory";
 import { useNotif } from "../Hooks/useNotif";
 import DatePicker from "../Components/DatePicker";
 import TimePicker from "../Components/TimePicker";
 import { usePopup } from "../Hooks/usePopup";
 import {useBreadcrumbs} from "../Hooks/useBreadcrumbs"
+import InputFloatingLabel from "../Components/InputFloatingLabel";
 
 const PostTextArea = lazy(() => import("../Components/PostTextArea"))
 const PostCollectionArea = lazy(() => import("../Components/PostCollectionArea"))
@@ -66,6 +67,7 @@ export default function Post() {
     useEffect(() => {
         form.current.title.value = postState.title ?? ""
         form.current.select_status.value = postState?.status ?? ""
+        form.current.slug.value = postState?.slug 
 
         if (!!post_id) {
             try {
@@ -153,7 +155,7 @@ export default function Post() {
         const formObj = {
             title: form.current.title.value,
             content: createContentObj(),
-            slug: form.current.title.value,
+            slug: form.current.slug.value,
             publish_datetime: `${form.current.pub_date.value}${form.current.pub_time.value}`,
             status: form.current.select_status.value,
         }
@@ -260,10 +262,16 @@ export default function Post() {
 
     };
 
+    const handleLabelChange = (e)=>{
+        const value = e.target.value
+        form.current.slug.value = convertToSlug(value)
+    };
+
     return (
         <form ref={form} onSubmit={handleSubmit} className="grid-2" autoComplete="off">
             <WindowBasic className="post">
-                <input type="text" placeholder="Title" name="title" style={{ fontSize: "3rem" }} />
+                {/* <input type="text" placeholder="Title" name="title" style={{ fontSize: "3rem" }} /> */}
+                <InputFloatingLabel onChange={handleLabelChange} type="text" name="title" label="Title" style={{ fontSize: "3rem" }}/>
                 <div className="controls">
                     <button title="Text" type="button" onClick={()=>addFormElement("text")} className="btn primary"><FontAwesomeIcon icon={faFont} /></button>
                     <button title="Collection" type="button" onClick={()=>addFormElement("collection")} className="btn primary"><FontAwesomeIcon icon={faFolder} /></button>
@@ -274,7 +282,7 @@ export default function Post() {
                 </div>
             </WindowBasic>
             <WindowBasic>
-                <section>
+                <section style={{display: "flex", gap:"10px", justifyContent:"center"}}>
                     <button className="btn primary">{!!post_id ? "Update" : "Create"}</button>
                     {
                         !!post_id 
@@ -282,6 +290,10 @@ export default function Post() {
                             : null
                     }
                     
+                </section>
+                <section>
+                    <h3>Slug</h3>
+                    <input type="text" name="slug" placeholder="Slug"/>
                 </section>
                 <section>
                     <h3>Status</h3>
