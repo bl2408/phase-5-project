@@ -32,6 +32,7 @@ User.create!(
 )
 
 # Categories
+cat0 = Category.create(label: "uncategorized", slug: "uncategorized", description: "Posts without a category.")
 cat1 = Category.create(label: "TEST", slug: "test", description: "description for test category")
 cat2 = Category.create(label: "TEST with spaces", slug: "TEST With SpAcEs", description: "description for test with spaces category")
 
