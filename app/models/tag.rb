@@ -23,6 +23,10 @@ class Tag < ApplicationRecord
         taggables.map {|x| x.target}
     end
 
+    def targets_count
+        taggables.count
+    end
+
     private
 
     def pre_format

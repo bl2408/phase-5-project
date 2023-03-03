@@ -14,6 +14,11 @@ class Category < ApplicationRecord
             with: /[a-z0-9\-]+\S/, message: "Category slug can only contain letters, numbers and hyphens."
         }
 
+    
+    def posts_count
+        posts.count
+    end
+
     private
 
     def pre_format

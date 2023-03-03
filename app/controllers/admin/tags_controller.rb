@@ -9,7 +9,8 @@ class Admin::TagsController < Admin::ApplicationController
 
         query_total = tags.order("label ASC")
 
-        query_total = query_total.map { |tag| tag.attributes.merge({count: tag.targets.count})} unless params[:count].nil?
+        query_total = query_total.map { |tag| tag.attributes.merge({count: tag.targets_count})} unless params[:count].nil?
+        
         res(
             data: query_total,
             meta:  params[:count].nil? ? nil : { target_count: Tag.joins(:taggables).group(:target_type).size },

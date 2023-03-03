@@ -9,7 +9,7 @@ class Admin::CategoryController < Admin::ApplicationController
 
         query_total = cats.order("label ASC")
 
-        query_total = query_total.map { |cat| cat.attributes.merge({count: cat.posts.count})} unless params[:count].nil?
+        query_total = query_total.map { |cat| cat.attributes.merge({count: cat.posts_count})} unless params[:count].nil?
 
         res(
             data: query_total,
