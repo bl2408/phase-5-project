@@ -87,12 +87,6 @@ class Admin::PostsController < Admin::ApplicationController
 
     private 
 
-    # limit 10
-    # total 120
-    # offset 10
-    # total / limit .ceil = 12 pages
-    # offset + limit / limit = 1 current page
-
     def generate_pagination offset, total, limit, qs_extras
 
         total_pages = (total / limit.to_f).ceil
@@ -102,7 +96,7 @@ class Admin::PostsController < Admin::ApplicationController
         if total_pages <= 1
             return [
                 {
-                    query_string: create_qs(limit, 1, qs_extras),
+                    query_string: create_qs(limit, 0, qs_extras),
                     label: 1,
                     start: true,
                     current: false
@@ -118,7 +112,7 @@ class Admin::PostsController < Admin::ApplicationController
         point_end = steps_right >= total_pages ? total_pages : steps_right
 
         hash << {
-            query_string: create_qs(limit, 1, qs_extras),
+            query_string: create_qs(limit, 0, qs_extras),
             label: 1,
             start: true,
             current: false
