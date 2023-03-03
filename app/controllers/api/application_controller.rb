@@ -3,8 +3,6 @@ class Api::ApplicationController < ApplicationController
 
     def res data:, status:, meta: nil
 
-        # puts data.size if data.kind_of?(Array)
-
         obj = {
             data: data
         }

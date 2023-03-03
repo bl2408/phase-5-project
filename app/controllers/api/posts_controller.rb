@@ -1,11 +1,20 @@
 class Api::PostsController < Api::ApplicationController
 
+    def index
+        posts = Post.all.where(status: "published").order(publish_datetime: :desc)
+
+        res(
+            data: posts.as_json(include: [:category ]),
+            status: :ok
+        )
+
+    end
+
     def show
         
-        post = Post.find_by(id: params[:id])
+        post = Post.find_by(slug: params[:slug])
 
         content = ActiveSupport::JSON.decode(post.content)
-
 
         content = content.map do | c |
             value = c["v"]
@@ -37,7 +46,11 @@ class Api::PostsController < Api::ApplicationController
             end
         end
 
-        post = post.attributes.merge({content: content})
+        post = post.attributes.merge({
+            content: content,
+            tags: post.tags,
+            category: post.category
+        })
 
         # .find([1,3]).map {|item| pp item.url}``
 
@@ -46,6 +59,7 @@ class Api::PostsController < Api::ApplicationController
             status: :ok
         )
     end
+
 
     private
 
