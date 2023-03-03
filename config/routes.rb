@@ -15,6 +15,8 @@ Rails.application.routes.draw do
     put "/posts/batch", to: "posts#batch_update"
     resources :posts
 
+    get "/summary", to: "application#summaries"
+
 
     resources :tags, param: :slug, only: [:show, :index]
     resources :tags

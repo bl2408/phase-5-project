@@ -11,6 +11,7 @@ const TagsAll = lazy(() => import('./TagsAll'));
 const Tag = lazy(() => import('./Tag'));
 const CategoryAll = lazy(() => import('./CategoryAll'));
 const Category = lazy(() => import("./Category"));
+const Dashboard = lazy(() => import("./Dashboard"));
 const ErrorPage = lazy(() => import('./ErrorPage'));
 
 
@@ -19,6 +20,10 @@ export const routesList = createBrowserRouter([
 		path: "/",
 		element: <SuspenseLoader element={<App />} />,
 		children: [
+			{
+				path: "/",
+				element: <SuspenseLoader element={<Dashboard />} />
+			},
 			{
 				path: "posts/",
 				element: <SuspenseLoader element={<PostsAll />} />

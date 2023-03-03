@@ -2,6 +2,52 @@ class Admin::ApplicationController < ApplicationController
 
     before_action :authorize
 
+
+    def summaries
+        posts = Post.all
+        posts_hash = {
+            count: posts.count,
+            draft_count: posts.where(status: 0).count, 
+            published_count: posts.where(status: 1).count, 
+            recent: posts.last(5).map { | post |  Admin::PostAllSerializer.new(post) }
+            
+        }
+        collection = Collection.all
+        coll_hash = {
+            count: collection.count,
+            recent: collection.limit(5).order(id: :desc).map { |coll|  Admin::CollectionSingleSerializer.new(coll) }
+        }
+        files = StoredFile.all
+        sf_hash = {
+            count: files.count,
+            recent: files.limit(5).order(id: :desc).map { |file| Admin::StoredFileSingleSerializer.new(file)}
+        }
+
+        tags = Tag.all
+        tags_hash = {
+            count: tags.count,
+            recent: tags.limit(5).order(id: :desc).map { | tag | Admin::TagsSerializer.new(tag).attributes.merge({count: tag.targets_count})}
+        }
+
+        cats = Category.all
+        cat_hash = {
+            count: cats.count,
+            recent: cats.limit(5).order(id: :desc).map { | cat |cat.attributes.merge({count: cat.posts_count})}
+        }
+
+        res(
+            data: {
+                posts: posts_hash,
+                collections: coll_hash,
+                files: sf_hash,
+                tags: tags_hash,
+                categories: cat_hash
+            },
+            status: :ok
+        )
+    end
+
+
     def res_err_ue msg
         res_err msg: msg, status: :unprocessable_entity
     end 
@@ -23,9 +69,6 @@ class Admin::ApplicationController < ApplicationController
 
     
     def res data:, status:, meta: nil
-
-        # puts data.size if data.kind_of?(Array)
-
         obj = {
             data: data
         }
