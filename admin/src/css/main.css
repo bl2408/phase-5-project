@@ -190,6 +190,11 @@ body.open {
 #nav-side>header {
     overflow: hidden;
     border-bottom: solid 1px var(--border-col-nav-side-header);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2rem;
+    color: var(--font-col-nav-side-hover);
 }
 
 #nav-side>section {

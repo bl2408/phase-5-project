@@ -26,7 +26,7 @@ export default function NavSide() {
     return (
         <nav id="nav-side" className={`${navIsOpen ? "" : "closed"}`}>
             <header>
-                HEADING
+                BL :: CMS
             </header>
 
             <section className="thin-scroll ts-light">

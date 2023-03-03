@@ -10,7 +10,7 @@ export default function ButtonList(){
             <NavSideButton text="Collections" icon={faFolderOpen} to="collections/" />
             <NavSideButton text="Categories" icon={faFolderTree} to="categories/"/>
             <NavSideButton text="Tags" icon={faTag}  to="tags/"/>
-            <NavSideButton text="Settings" icon={faCogs} to="settings/"/>
+            {/* <NavSideButton text="Settings" icon={faCogs} to="settings/"/> */}
         </>
     );
 
