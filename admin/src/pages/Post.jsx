@@ -67,7 +67,7 @@ export default function Post() {
     useEffect(() => {
         form.current.title.value = postState.title ?? ""
         form.current.select_status.value = postState?.status ?? ""
-        form.current.slug.value = postState?.slug 
+        form.current.slug.value = postState?.slug ?? ""
 
         if (!!post_id) {
             try {
@@ -234,7 +234,6 @@ export default function Post() {
             if (newIndex>=0 && newIndex <=state.length-1) {
                 newState.splice(itemIndex, 1)
                 newState.splice(newIndex, 0, item)
-                console.log(newState)
                 return newState;
             }
             
@@ -270,7 +269,6 @@ export default function Post() {
     return (
         <form ref={form} onSubmit={handleSubmit} className="grid-2" autoComplete="off">
             <WindowBasic className="post">
-                {/* <input type="text" placeholder="Title" name="title" style={{ fontSize: "3rem" }} /> */}
                 <InputFloatingLabel onChange={handleLabelChange} type="text" name="title" label="Title" style={{ fontSize: "3rem" }}/>
                 <div className="controls">
                     <button title="Text" type="button" onClick={()=>addFormElement("text")} className="btn primary"><FontAwesomeIcon icon={faFont} /></button>
